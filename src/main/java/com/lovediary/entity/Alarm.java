@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Alarm extends TimeEntity {
-    @Id @GeneratedValue
+    @Id
     private Long idx;
 
     @Column(length = 300)

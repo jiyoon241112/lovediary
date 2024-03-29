@@ -29,6 +29,7 @@ public class AlarmService {
         this.alarmRepository = alarmRepository;
     }
 
+    // 목록 조회
     @Transactional
     public List<AlarmDto> getList() {
         List<Alarm> alarmList = alarmRepository.findAll();
@@ -41,6 +42,7 @@ public class AlarmService {
         return resultList;
     }
 
+    // 단건 조회
     @Transactional
     public AlarmDto getOne(Long idx) {
         Optional<Alarm> wrapper = alarmRepository.findById(idx);
@@ -49,11 +51,13 @@ public class AlarmService {
         return convertToDto(alarm);
     }
 
+    // 생성, 수정
     @Transactional
     public Long saveItem(AlarmDto alarmDto) {
         return alarmRepository.save(alarmDto.toEntity()).getIdx();
     }
 
+    // DTO 변환
     private AlarmDto convertToDto(Alarm alarm) {
         return AlarmDto.builder()
                 .idx(alarm.getIdx())
