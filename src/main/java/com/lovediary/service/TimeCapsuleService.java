@@ -26,7 +26,7 @@ import java.util.Optional;
  **/
 @Service
 public class TimeCapsuleService {
-    private TimeCapsuleRepository timeCapsuleRepository;
+    private final TimeCapsuleRepository timeCapsuleRepository;
     public TimeCapsuleService(TimeCapsuleRepository timeCapsuleRepository) {
         this.timeCapsuleRepository = timeCapsuleRepository;
     }

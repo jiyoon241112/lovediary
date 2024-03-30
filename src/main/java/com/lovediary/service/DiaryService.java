@@ -26,7 +26,7 @@ import java.util.Optional;
  **/
 @Service
 public class DiaryService {
-    private DiaryRepository diaryRepository;
+    private final DiaryRepository diaryRepository;
     public DiaryService(DiaryRepository diaryRepository) {
         this.diaryRepository = diaryRepository;
     }

@@ -5,6 +5,7 @@ import com.lovediary.entity.Account;
 import com.lovediary.entity.CoupleAccount;
 import com.lovediary.repository.AccountRepository;
 import com.lovediary.repository.CoupleAccountRepository;
+import com.lovediary.values.SessionData;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -59,11 +60,15 @@ public class AccountService {
         return convertToDto(account);
     }
 
-    // 수정, 삭제
+    // 생성, 수정
     @Transactional
     public Long saveItem(AccountDto accountDto) {
+        Long idx = accountRepository.save(accountDto.toAccountEntity()).getIdx();
+        accountDto.setIdx(idx);
+
         coupleAccountRepository.save(accountDto.toCoupleAccountEntity());
-        return accountRepository.save(accountDto.toAccountEntity()).getIdx();
+
+        return idx;
     }
 
     // 로그인
@@ -77,6 +82,20 @@ public class AccountService {
         }
 
         return null;
+    }
+
+    // 세션 데이터 조회
+    public SessionData getSesssionData(AccountDto accountDto) {
+        Long coupleIdx = accountDto.getCoupleIdx();
+        Long accountIdx = accountDto.getIdx();
+
+        CoupleAccount account = coupleAccountRepository.findByCoupleIdxAndAccountIdxIsNot(coupleIdx, accountIdx);
+
+        return SessionData.builder()
+                .coupleIdx(coupleIdx)
+                .accountIdx(accountIdx)
+                .partnerIdx(account.getAccountIdx())
+                .build();
     }
 
     // DTO 변환
