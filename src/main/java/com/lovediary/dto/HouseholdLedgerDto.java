@@ -5,6 +5,10 @@ import lombok.*;
 
 import java.sql.Timestamp;
 
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class HouseholdLedgerDto {
     private Long idx;
     private Long categoryIdx;

@@ -1,11 +1,15 @@
 package com.lovediary.dto;
 
 import com.lovediary.entity.TimeCapsule;
-import lombok.Builder;
+import lombok.*;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class TimeCapsuleDto {
     private Long idx;
     private Date openDate;
