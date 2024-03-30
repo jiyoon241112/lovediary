@@ -51,8 +51,12 @@ public class CoupleAccount {
     @Column(length = 100)
     private String kakaoToken;
 
+    @OneToOne
+    @JoinColumn(name = "account_idx", referencedColumnName = "idx")
+    private Account account;
+
     @Builder
-    public CoupleAccount(Long accountIdx, Long coupleIdx, String loveName, Character gender, Date birthDay, String mbti, String bloodType, String naverToken, String kakaoToken) {
+    public CoupleAccount(Long accountIdx, Long coupleIdx, String loveName, Character gender, Date birthDay, String mbti, String bloodType, String naverToken, String kakaoToken, Account account) {
         this.accountIdx = accountIdx;
         this.coupleIdx = coupleIdx;
         this.loveName = loveName;
@@ -62,5 +66,6 @@ public class CoupleAccount {
         this.bloodType = bloodType;
         this.naverToken = naverToken;
         this.kakaoToken = kakaoToken;
+        this.account = account;
     }
 }

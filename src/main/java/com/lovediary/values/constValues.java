@@ -14,6 +14,7 @@ package com.lovediary.values;
  **/
 public class constValues {
     public static final String LOGIN_USER = "USER";
+    public static final String JOIN_DATA = "USER";
 
     public static final String DONE = "200";
     public static final String ERROR = "400";

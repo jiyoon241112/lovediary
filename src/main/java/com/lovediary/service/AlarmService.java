@@ -24,7 +24,7 @@ import java.util.Optional;
  **/
 @Service
 public class AlarmService {
-    private AlarmRepository alarmRepository;
+    private final AlarmRepository alarmRepository;
     public AlarmService(AlarmRepository alarmRepository) {
         this.alarmRepository = alarmRepository;
     }

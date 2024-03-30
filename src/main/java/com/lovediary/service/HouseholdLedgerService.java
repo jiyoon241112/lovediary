@@ -25,7 +25,7 @@ import java.util.Optional;
 
 @Service
 public class HouseholdLedgerService {
-    private HouseholdLedgerRepository householdLedgerRepository;
+    private final HouseholdLedgerRepository householdLedgerRepository;
     public HouseholdLedgerService(HouseholdLedgerRepository householdLedgerRepository) {
         this.householdLedgerRepository = householdLedgerRepository;
     }
