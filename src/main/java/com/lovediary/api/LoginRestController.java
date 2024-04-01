@@ -9,7 +9,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.sql.Date;
 
 /**
  * 
@@ -84,11 +87,6 @@ public class LoginRestController {
             if(accountDto.getName() == null || accountDto.getName().isEmpty()) {
                 return new ResponseData(constValues.ERROR, "이름을 입력해주세요.", null);
             }
-            
-//            // 사귀기 시작한 날짜가 없을 때
-//            if(accountDto.get() == null || accountDto.getName().isEmpty()) {
-//                return new ResponseData(constValues.ERROR, "사귀기 시작한 날짜를 입력해주세요.", null);
-//            }
 
             // ID가 없을 때
             if(accountDto.getId() == null || accountDto.getId().isEmpty()) {

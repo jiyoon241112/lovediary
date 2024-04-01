@@ -3,6 +3,7 @@ package com.lovediary.dto;
 import com.lovediary.entity.Couple;
 import lombok.*;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -24,7 +25,7 @@ import java.sql.Timestamp;
 public class CoupleDto {
     private Long idx;
     private String name;
-    private Timestamp startDate;
+    private Date startDate;
     private String questionTime;
     private Long point;
     private Character deleteYn;
@@ -45,7 +46,7 @@ public class CoupleDto {
     }
 
     @Builder
-    public CoupleDto(Long idx, String name, Timestamp startDate, String questionTime, Long point, Character deleteYn, Timestamp registDate, Timestamp modifyDate) {
+    public CoupleDto(Long idx, String name, Date startDate, String questionTime, Long point, Character deleteYn, Timestamp registDate, Timestamp modifyDate) {
         this.idx = idx;
         this.name = name;
         this.startDate = startDate;

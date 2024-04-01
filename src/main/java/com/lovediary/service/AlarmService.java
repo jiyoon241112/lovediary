@@ -32,7 +32,11 @@ public class AlarmService {
     // 목록 조회
     @Transactional
     public List<AlarmDto> getList() {
-        List<Alarm> alarmList = alarmRepository.findAll();
+        List<Long> accountIdx = new ArrayList<>();
+        accountIdx.add(2L);
+        accountIdx.add(3L);
+
+        List<Alarm> alarmList = alarmRepository.findByAccountIdxInOrderByIdxDesc(accountIdx);
         List<AlarmDto> resultList = new ArrayList<>();
 
         for(Alarm alarm : alarmList) {

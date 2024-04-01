@@ -18,7 +18,7 @@ import java.util.List;
  *  2024-03-29          JJY             최초 등록
  **/
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
-    List<Diary> findByAccountIdx(Long idx);
+    List<Diary> findByAccountIdxInOrderByIdxDesc(List<Long> accountIdx);
 }
 
 

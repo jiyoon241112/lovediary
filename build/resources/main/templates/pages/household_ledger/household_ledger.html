@@ -8,32 +8,35 @@
 		<div class="absoluted t_0 r_30 w_230 bold_t btn active_btn">등록하기</div>
 		<div class="absoluted mt_30 r_30 w_270 right_t bold_t money">2,360,000</div>
 	</div>
-	<div class="find_password right_t bold_t mr_30 mt_120">
+	<div class="label_t right_t bold_t mr_30 mt_120">
 		<div class="checkbox">
 			<label class="flex">
 				<input type="checkbox" id="check2" /><label></label>
-				<p class="inline_block f_40">입금</p>
+				<p class="inline_block f_30">입금</p>
 			</label>
 			<label class="flex">
 				<input type="checkbox" id="check1" /><label></label>
-				<p class="inline_block f_40">출금</p>
+				<p class="inline_block f_30">출금</p>
 			</label>
 		</div>
 	</div>
-	<section class="center_a mt_30 f_40">
+	<section class="center_a f_30">
 		<ul class="list">
-			<li>
+			<li th:each="household : ${list}" th:data-idx="${household.idx}">
 				<div>
 					<div class="income_payment_img"></div>
 				</div>
 				<div class="w_70p">
-					<p class="left_t"><span class="green_t plus">86,400</span><br><span class="light_t">서비서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스서비스스</span></p>
+					<p class="left_t">
+						<span th:class="${#strings.equals(household.type, 'I') ? 'green_t plus' : 'red_t minus'}" th:text="${#numbers.formatInteger(household.amount, 3, 'COMMA')}"></span>
+<!--						<span th:class="${household.type == 'I' ? 'green_t plus' : 'red_t minus'} " th:text="${#numbers.formatInteger(household.amount, 3, 'COMMA')}"></span>-->
+						<br><span class="light_t" th:text="${household.contents}"></span></p>
 				</div>
 				<div class="w_20p">
-					<p class="left_t">03-19</p>
+					<p class="left_t" th:text="${#dates.format(household.registDate, 'MM-dd')}"></p>
 				</div>
 			</li>
-			<li>
+			<!--<li>
 				<div>
 					<div class="outgoing_hobby_img"></div>
 				</div>
@@ -43,7 +46,7 @@
 				<div class="w_20p">
 					<p class="left_t">03-19</p>
 				</div>
-			</li>
+			</li>-->
 		</ul>
 	<section>
 </body>

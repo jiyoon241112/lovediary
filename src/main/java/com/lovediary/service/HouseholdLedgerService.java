@@ -65,6 +65,7 @@ public class HouseholdLedgerService {
                 .categoryIdx(householdLedger.getCategoryIdx())
                 .contents(householdLedger.getContents())
                 .amount(householdLedger.getAmount())
+                .type(householdLedger.getType())
                 .dueDate(householdLedger.getDueDate())
                 .accountIdx(householdLedger.getAccountIdx())
                 .deleteYn(householdLedger.getDeleteYn())

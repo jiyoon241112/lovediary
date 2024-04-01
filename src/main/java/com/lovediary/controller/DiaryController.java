@@ -25,8 +25,9 @@ public class DiaryController {
 
     // <커플 다이어리 상세 페이지>
     @GetMapping("/diary/detail/{idx}")
-    public String diaryDetailPage(@PathVariable("idx") Long idx) {
-        DiaryDto diaryDto = diaryService.getOne(idx);
+    public String diaryDetailPage(@PathVariable("idx") Long idx, Model model) {
+        model.addAttribute("detail", diaryService.getOne(idx));
+        model.addAttribute("comment_list", diaryService.getDiaryCommentList(idx));
         return "pages/diary/diary_detail";
     }
 
