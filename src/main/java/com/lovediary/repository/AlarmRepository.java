@@ -18,5 +18,5 @@ import java.util.List;
  *  2024-03-26          HTH             최초 등록
  **/
 public interface AlarmRepository extends JpaRepository<Alarm, Long> {
-    List<Alarm> findByAccountIdx(Long accountIdx);
+    List<Alarm> findByAccountIdxInOrderByIdxDesc(List<Long> accountIdx);
 }

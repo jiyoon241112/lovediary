@@ -7,22 +7,19 @@
 		<p class="title_t center_t bold_t line_height">알림</p>
 		<div class="absoluted t_0 r_30 w_230 bold_t btn white_btn">전체 읽기</div>
 	</div>
-	<div class="find_password right_t bold_t mr_30">
+	<div class="label_t right_t bold_t mr_30">
 		<label class="checkbox">
-			<p class="inline_block f_40">안 읽은 알림만 보기</p>
+			<p class="inline_block f_30">안 읽은 알림만 보기</p>
 			<input type="checkbox" id="check" /><label></label>
 		</label>
 	</div>
-	<section class="center_a mt_30 f_40 scroll">
+	<section class="center_a mt_30 f_30 scroll">
 		<ul class="list">
-			<li>
-				<p class="left_t">두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두<br><span class="light_t">2024-03-24 11:51</span></p>
-			</li>
-			<li>
-				<p class="left_t">두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두<br><span class="light_t">2024-03-24 11:51</span></p>
-			</li>
-			<li>
-				<p class="left_t">두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두<br><span class="light_t">2024-03-24 11:51</span></p>
+			<li th:each="alarm : ${list}" th:data-idx="${alarm.idx}">
+				<p class="left_t">
+					<span th:text="${alarm.contents}"></span><br>
+					<span class="light_t" th:text="${#dates.format(alarm.registDate, 'yyyy-MM-dd HH:mm')}"></span>
+				</p>
 			</li>
 		</ul>
 	</section>

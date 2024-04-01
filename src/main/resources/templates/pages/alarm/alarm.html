@@ -15,14 +15,11 @@
 	</div>
 	<section class="center_a mt_30 f_30 scroll">
 		<ul class="list">
-			<li>
-				<p class="left_t">두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두<br><span class="light_t">2024-03-24 11:51</span></p>
-			</li>
-			<li>
-				<p class="left_t">두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두<br><span class="light_t">2024-03-24 11:51</span></p>
-			</li>
-			<li>
-				<p class="left_t">두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두<br><span class="light_t">2024-03-24 11:51</span></p>
+			<li th:each="alarm : ${list}" th:data-idx="${alarm.idx}">
+				<p class="left_t">
+					<span th:text="${alarm.contents}"></span><br>
+					<span class="light_t" th:text="${#dates.format(alarm.registDate, 'yyyy-MM-dd HH:mm')}"></span>
+				</p>
 			</li>
 		</ul>
 	</section>
