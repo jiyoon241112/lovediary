@@ -22,8 +22,8 @@ public class TimecapsuleController {
 
     // <타입캡슐 상세 페이지>
     @GetMapping("/timecapsule/detail/{idx}")
-    public String timecapsuleDetailPage(@PathVariable("idx") Long idx) {
-        TimeCapsuleDto timecapsuleDto = timeCapsuleService.getOne(idx);
+    public String timecapsuleDetailPage(@PathVariable("idx") Long idx, Model model) {
+        model.addAttribute("detail", timeCapsuleService.getOne(idx));
         return "pages/timecapsule/timecapsule_detail";
     }
 

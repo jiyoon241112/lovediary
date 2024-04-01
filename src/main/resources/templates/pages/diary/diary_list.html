@@ -9,14 +9,11 @@
 	</div>
 	<section class="center_a f_30">
 		<ul class="list">
-			<li>
-				<p><span>03-19</span>두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트</p>
-			</li>
-			<li>
-				<p><span>03-19</span>두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트</p>
-			</li>
-			<li>
-				<p><span>03-19</span>두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트</p>
+			<li th:each="diary : ${list}" th:data-idx="${diary.idx}">
+				<p>
+					<span th:text="${#dates.format(diary.registDate, 'MM-dd HH:mm')}"></span>
+					<span th:text="${diary.contents}"></span><br>
+				</p>
 			</li>
 		</ul>
 	<section>

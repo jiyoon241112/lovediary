@@ -10,6 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  *
@@ -54,7 +55,7 @@ public class Diary {
     private Timestamp registDate;
 
     @Builder
-    public Diary(Long idx, Long coupleIdx, Long emotionIdx, Long categoryIdx, String title, String contents, Long accountIdx,Timestamp registDate) {
+    public Diary(Long idx, Long coupleIdx, Long emotionIdx, Long categoryIdx, String title, String contents, Long accountIdx,Timestamp registDate, List<DiaryComment> diaryCommentList) {
         this.idx = idx;
         this.coupleIdx = coupleIdx;
         this.emotionIdx = emotionIdx;
