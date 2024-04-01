@@ -3,10 +3,6 @@ $("#login_btn").click(function() {
     const id = $("#id").val();
     const password = $("#password").val();
 
-    let form_data = new FormData;
-    form_data.append("id", id);
-    form_data.append("password", password);
-
     if(!id) {
         alert("아이디를 입력해주세요.");
         return;
@@ -16,6 +12,10 @@ $("#login_btn").click(function() {
         alert("비밀번호를 입력해주세요.");
         return;
     }
+
+    let form_data = new FormData;
+    form_data.append("id", id);
+    form_data.append("password", password);
 
     login(form_data);
 });
@@ -29,6 +29,7 @@ function login(form_data, retry = false) {
         processData: false,
         success: function (data) {
             const msg = data.msg ?? null;
+            const code = data.code ?? null;
             if(msg ?? null) {
                 alert(msg);
             }

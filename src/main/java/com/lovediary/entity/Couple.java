@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -35,7 +36,7 @@ public class Couple {
     private String name;
 
     @Column
-    private Timestamp startDate;
+    private Date startDate;
 
     @Column(length = 4)
     private String questionTime;
@@ -54,7 +55,7 @@ public class Couple {
     private Timestamp modifyDate;
 
     @Builder
-    public Couple(Long idx, String name, Timestamp startDate, String questionTime, Long point, Character deleteYn, Timestamp registDate, Timestamp modifyDate) {
+    public Couple(Long idx, String name, Date startDate, String questionTime, Long point, Character deleteYn, Timestamp registDate, Timestamp modifyDate) {
         this.idx = idx;
         this.name = name;
         this.startDate = startDate;
