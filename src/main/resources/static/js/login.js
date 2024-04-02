@@ -34,7 +34,7 @@ function login(form_data, retry = false) {
                 alert(msg);
             }
 
-            if(data.code === "200") {
+            if(code === "200") {
                 location.replace("/");
             }
         }, error: function () {

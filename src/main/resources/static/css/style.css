@@ -239,7 +239,7 @@ input[type="checkbox"]:checked + label::after{content:'✔'; font-size: 20px; wi
 .green_t {color: #00e317 !important;}
 .red_t {color: #ff0000 !important;}
 
-.center_a .center_a:not(.editor *) {text-align: center !important;}
+.center_a:not(.editor *) {text-align: center !important;}
 .center_v {vertical-align: middle !important;}
 .vertical_center {display: flex; align-items: center;}
 
@@ -301,3 +301,4 @@ input[type="checkbox"]:checked + label::after{content:'✔'; font-size: 20px; wi
 .br_20 {border-radius: 20%;}
 
 .skip_text {overflow: hidden; white-space: nowrap; text-overflow: ellipsis; word-break: break-all;}
+.pre_line {white-space: pre-line;}

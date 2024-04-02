@@ -5,17 +5,15 @@
 	<div class="logo center_a"></div>
 	<p class="title_t center_t bold_t">오늘의 질문</p>
 	<section class="center_a f_30">
-		<ul class="list">
-			<li>
-				<p><span>03-19</span>두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트</p>
-			</li>
-			<li>
-				<p><span>03-19</span>두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트</p>
-			</li>
-			<li>
-				<p><span>03-19</span>두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트</p>
+		<ul id="question_list" class="list">
+			<li th:each="answer : ${list}" th:data-idx="${answer.idx}">
+				<p>
+					<span th:text="${#dates.format(answer.questionDate, 'MM-dd')}"></span>
+					<span th:text="${answer.questionContents}"></span>
+				</p>
 			</li>
 		</ul>
-	<section>
+	</section>
 </body>
+<script type="application/javascript" th:src="@{/js/question.js}"></script>
 </html>

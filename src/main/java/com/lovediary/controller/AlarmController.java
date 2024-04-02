@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
  **/
 @Controller
 public class AlarmController {
-    private AlarmService alarmService;
+    private final AlarmService alarmService;
     public AlarmController(AlarmService service) {
         this.alarmService = service;
     }

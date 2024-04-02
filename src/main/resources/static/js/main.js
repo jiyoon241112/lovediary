@@ -30,7 +30,7 @@ $("#store_btn").click(function() {
 
 // 오늘의 질문 페이지
 $("#question_btn").click(function() {
-    location.href = "/question/regist";
+    location.href = "/question/modify";
 });
 
 // 일정 페이지
