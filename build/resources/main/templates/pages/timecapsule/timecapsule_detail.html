@@ -18,9 +18,7 @@
 							<span class="regist_date" th:text="${#dates.format(detail.registDate, 'YYYY-MM-dd HH:mm')}"></span>
 						</div>
 					</div>
-					<div class="editor_viewer">
-						<p th:text="${detail.contents}"></p>
-					</div>
+					<div class="editor_viewer" th:utext="${detail.contents}"></div>
 				</div>
 			</div>
 		</section>

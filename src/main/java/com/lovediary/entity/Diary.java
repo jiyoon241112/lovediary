@@ -29,7 +29,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="couple_diary")
 public class Diary {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column
@@ -37,9 +37,6 @@ public class Diary {
 
     @Column
     private Long emotionIdx;
-
-    @Column
-    private Long categoryIdx;
 
     @Column
     private String title;
@@ -59,10 +56,9 @@ public class Diary {
         this.idx = idx;
         this.coupleIdx = coupleIdx;
         this.emotionIdx = emotionIdx;
-        this.categoryIdx = categoryIdx;
         this.title = title;
         this.contents = contents;
         this.accountIdx = accountIdx;
-        this.registDate = registDate;
+        this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
     }
 }

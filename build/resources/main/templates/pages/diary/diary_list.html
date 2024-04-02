@@ -9,10 +9,10 @@
 	</div>
 	<section class="center_a f_30">
 		<ul class="list">
-			<li th:each="diary : ${list}" th:data-idx="${diary.idx}">
+			<li th:each="diary : ${list}" th:data-idx="${diary.idx}" onclick="clickDiary(this)">
 				<p>
 					<span th:text="${#dates.format(diary.registDate, 'MM-dd HH:mm')}"></span>
-					<span th:text="${diary.contents}"></span><br>
+					<span th:text="${diary.title}"></span><br>
 				</p>
 			</li>
 		</ul>
