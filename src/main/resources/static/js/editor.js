@@ -1,7 +1,7 @@
 const editor = new toastui.Editor({
     el: document.querySelector('#editor'),
     height: `500px`,
-    initialEditType: 'markdown',
+    initialEditType: 'wysiwyg',
     previewStyle: 'vertical',
     toolbarItems: [
         ['heading', 'bold', 'italic', 'strike'],
@@ -10,5 +10,8 @@ const editor = new toastui.Editor({
     ]
 });
 
-$(".toastui-editor-mode-switch .tab-item").eq(1).click()
 $(".toastui-editor-mode-switch").remove();
+
+function getEditorContent() {
+    return $(editor.wwEditor.el).children().html();
+}

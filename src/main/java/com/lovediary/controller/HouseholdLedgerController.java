@@ -17,12 +17,14 @@ public class HouseholdLedgerController {
     @GetMapping("/household")
     public String householdLedgerPage(Model model) {
         model.addAttribute("list", householdLedgerService.getList());
+        model.addAttribute("amount", householdLedgerService.totalAmount());
         return "pages/household_ledger/household_ledger";
     }
 
     @GetMapping("/household/detail/{idx}")
-    public String householdLedgerDetailPage(@PathVariable("idx") Long idx) {
+    public String householdLedgerDetailPage(@PathVariable("idx") Long idx, Model model) {
         HouseholdLedgerDto householdLedgerDto = householdLedgerService.getOne(idx);
+        model.addAttribute("monthAmount", householdLedgerService.monthTotal());
         return "pages/household_ledger/household_ledger_detail";
     }
 

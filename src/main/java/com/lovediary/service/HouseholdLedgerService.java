@@ -12,22 +12,27 @@ package com.lovediary.service;
  *  2024-03-29          JJY             최초 등록
  **/
 import com.lovediary.dto.HouseholdLedgerDto;
-import com.lovediary.dto.TimeCapsuleDto;
+import com.lovediary.dto.PlusAndMinus;
+import com.lovediary.dto.PlusAndMinusDto;
 import com.lovediary.entity.HouseholdLedger;
-import com.lovediary.entity.TimeCapsule;
+import com.lovediary.repository.HouseHoldMonthTotalRepository;
 import com.lovediary.repository.HouseholdLedgerRepository;
+import com.lovediary.repository.HouseholdTotalRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class HouseholdLedgerService {
     private final HouseholdLedgerRepository householdLedgerRepository;
-    public HouseholdLedgerService(HouseholdLedgerRepository householdLedgerRepository) {
+    private final HouseholdTotalRepository householdTotalRepository;
+    private final HouseHoldMonthTotalRepository householdMonthTotalRepository;
+    public HouseholdLedgerService(HouseholdLedgerRepository householdLedgerRepository, HouseholdTotalRepository householdTotalRepository,
+                                  HouseHoldMonthTotalRepository householdMonthTotalRepository) {
         this.householdLedgerRepository = householdLedgerRepository;
+        this.householdTotalRepository = householdTotalRepository;
+        this.householdMonthTotalRepository = householdMonthTotalRepository;
     }
 
     // <가계부 리스트 페이지>
@@ -43,6 +48,12 @@ public class HouseholdLedgerService {
         return resultList;
     }
 
+    public Long totalAmount(){
+        Long totalAmount = householdTotalRepository.calculateTotalAmount().longValue();
+
+        return totalAmount;
+    }
+
     // <가계부 상세 페이지>
     @Transactional
     public HouseholdLedgerDto getOne(Long idx) {
@@ -50,6 +61,16 @@ public class HouseholdLedgerService {
         HouseholdLedger householdLedger = wrapper.get();
 
         return convertToDto(householdLedger);
+    }
+
+    @Transactional
+    public PlusAndMinusDto monthTotal() {
+        PlusAndMinus householdLedger = householdMonthTotalRepository.calculateMonthAmount();
+
+        return PlusAndMinusDto.builder()
+                .plusAmount(householdLedger.getPlusAmount())
+                .minusAmount(householdLedger.getMinusAmount())
+                .build();
     }
 
     // <가계부 작성(저장)>
@@ -65,6 +86,7 @@ public class HouseholdLedgerService {
                 .categoryIdx(householdLedger.getCategoryIdx())
                 .contents(householdLedger.getContents())
                 .amount(householdLedger.getAmount())
+                .type(householdLedger.getType())
                 .dueDate(householdLedger.getDueDate())
                 .accountIdx(householdLedger.getAccountIdx())
                 .deleteYn(householdLedger.getDeleteYn())

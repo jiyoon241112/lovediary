@@ -1,9 +1,10 @@
 package com.lovediary.service;
 
-import com.lovediary.dto.AlarmDto;
+import com.lovediary.dto.DiaryCommentDto;
 import com.lovediary.dto.DiaryDto;
-import com.lovediary.entity.Alarm;
 import com.lovediary.entity.Diary;
+import com.lovediary.entity.DiaryComment;
+import com.lovediary.repository.DiaryCommentRepository;
 import com.lovediary.repository.DiaryRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -27,14 +28,20 @@ import java.util.Optional;
 @Service
 public class DiaryService {
     private final DiaryRepository diaryRepository;
-    public DiaryService(DiaryRepository diaryRepository) {
+    private final DiaryCommentRepository diaryCommentRepository;
+    public DiaryService(DiaryRepository diaryRepository, DiaryCommentRepository diaryCommentRepository) {
         this.diaryRepository = diaryRepository;
+        this.diaryCommentRepository = diaryCommentRepository;
     }
 
     // <커플 다이어리 리스트 페이지>
     @Transactional
     public List<DiaryDto> getList() {
-        List<Diary> diaryList = diaryRepository.findByAccountIdx(2L);
+        List<Long> accountIdx = new ArrayList<>();
+        accountIdx.add(2L);
+        accountIdx.add(3L);
+
+        List<Diary> diaryList = diaryRepository.findByAccountIdxInOrderByIdxDesc(accountIdx);
         List<DiaryDto> resultList = new ArrayList<>();
 
         for(Diary diary : diaryList) {
@@ -53,6 +60,19 @@ public class DiaryService {
         return convertToDto(diary);
     }
 
+    // <커플 다이어리 댓글 상세 페이지>
+    @Transactional
+    public List<DiaryCommentDto> getDiaryCommentList(Long idx) {
+        List<DiaryComment> commentList = diaryCommentRepository.findByCoupleDiaryIdxOrderByIdxDesc(idx);
+        List<DiaryCommentDto> resultList = new ArrayList<>();
+
+        for(DiaryComment diaryComment : commentList) {
+            resultList.add(convertToDto(diaryComment));
+        }
+
+        return resultList;
+    }
+
     // <커플 다이어리 작성(저장)>
     @Transactional
     public Long saveItem(DiaryDto diaryDto) {
@@ -65,11 +85,24 @@ public class DiaryService {
                 .idx(diary.getIdx())
                 .coupleIdx(diary.getCoupleIdx())
                 .emotionIdx(diary.getEmotionIdx())
-                .categoryIdx(diary.getCategoryIdx())
                 .title(diary.getTitle())
                 .contents(diary.getContents())
                 .accountIdx(diary.getAccountIdx())
                 .registDate(diary.getRegistDate())
+                .build();
+    }
+
+    // Dto 변환
+    private DiaryCommentDto convertToDto(DiaryComment diaryComment) {
+        return DiaryCommentDto.builder()
+                .idx(diaryComment.getIdx())
+                .coupleDiaryIdx(diaryComment.getCoupleDiaryIdx())
+                .contents(diaryComment.getContents())
+                .accountIdx(diaryComment.getAccountIdx())
+                .deleteYn(diaryComment.getDeleteYn())
+                .registDate(diaryComment.getRegistDate())
+                .modifyDate(diaryComment.getModifyDate())
+                .deleteDate(diaryComment.getDeleteDate())
                 .build();
     }
 }

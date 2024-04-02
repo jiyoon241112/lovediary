@@ -13,7 +13,6 @@ public class DiaryDto {
     private Long idx;
     private Long coupleIdx;
     private Long emotionIdx;
-    private Long categoryIdx;
     private String title;
     private String contents;
     private Long accountIdx;
@@ -24,7 +23,6 @@ public class DiaryDto {
                 .idx(idx)
                 .coupleIdx(coupleIdx)
                 .emotionIdx(emotionIdx)
-                .categoryIdx(categoryIdx)
                 .title(title)
                 .contents(contents)
                 .accountIdx(accountIdx)
@@ -33,12 +31,11 @@ public class DiaryDto {
     }
 
     @Builder
-    public DiaryDto(Long idx, Long coupleIdx, Long emotionIdx, Long categoryIdx, String title, String contents,
+    public DiaryDto(Long idx, Long coupleIdx, Long emotionIdx, String title, String contents,
                     Long accountIdx,Timestamp registDate) {
         this.idx = idx;
         this.coupleIdx = coupleIdx;
         this.emotionIdx = emotionIdx;
-        this.categoryIdx = categoryIdx;
         this.title = title;
         this.contents = contents;
         this.accountIdx = accountIdx;

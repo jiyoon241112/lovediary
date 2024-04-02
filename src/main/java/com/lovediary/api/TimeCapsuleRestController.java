@@ -7,7 +7,9 @@ import com.lovediary.values.constValues;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class TimeCapsuleRestController {
     private TimeCapsuleService timeCapsuleService;
     public TimeCapsuleRestController(TimeCapsuleService service) {
@@ -30,6 +32,8 @@ public class TimeCapsuleRestController {
         if(timeCapsuleDto.getOpenDate() == null) {
             return new ResponseData(constValues.ERROR, "열릴 날짜를 입력해주세요.", null);
         }
+
+        timeCapsuleDto.setAccountIdx(2L);
 
         timeCapsuleService.saveItem(timeCapsuleDto);
 

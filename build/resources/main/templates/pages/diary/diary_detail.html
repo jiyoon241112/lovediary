@@ -5,7 +5,7 @@
 	<div class="body">
 		<div class="logo center_a"></div>
 		<p class="title_t center_t bold_t">일기</p>
-		<p class="title center_t bold_t">애인과 함께 보고싶은 영화는?</p>
+		<p class="title center_t bold_t" th:text="${detail.title}"></p>
 		<section class="center_a">
 			<div class="form_group">
 				<div class="comment card">
@@ -16,8 +16,8 @@
 						</div>
 						<div>&nbsp;</div>
 					</div>
-					<p>댓글입니다</p>
-					<p class="right_t">2024-03-24 11:51</p>
+					<div th:text="${detail.contents}"></div>
+					<p class="right_t" th:text="${#dates.format(detail.registDate, 'YYYY-MM-dd HH:mm')}"></p>
 				</div>
 			</div>
 			<div class="division_line"></div>
@@ -31,17 +31,17 @@
 			</div>
 			<section class="center_a">
 				<div class="form_group">
-					<div class="comment card">
+					<div class="comment card" th:each="comment : ${comment_list}" th:data-idx="${comment.idx}">
 						<div class="twin profile">
 							<div>
 								<div class="profile_img bold_t mt_0">황</div>
 								<span class="profile_name">황태현</span>
 							</div>
 							<div>
-								<span class="regist_date">2024-03-24 11:51</span>
+								<span class="regist_date" th:text="${#dates.format(comment.registDate, 'MM-dd HH:mm')}"></span>
 							</div>
 						</div>
-						<p>댓글입니다</p>
+						<p th:text="${comment.contents}"></p>
 					</div>
 				</div>
 			</section>

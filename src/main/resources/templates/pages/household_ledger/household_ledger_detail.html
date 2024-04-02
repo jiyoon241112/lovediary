@@ -17,13 +17,13 @@
 					<div class="form_group">
 						<ul class="list">
 							<li>
-								<p><span class="bold_t">수입</span><span class="green_t plus">3,000,000</span></p>
+								<p><span class="bold_t">수입</span><span class="green_t plus" th:text="${#numbers.formatInteger(monthAmount.plusAmount, 3, 'COMMA')}"></span></p>
 							</li>
 						</ul>
 						<div class="division_line w_full"></div>
 						<ul class="list">
 							<li>
-								<p><span class="bold_t">지출</span><span class="red_t minus">876,000</span></p>
+								<p><span class="bold_t">지출</span><span class="red_t minus" th:text="${#numbers.formatInteger(monthAmount.minusAmount, 3, 'COMMA')}"></span></p>
 							</li>
 						</ul>
 					</div>

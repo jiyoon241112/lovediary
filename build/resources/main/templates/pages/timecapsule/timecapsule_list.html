@@ -9,32 +9,20 @@
 	</div>
 	<section class="center_a mt_30 f_30">
 		<ul class="list">
-			<li>
+			<li th:each="timecapsule : ${list}" th:data-idx="${timecapsule.idx}" onclick="clickTimeCapsule(this)">
 				<div>
 					<div class="profile_img">정</div>
 				</div>
 				<div class="w_90p">
-					<p class="left_t">두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두<br><span class="light_t">2024년 03월 24일에 열려요</span></p>
-				</div>
-			</li>
-			<li>
-				<div>
-					<div class="profile_img">정</div>
-				</div>
-				<div class="w_90p">
-					<p class="left_t">두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두<br><span class="light_t">2024년 03월 24일에 열려요</span></p>
-				</div>
-			</li>
-			<li>
-				<div>
-					<div class="profile_img">정</div>
-				</div>
-				<div class="w_90p">
-					<p class="left_t">두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두 줄 테스트두<br><span class="light_t">2024년 03월 24일에 열려요</span></p>
+					<p class="left_t">
+						<span th:text="${timecapsule.title}"></span>
+						<br>
+						<span class="light_t" th:text="${#dates.format(timecapsule.registDate, 'YYYY년 MM월 dd일에 열려요')}"></span>
+					</p>
 				</div>
 			</li>
 		</ul>
 	<section>
 </body>
-<script type="application/javascript" th:src="@{/js/time_capsule.js}"></script>
+<script type="application/javascript" th:src="@{/js/timecapsule.js}"></script>
 </html>
