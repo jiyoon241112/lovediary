@@ -1,10 +1,8 @@
 package com.lovediary.service;
 
-import com.lovediary.dto.DiaryDto;
-import com.lovediary.dto.TimeCapsuleDto;
-import com.lovediary.entity.Diary;
-import com.lovediary.entity.TimeCapsule;
-import com.lovediary.repository.TimeCapsuleRepository;
+import com.lovediary.dto.TimecapsuleDto;
+import com.lovediary.entity.Timecapsule;
+import com.lovediary.repository.TimecapsuleRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -26,18 +24,18 @@ import java.util.Optional;
  **/
 @Service
 public class TimeCapsuleService {
-    private final TimeCapsuleRepository timeCapsuleRepository;
-    public TimeCapsuleService(TimeCapsuleRepository timeCapsuleRepository) {
+    private final TimecapsuleRepository timeCapsuleRepository;
+    public TimeCapsuleService(TimecapsuleRepository timeCapsuleRepository) {
         this.timeCapsuleRepository = timeCapsuleRepository;
     }
 
     // <타입캡슐 리스트 페이지>
     @Transactional
-    public List<TimeCapsuleDto> getList() {
-        List<TimeCapsule> timeCapsuleList = timeCapsuleRepository.findByAccountIdx(2L);
-        List<TimeCapsuleDto> resultList = new ArrayList<>();
+    public List<TimecapsuleDto> getList() {
+        List<Timecapsule> timeCapsuleList = timeCapsuleRepository.findByAccountIdx(2L);
+        List<TimecapsuleDto> resultList = new ArrayList<>();
 
-        for(TimeCapsule timeCapsule : timeCapsuleList) {
+        for(Timecapsule timeCapsule : timeCapsuleList) {
             resultList.add(convertToDto(timeCapsule));
         }
 
@@ -46,22 +44,22 @@ public class TimeCapsuleService {
 
     // <타입캡슐 상세 페이지>
     @Transactional
-    public TimeCapsuleDto getOne(Long idx) {
-        Optional<TimeCapsule> wrapper = timeCapsuleRepository.findById(idx);
-        TimeCapsule timeCapsule = wrapper.get();
+    public TimecapsuleDto getOne(Long idx) {
+        Optional<Timecapsule> wrapper = timeCapsuleRepository.findById(idx);
+        Timecapsule timeCapsule = wrapper.get();
 
         return convertToDto(timeCapsule);
     }
 
     // <타입캡슐 작성(저장)>
     @Transactional
-    public Long saveItem(TimeCapsuleDto timeCapsuleDto) {
+    public Long saveItem(TimecapsuleDto timeCapsuleDto) {
         return timeCapsuleRepository.save(timeCapsuleDto.toEntity()).getIdx();
     }
 
     // Dto 변환
-    private TimeCapsuleDto convertToDto(TimeCapsule timeCapsule) {
-        return TimeCapsuleDto.builder()
+    private TimecapsuleDto convertToDto(Timecapsule timeCapsule) {
+        return TimecapsuleDto.builder()
                 .idx(timeCapsule.getIdx())
                 .openDate(timeCapsule.getOpenDate())
                 .title(timeCapsule.getTitle())

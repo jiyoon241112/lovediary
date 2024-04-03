@@ -15,7 +15,7 @@ import com.lovediary.dto.HouseholdLedgerDto;
 import com.lovediary.dto.PlusAndMinus;
 import com.lovediary.dto.PlusAndMinusDto;
 import com.lovediary.entity.HouseholdLedger;
-import com.lovediary.repository.HouseHoldMonthTotalRepository;
+import com.lovediary.repository.HouseholdMonthTotalRepository;
 import com.lovediary.repository.HouseholdLedgerRepository;
 import com.lovediary.repository.HouseholdTotalRepository;
 import jakarta.transaction.Transactional;
@@ -27,9 +27,9 @@ import java.util.*;
 public class HouseholdLedgerService {
     private final HouseholdLedgerRepository householdLedgerRepository;
     private final HouseholdTotalRepository householdTotalRepository;
-    private final HouseHoldMonthTotalRepository householdMonthTotalRepository;
+    private final HouseholdMonthTotalRepository householdMonthTotalRepository;
     public HouseholdLedgerService(HouseholdLedgerRepository householdLedgerRepository, HouseholdTotalRepository householdTotalRepository,
-                                  HouseHoldMonthTotalRepository householdMonthTotalRepository) {
+                                  HouseholdMonthTotalRepository householdMonthTotalRepository) {
         this.householdLedgerRepository = householdLedgerRepository;
         this.householdTotalRepository = householdTotalRepository;
         this.householdMonthTotalRepository = householdMonthTotalRepository;
@@ -37,8 +37,11 @@ public class HouseholdLedgerService {
 
     // <가계부 리스트 페이지>
     @Transactional
-    public List<HouseholdLedgerDto> getList() {
+    public List<HouseholdLedgerDto> getList(Character type) {
         List<HouseholdLedger> householdLedgerList = householdLedgerRepository.findByAccountIdx(2L);
+        if(type != null){
+            householdLedgerList = householdLedgerRepository.findByAccountIdxAndType(2L, type);
+        }
         List<HouseholdLedgerDto> resultList = new ArrayList<>();
 
         for(HouseholdLedger householdLedger : householdLedgerList) {

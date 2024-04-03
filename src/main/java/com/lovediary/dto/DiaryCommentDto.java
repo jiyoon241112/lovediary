@@ -5,6 +5,18 @@ import lombok.*;
 
 import java.sql.Timestamp;
 
+/**
+ * 
+ * DiaryCommentDto
+ * 
+ * @author JJY
+ * @version 1.0.0
+ * @date 2024-04-03
+ * ========================================================
+ *  DATE                AUTHOR          NOTE 
+ * ========================================================
+ *  2024-04-03          JJY             최초 등록
+ **/
 @Getter
 @Setter
 @ToString

@@ -3,14 +3,14 @@ package com.lovediary.dto;
 import lombok.*;
 
 /**
- * 
- * PlusAndMinusDto
- * 
+ *
+ * CourseDto
+ *
  * @author JJY
  * @version 1.0.0
  * @date 2024-04-03
  * ========================================================
- *  DATE                AUTHOR          NOTE 
+ *  DATE                AUTHOR          NOTE
  * ========================================================
  *  2024-04-03          JJY             최초 등록
  **/
@@ -18,13 +18,15 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor
-public class PlusAndMinusDto {
-    private Long plusAmount;
-    private Long minusAmount;
+public class CourseDto {
+    private Long idx;
+    private Long imageIdx;
+    private String name;
 
     @Builder
-    public PlusAndMinusDto(Long plusAmount, Long minusAmount) {
-        this.plusAmount = plusAmount;
-        this.minusAmount = minusAmount;
+    public CourseDto(Long idx, Long imageIdx, String name) {
+        this.idx = idx;
+        this.imageIdx = imageIdx;
+        this.name = name;
     }
 }

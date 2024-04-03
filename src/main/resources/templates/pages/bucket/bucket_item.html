@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="common/head.html"></head>
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <body>
 	<div class="body">
 		<div class="logo center_a"></div>
@@ -8,7 +9,7 @@
 		<section class="center_a card mt_30">
 			<div class="form_group mb_30">
 				<input type="text" class="input" placeholder="제목*" />
-				<div class="editor h_300"></div>
+				<div id="editor" class="editor h_300"></div>
 				<input type="text" class="input" placeholder="목표일자" />
 				<input type="text" class="input" placeholder="주소" />
 				<input type="text" class="input" placeholder="상세주소" />
@@ -26,4 +27,6 @@
 		<a class="btn active_btn">저장</a>
 	</div>
 </body>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script type="application/javascript" th:src="@{/js/editor.js}" defer></script>
 </html>

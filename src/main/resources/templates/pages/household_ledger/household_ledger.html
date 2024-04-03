@@ -11,11 +11,11 @@
 	<div class="label_t right_t bold_t mr_30 mt_120">
 		<div class="checkbox">
 			<label class="flex">
-				<input type="checkbox" id="check2"/><label></label>
+				<input type="checkbox" id="check2" name="type" value="I" th:checked="${#strings.equals(type, 'I')}" /><label></label>
 				<p class="inline_block f_30">입금</p>
 			</label>
 			<label class="flex">
-				<input type="checkbox" id="check1"/><label></label>
+				<input type="checkbox" id="check1" name="type" value="O" th:checked="${#strings.equals(type, 'O')}" /><label></label>
 				<p class="inline_block f_30">출금</p>
 			</label>
 		</div>

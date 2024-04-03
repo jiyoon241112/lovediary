@@ -26,7 +26,7 @@ import java.sql.Timestamp;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="time_capsule")
-public class TimeCapsule {
+public class Timecapsule {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
@@ -56,7 +56,7 @@ public class TimeCapsule {
     private Timestamp deleteDate;
 
     @Builder
-    public TimeCapsule(Long idx, Date openDate, String title, String contents, Long accountIdx, Character deleteYn, Timestamp registDate,
+    public Timecapsule(Long idx, Date openDate, String title, String contents, Long accountIdx, Character deleteYn, Timestamp registDate,
                        Timestamp modifyDate, Timestamp deleteDate) {
         this.idx = idx;
         this.openDate = openDate;

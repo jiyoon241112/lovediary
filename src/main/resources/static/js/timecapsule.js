@@ -3,7 +3,7 @@ $(".active_btn").click(function() {
 });
 
 function clickTimeCapsule(element){
-    let idx = element.getAttribute('data-idx');
+    let idx = $(element).data('idx');
 
     location.href = "/timecapsule/detail/" + idx;
 }
