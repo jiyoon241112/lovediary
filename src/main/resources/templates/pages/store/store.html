@@ -4,13 +4,13 @@
 <body class="scroll">
 	<div class="logo center_a"></div>
 	<p class="title_t center_t bold_t">스토어</p>
-	<div class="fixed t_30 r_30 card w_270 pd_10 bd_5 br_20 twin">
+	<div id="history_btn" class="fixed t_30 r_30 card w_270 pd_10 bd_5 br_20 twin">
 		<div class="coin_img"></div>
-		<p class="ml_30 f_50 bold_t">5</p>
+		<p class="ml_30 f_50 bold_t" th:text="${#numbers.formatInteger(point, 1, 'COMMA')}"></p>
 	</div>
 	<section class="center_a f_40">
-		<ul class="item_list">
-			<li>
+		<ul id="store_list" class="item_list">
+			<li data-idx="1" data-point="5">
 				<div class="food_meal_img"></div>
 				<p>사료</p>
 				<div class="twin_center">
@@ -18,7 +18,7 @@
 					<p class="ml_30 f_50">5</p>
 				</div>
 			</li>
-			<li>
+			<li data-idx="2" data-point="7">
 				<div class="food_gum_img"></div>
 				<p>개껌</p>
 				<div class="twin_center">
@@ -26,7 +26,7 @@
 					<p class="ml_30 f_50">7</p>
 				</div>
 			</li>
-			<li>
+			<li data-idx="3" data-point="10">
 				<div class="food_cabbage_img"></div>
 				<p>양배추</p>
 				<div class="twin_center">
@@ -34,7 +34,7 @@
 					<p class="ml_30 f_50">10</p>
 				</div>
 			</li>
-			<li>
+			<li data-idx="4" data-point="15">
 				<div class="food_sweet_potato_img"></div>
 				<p>고구마</p>
 				<div class="twin_center">
@@ -42,7 +42,7 @@
 					<p class="ml_30 f_50">15</p>
 				</div>
 			</li>
-			<li>
+			<li data-idx="5" data-point="20">
 				<div class="food_meat_img"></div>
 				<p>고기</p>
 				<div class="twin_center">
@@ -51,6 +51,7 @@
 				</div>
 			</li>
 		</ul>
-	<section>
+	</section>
 </body>
+<script type="application/javascript" th:src="@{/js/store.js}"></script>
 </html>

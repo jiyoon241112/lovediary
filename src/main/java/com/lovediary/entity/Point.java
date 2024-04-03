@@ -6,56 +6,47 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.sql.Timestamp;
 
 /**
- *
- * CoupleAnswer
- *
+ * 
+ * Point
+ * 
  * @author HTH
  * @version 1.0.0
- * @date 2024-04-02
+ * @date 2024-04-03
  * ========================================================
- *  DATE                AUTHOR          NOTE
+ *  DATE                AUTHOR          NOTE 
  * ========================================================
- *  2024-04-02          HTH             최초 등록
+ *  2024-04-03          HTH             최초 등록
  **/
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CoupleAnswerReply {
+public class Point {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column
-    private Long coupleAnswerIdx;
+    private Long coupleIdx;
 
     @Column(length = 300)
     private String contents;
 
     @Column
-    private Long accountIdx;
-
-    @Column
-    private Character deleteYn;
+    private Long point;
 
     @CreatedDate
     @Column(updatable = false)
     private Timestamp registDate;
 
-    @Column
-    private Timestamp modifyDate;
-
     @Builder
-    public CoupleAnswerReply(Long idx, Long coupleAnswerIdx, String contents, Long accountIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate) {
+    public Point(Long idx, Long coupleIdx, String contents, Long point, Timestamp registDate) {
         this.idx = idx;
-        this.coupleAnswerIdx = coupleAnswerIdx;
+        this.coupleIdx = coupleIdx;
         this.contents = contents;
-        this.accountIdx = accountIdx;
-        this.deleteYn = deleteYn == null ? 'N' : deleteYn;
+        this.point = point;
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
-        this.modifyDate = modifyDate;
     }
 }
