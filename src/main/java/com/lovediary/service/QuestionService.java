@@ -109,6 +109,17 @@ public class QuestionService {
         return resultList;
     }
 
+    // 댓글 저장
+    public Long saveComment(Long idx, String contents) {
+        CoupleAnswerReplyDto replyDto = CoupleAnswerReplyDto.builder()
+                .coupleAnswerIdx(idx)
+                .contents(contents)
+                .accountIdx(1L)
+                .build();
+
+        return coupleAnswerReplyRepository.save(replyDto.toEntity()).getIdx();
+    }
+
     // DTO 변환
     private CoupleAnswerDto convertToDto(CoupleAnswer coupleAnswer) {
         return CoupleAnswerDto.builder()

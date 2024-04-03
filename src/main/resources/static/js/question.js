@@ -22,14 +22,14 @@ $("#save_comment").click(function() {
 
     let form_data = new FormData;
     form_data.append("idx", idx);
-    form_data.append("comment", comment);
+    form_data.append("contents", comment);
 
     saveComment(form_data);
 });
 
 function saveComment(form_data, retry = false) {
     $.ajax({
-        url: '/question/save',
+        url: '/question/save_comment',
         method: 'post',
         data : form_data,
         contentType: false,

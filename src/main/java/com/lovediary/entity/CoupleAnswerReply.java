@@ -55,7 +55,7 @@ public class CoupleAnswerReply {
         this.contents = contents;
         this.accountIdx = accountIdx;
         this.deleteYn = deleteYn == null ? 'N' : deleteYn;
-        this.registDate = registDate;
+        this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.modifyDate = modifyDate;
     }
 }

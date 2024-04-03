@@ -1,6 +1,7 @@
 package com.lovediary.api;
 
 import com.lovediary.dto.CoupleAnswerDto;
+import com.lovediary.dto.CoupleAnswerReplyDto;
 import com.lovediary.service.AccountService;
 import com.lovediary.service.QuestionService;
 import com.lovediary.values.ResponseData;
@@ -67,5 +68,17 @@ public class QuestionRestController {
         Long result = questionService.saveItem(answer);
 
         return new ResponseData(constValues.DONE, "저장되었습니다.", result);
+    }
+
+    // 댓글 저장
+    @PostMapping("/question/save_comment")
+    public ResponseData saveComment(HttpServletRequest request, @RequestParam(name = "idx") Long idx, @RequestParam(name = "contents") String contents) {
+        if(contents == null || contents.isEmpty()) {
+            return new ResponseData(constValues.ERROR, "댓글 내용을 입력해주세요.", null);
+        }
+
+        questionService.saveComment(idx, contents);
+
+        return new ResponseData(constValues.DONE, "댓글이 저장되었습니다.", null);
     }
 }
