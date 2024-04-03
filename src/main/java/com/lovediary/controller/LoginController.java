@@ -59,4 +59,10 @@ public class LoginController {
             return "pages/login/find_password2";
         }
     }
+
+    // 내 정보 수정 페이지
+    @GetMapping("/profile")
+    public String profilePage() {
+        return "pages/login/profile";
+    }
 }

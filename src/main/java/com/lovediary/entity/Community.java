@@ -7,36 +7,31 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
  *
- * TimeCapsule
+ * Community
  *
- * @author JJY
+ * @author HTH
  * @version 1.0.0
- * @date 2024-03-29
+ * @date 2024-04-03
  * ========================================================
  *  DATE                AUTHOR          NOTE
  * ========================================================
- *  2024-03-29          JJY             최초 등록
+ *  2024-04-03          HTH             최초 등록
  **/
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name="time_capsule")
-public class TimeCapsule {
+public class Community {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    @Column
-    private Date openDate;
-
-    @Column
+    @Column(length = 100)
     private String title;
 
-    @Column
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String contents;
 
     @Column
@@ -56,10 +51,8 @@ public class TimeCapsule {
     private Timestamp deleteDate;
 
     @Builder
-    public TimeCapsule(Long idx, Date openDate, String title, String contents, Long accountIdx, Character deleteYn, Timestamp registDate,
-                       Timestamp modifyDate, Timestamp deleteDate) {
+    public Community(Long idx, String title, String contents, Long accountIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate) {
         this.idx = idx;
-        this.openDate = openDate;
         this.title = title;
         this.contents = contents;
         this.accountIdx = accountIdx;

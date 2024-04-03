@@ -3,7 +3,7 @@ $(".active_btn").click(function() {
 });
 
 function clickDiary(element){
-    let idx = element.getAttribute('data-idx');
+    let idx = $(element).data('idx');
 
     location.href = "/diary/detail/" + idx;
 }

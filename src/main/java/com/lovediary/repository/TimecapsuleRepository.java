@@ -1,6 +1,6 @@
 package com.lovediary.repository;
 
-import com.lovediary.entity.TimeCapsule;
+import com.lovediary.entity.Timecapsule;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -18,6 +18,6 @@ import java.util.List;
  *  2024-03-29          JJY             최초 등록
  **/
 
-public interface TimeCapsuleRepository extends JpaRepository<TimeCapsule, Long> {
-    List<TimeCapsule> findByAccountIdx(Long idx);
+public interface TimecapsuleRepository extends JpaRepository<Timecapsule, Long> {
+    List<Timecapsule> findByAccountIdx(Long idx);
 }

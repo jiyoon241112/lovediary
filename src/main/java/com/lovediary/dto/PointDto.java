@@ -1,56 +1,49 @@
 package com.lovediary.dto;
 
-import com.lovediary.entity.Diary;
+import com.lovediary.entity.Point;
 import lombok.*;
 
 import java.sql.Timestamp;
 
 /**
  * 
- * DiaryDto
+ * PointDto
  * 
- * @author JJY
+ * @author HTH
  * @version 1.0.0
  * @date 2024-04-03
  * ========================================================
  *  DATE                AUTHOR          NOTE 
  * ========================================================
- *  2024-04-03          JJY             최초 등록
+ *  2024-04-03          HTH             최초 등록
  **/
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class DiaryDto {
+public class PointDto {
     private Long idx;
     private Long coupleIdx;
-    private Long emotionIdx;
-    private String title;
     private String contents;
-    private Long accountIdx;
+    private Long point;
     private Timestamp registDate;
 
-    public Diary toEntity() {
-        return Diary.builder()
+    public Point toEntity() {
+        return Point.builder()
                 .idx(idx)
                 .coupleIdx(coupleIdx)
-                .emotionIdx(emotionIdx)
-                .title(title)
                 .contents(contents)
-                .accountIdx(accountIdx)
+                .point(point)
                 .registDate(registDate)
                 .build();
     }
 
     @Builder
-    public DiaryDto(Long idx, Long coupleIdx, Long emotionIdx, String title, String contents,
-                    Long accountIdx,Timestamp registDate) {
+    public PointDto(Long idx, Long coupleIdx, String contents, Long point, Timestamp registDate) {
         this.idx = idx;
         this.coupleIdx = coupleIdx;
-        this.emotionIdx = emotionIdx;
-        this.title = title;
         this.contents = contents;
-        this.accountIdx = accountIdx;
+        this.point = point;
         this.registDate = registDate;
     }
 }

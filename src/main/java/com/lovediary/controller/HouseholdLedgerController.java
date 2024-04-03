@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HouseholdLedgerController {
@@ -15,9 +16,11 @@ public class HouseholdLedgerController {
     }
 
     @GetMapping("/household")
-    public String householdLedgerPage(Model model) {
-        model.addAttribute("list", householdLedgerService.getList());
+    public String householdLedgerPage(Model model, @RequestParam(required = false, name = "type") Character type) {
+
+        model.addAttribute("list", householdLedgerService.getList(type));
         model.addAttribute("amount", householdLedgerService.totalAmount());
+        model.addAttribute("type", type);
         return "pages/household_ledger/household_ledger";
     }
 
@@ -25,6 +28,7 @@ public class HouseholdLedgerController {
     public String householdLedgerDetailPage(@PathVariable("idx") Long idx, Model model) {
         HouseholdLedgerDto householdLedgerDto = householdLedgerService.getOne(idx);
         model.addAttribute("monthAmount", householdLedgerService.monthTotal());
+        model.addAttribute("totalAmount", householdLedgerService.monthTotalAmount());
         return "pages/household_ledger/household_ledger_detail";
     }
 

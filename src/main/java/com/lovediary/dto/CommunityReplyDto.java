@@ -1,29 +1,30 @@
 package com.lovediary.dto;
 
-import com.lovediary.entity.DiaryComment;
+import com.lovediary.entity.CommunityReply;
 import lombok.*;
 
 import java.sql.Timestamp;
 
 /**
  * 
- * DiaryCommentDto
+ * CommunityReplyDto
  * 
- * @author JJY
+ * @author HTH
  * @version 1.0.0
  * @date 2024-04-03
  * ========================================================
  *  DATE                AUTHOR          NOTE 
  * ========================================================
- *  2024-04-03          JJY             최초 등록
+ *  2024-04-03          HTH             최초 등록
  **/
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class DiaryCommentDto {
+public class CommunityReplyDto {
     private Long idx;
-    private Long coupleDiaryIdx;
+    private Long communityIdx;
+    private Long replyIdx;
     private String contents;
     private Long accountIdx;
     private Character deleteYn;
@@ -31,10 +32,11 @@ public class DiaryCommentDto {
     private Timestamp modifyDate;
     private Timestamp deleteDate;
 
-    public DiaryComment toEntity() {
-        return DiaryComment.builder()
+    public CommunityReply toEntity() {
+        return CommunityReply.builder()
                 .idx(idx)
-                .coupleDiaryIdx(coupleDiaryIdx)
+                .communityIdx(communityIdx)
+                .replyIdx(replyIdx)
                 .contents(contents)
                 .accountIdx(accountIdx)
                 .deleteYn(deleteYn)
@@ -45,10 +47,10 @@ public class DiaryCommentDto {
     }
 
     @Builder
-    public DiaryCommentDto(Long idx, Long coupleDiaryIdx, String contents, Long accountIdx,Character deleteYn,
-                           Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate) {
+    public CommunityReplyDto(Long idx, Long communityIdx, Long replyIdx, String contents, Long accountIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate) {
         this.idx = idx;
-        this.coupleDiaryIdx = coupleDiaryIdx;
+        this.communityIdx = communityIdx;
+        this.replyIdx = replyIdx;
         this.contents = contents;
         this.accountIdx = accountIdx;
         this.deleteYn = deleteYn;

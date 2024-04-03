@@ -1,6 +1,5 @@
 package com.lovediary.controller;
 
-import com.lovediary.dto.TimeCapsuleDto;
 import com.lovediary.service.TimeCapsuleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -2,6 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="common/head.html"></head>
 <body>
+	<input type="hidden" id="idx" th:value="${answer.idx}"/>
 	<div class="logo center_a"></div>
 	<p class="title_t center_t bold_t">오늘의 질문</p>
 	<div class="circle_group">
@@ -21,8 +22,8 @@
 					</div>
 					<div>&nbsp;</div>
 				</div>
-				<p class="pre_line" th:text="${answer.mansAnswerContents}"></p>
-				<p class="right_t" th:text="${#dates.format(answer.mansAnswerDate, 'yyyy-MM-dd HH:mm')}"></p>
+				<p class="pre_line" th:text="${#strings.equals(answer.mansAnswerYn, 'Y') ? answer.mansAnswerContents : '아직 작성되지 않았습니다.'}"></p>
+				<p class="right_t" th:if="${#strings.equals(answer.mansAnswerYn, 'Y')}" th:text="${#dates.format(answer.mansAnswerDate, 'yyyy-MM-dd HH:mm')}"></p>
 			</div>
 			<div class="comment card">
 				<div class="twin profile">
@@ -32,8 +33,8 @@
 					</div>
 					<div>&nbsp;</div>
 				</div>
-				<p class="pre_line" th:text="${answer.womansAnswerContents}"></p>
-				<p class="right_t" th:text="${#dates.format(answer.womansAnswerDate, 'yyyy-MM-dd HH:mm')}"></p>
+				<p class="pre_line" th:text="${#strings.equals(answer.womansAnswerYn, 'Y') ? answer.womansAnswerContents : '아직 작성되지 않았습니다.'}"></p>
+				<p class="right_t" th:if="${#strings.equals(answer.womansAnswerYn, 'Y')}" th:text="${#dates.format(answer.womansAnswerDate, 'yyyy-MM-dd HH:mm')}"></p>
 			</div>
 		</div>
 		<div class="division_line"></div>
@@ -42,11 +43,11 @@
 		<div class="form_group">
 			<div class="button_input">
 				<input type="text" id="comment" class="input" placeholder="댓글" />
-				<a id="save_comment" class="btn active_btn">입력</a>
+				<a href="javascript:;" id="save_comment" class="btn active_btn">입력</a>
 			</div>
 		</div>
 		<section class="center_a">
-			<div class="form_group">
+			<div id="comment_list" class="form_group">
 				<div class="comment card" th:each="comment : ${comment_list}">
 					<div class="twin">
 						<div class="twin profile">
@@ -63,4 +64,5 @@
 		</section>
 	</section>
 </body>
+<script type="application/javascript" th:src="@{/js/question.js}"></script>
 </html>

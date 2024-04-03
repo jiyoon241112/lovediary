@@ -1,7 +1,35 @@
+// 작성 페이지
+$("#write_btn").click(function() {
+    location.href = "/community/regist";
+});
+
+// 수정 페이지
+$("#modify_btn").click(function() {
+    const idx = $("#idx").val();
+    location.href = `/community/modify/${idx}`;
+});
+
+// 검색
+$("#keyword").on("keydown", function(key) {
+    if(key.keyCode === 13) {
+        $("#search_btn").click();
+    }
+});
+
+$("#search_btn").click(function() {
+    const keyword = $("#keyword").val();
+    location.replace(`/community?keyword=${keyword}`);
+});
+
 // 상세
-$("#question_list").on("click", "li", function() {
-    const answerIdx = $(this).data("idx")
-    location.href = `/question/detail/${answerIdx}`;
+$("#community_list").on("click", "li", function() {
+    const idx = $(this).data("idx");
+    location.href = `/community/detail/${idx}`;
+});
+
+// 목록
+$("#list_btn").click(function() {
+    location.href = "/community";
 });
 
 // 댓글 입력
@@ -13,6 +41,7 @@ $("#comment").on("keydown", function(key) {
 
 $("#save_comment").click(function() {
     const idx = $("#idx").val();
+    const reply_idx = $("#reply_idx").length ? $("#reply_idx").val() : 0;
     const comment = $("#comment").val();
 
     if(!comment) {
@@ -22,6 +51,7 @@ $("#save_comment").click(function() {
 
     let form_data = new FormData;
     form_data.append("idx", idx);
+    form_data.append("reply_idx", reply_idx);
     form_data.append("contents", comment);
 
     saveComment(form_data);
@@ -29,7 +59,7 @@ $("#save_comment").click(function() {
 
 function saveComment(form_data, retry = false) {
     $.ajax({
-        url: '/question/save_comment',
+        url: '/community/save_comment',
         method: 'post',
         data : form_data,
         contentType: false,

@@ -1,6 +1,6 @@
 package com.lovediary.api;
 
-import com.lovediary.dto.TimeCapsuleDto;
+import com.lovediary.dto.TimecapsuleDto;
 import com.lovediary.service.TimeCapsuleService;
 import com.lovediary.values.ResponseData;
 import com.lovediary.values.constValues;
@@ -8,16 +8,28 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+/**
+ * 
+ * TimeCapsuleRestController
+ * 
+ * @author JJY
+ * @version 1.0.0
+ * @date 2024-04-03
+ * ========================================================
+ *  DATE                AUTHOR          NOTE 
+ * ========================================================
+ *  2024-04-03          JJY             최초 등록
+ **/
 
 @RestController
-public class TimeCapsuleRestController {
+public class TimecapsuleRestController {
     private TimeCapsuleService timeCapsuleService;
-    public TimeCapsuleRestController(TimeCapsuleService service) {
+    public TimecapsuleRestController(TimeCapsuleService service) {
         this.timeCapsuleService = service;
     }
 
     @PostMapping("/timecapsule/save")
-    public ResponseData diarySave(HttpServletRequest request, TimeCapsuleDto timeCapsuleDto){
+    public ResponseData diarySave(HttpServletRequest request, TimecapsuleDto timeCapsuleDto){
         HttpSession session = request.getSession(true);
         session.getAttribute(constValues.LOGIN_USER);
 

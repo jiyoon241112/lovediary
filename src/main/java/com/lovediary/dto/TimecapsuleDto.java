@@ -1,13 +1,14 @@
 package com.lovediary.dto;
 
-import com.lovediary.entity.DiaryComment;
+import com.lovediary.entity.Timecapsule;
 import lombok.*;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
  * 
- * DiaryCommentDto
+ * TimeCapsuleDto
  * 
  * @author JJY
  * @version 1.0.0
@@ -21,9 +22,10 @@ import java.sql.Timestamp;
 @Setter
 @ToString
 @NoArgsConstructor
-public class DiaryCommentDto {
+public class TimecapsuleDto {
     private Long idx;
-    private Long coupleDiaryIdx;
+    private Date openDate;
+    private String title;
     private String contents;
     private Long accountIdx;
     private Character deleteYn;
@@ -31,10 +33,11 @@ public class DiaryCommentDto {
     private Timestamp modifyDate;
     private Timestamp deleteDate;
 
-    public DiaryComment toEntity() {
-        return DiaryComment.builder()
+    public Timecapsule toEntity() {
+        return Timecapsule.builder()
                 .idx(idx)
-                .coupleDiaryIdx(coupleDiaryIdx)
+                .openDate(openDate)
+                .title(title)
                 .contents(contents)
                 .accountIdx(accountIdx)
                 .deleteYn(deleteYn)
@@ -45,10 +48,11 @@ public class DiaryCommentDto {
     }
 
     @Builder
-    public DiaryCommentDto(Long idx, Long coupleDiaryIdx, String contents, Long accountIdx,Character deleteYn,
-                           Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate) {
+    public TimecapsuleDto(Long idx, Date openDate, String title, String contents, Long accountIdx, Character deleteYn,
+                          Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate) {
         this.idx = idx;
-        this.coupleDiaryIdx = coupleDiaryIdx;
+        this.openDate = openDate;
+        this.title = title;
         this.contents = contents;
         this.accountIdx = accountIdx;
         this.deleteYn = deleteYn;

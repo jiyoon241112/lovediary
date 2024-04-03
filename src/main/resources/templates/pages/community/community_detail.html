@@ -2,6 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="common/head.html"></head>
 <body>
+	<input type="hidden" id="idx" th:value="${community.idx}">
 	<div class="body">
 		<div class="logo center_a"></div>
 		<p class="title_t center_t bold_t">커뮤니티</p>
@@ -14,13 +15,11 @@
 							<span class="profile_name">황태현</span>
 						</div>
 						<div>
-							<span class="regist_date">2024-03-24 11:51</span>
+							<span class="regist_date" th:text="${#dates.format(community.registDate, 'YYYY-MM-dd HH:mm')}"></span>
 						</div>
 					</div>
-					<p class="bold_t">애인과 함께 보고싶은 영화는?</p>
-					<div class="h_200 scroll">
-						<p>댓글입니다</p>
-					</div>
+					<p class="bold_t" th:text="${community.title}"></p>
+					<div class="h_200 scroll" th:utext="${community.contents}"></div>
 				</div>
 			</div>
 			<div class="division_line"></div>
@@ -28,31 +27,32 @@
 		<section class="center_a">
 			<div class="form_group">
 				<div class="button_input">
-					<input type="tel" class="input" placeholder="댓글" />
-					<a class="btn active_btn">입력</a>
+					<input type="text" id="comment" class="input" placeholder="댓글" />
+					<a href="javascript:;" id="save_comment" class="btn active_btn">입력</a>
 				</div>
 			</div>
 			<section class="center_a">
 				<div class="form_group">
-					<div class="comment card">
+					<div class="comment card" th:each="comment : ${comment_list}">
 						<div class="twin profile">
 							<div>
 								<div class="profile_img bold_t mt_0">황</div>
 								<span class="profile_name">황태현</span>
 							</div>
 							<div>
-								<span class="regist_date">2024-03-24 11:51</span>
+								<span class="regist_date" th:text="${comment.modifyDate == null ? #dates.format(comment.registDate, 'yyyy-MM-dd HH:mm') : #dates.format(comment.modifyDate, 'yyyy-MM-dd HH:mm')}"></span>
 							</div>
 						</div>
-						<p>댓글입니다</p>
+						<p class="pre_line" th:text="${comment.contents}"></p>
 					</div>
 				</div>
 			</section>
-		<section>
+		</section>
 	</div>
 	<div class="footer">
-		<a class="btn disable_btn">돌아가기</a>
-		<a class="btn active_btn ml_30">수정</a>
+		<a id="list_btn" class="btn disable_btn">돌아가기</a>
+		<a id="modify_btn" class="btn active_btn ml_30">수정</a>
 	</div>
 </body>
+<script type="application/javascript" th:src="@{/js/community.js}"></script>
 </html>
