@@ -28,6 +28,7 @@ public class HouseholdLedgerController {
     public String householdLedgerDetailPage(@PathVariable("idx") Long idx, Model model) {
         HouseholdLedgerDto householdLedgerDto = householdLedgerService.getOne(idx);
         model.addAttribute("monthAmount", householdLedgerService.monthTotal());
+        model.addAttribute("totalAmount", householdLedgerService.monthTotalAmount());
         return "pages/household_ledger/household_ledger_detail";
     }
 

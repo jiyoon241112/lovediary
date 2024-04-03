@@ -14,7 +14,9 @@ package com.lovediary.service;
 import com.lovediary.dto.HouseholdLedgerDto;
 import com.lovediary.dto.PlusAndMinus;
 import com.lovediary.dto.PlusAndMinusDto;
+import com.lovediary.dto.TimecapsuleDto;
 import com.lovediary.entity.HouseholdLedger;
+import com.lovediary.entity.Timecapsule;
 import com.lovediary.repository.HouseholdMonthTotalRepository;
 import com.lovediary.repository.HouseholdLedgerRepository;
 import com.lovediary.repository.HouseholdTotalRepository;
@@ -66,6 +68,7 @@ public class HouseholdLedgerService {
         return convertToDto(householdLedger);
     }
 
+    //이달의 수입,지출
     @Transactional
     public PlusAndMinusDto monthTotal() {
         PlusAndMinus householdLedger = householdMonthTotalRepository.calculateMonthAmount();
@@ -74,6 +77,19 @@ public class HouseholdLedgerService {
                 .plusAmount(householdLedger.getPlusAmount())
                 .minusAmount(householdLedger.getMinusAmount())
                 .build();
+    }
+
+    //월별 수입, 지출, 총자산
+    @Transactional
+    public List<PlusAndMinusDto> monthTotalAmount() {
+        List<PlusAndMinus> timeCapsuleList = householdMonthTotalRepository.calculateTotalAmount();
+        List<PlusAndMinusDto> resultList = new ArrayList<>();
+
+        for(PlusAndMinus plusAndMinus : timeCapsuleList) {
+            resultList.add(convertToDto(plusAndMinus));
+        }
+
+        return resultList;
     }
 
     // <가계부 작성(저장)>
@@ -96,6 +112,15 @@ public class HouseholdLedgerService {
                 .registDate(householdLedger.getRegistDate())
                 .modifyDate(householdLedger.getModifyDate())
                 .deleteDate(householdLedger.getDeleteDate())
+                .build();
+    }
+
+    private PlusAndMinusDto convertToDto(PlusAndMinus plusAndMinus) {
+        return PlusAndMinusDto.builder()
+                .plusAmount(plusAndMinus.getPlusAmount())
+                .minusAmount(plusAndMinus.getMinusAmount())
+                .totalAmount(plusAndMinus.getTotalAmount())
+                .mon(plusAndMinus.getMon())
                 .build();
     }
 }

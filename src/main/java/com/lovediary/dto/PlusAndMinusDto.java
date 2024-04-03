@@ -21,10 +21,14 @@ import lombok.*;
 public class PlusAndMinusDto {
     private Long plusAmount;
     private Long minusAmount;
+    private Long totalAmount;
+    private int  mon;
 
     @Builder
-    public PlusAndMinusDto(Long plusAmount, Long minusAmount) {
+    public PlusAndMinusDto(Long plusAmount, Long minusAmount, Long totalAmount, int mon) {
         this.plusAmount = plusAmount;
         this.minusAmount = minusAmount;
+        this.totalAmount = totalAmount;
+        this.mon = mon;
     }
 }
