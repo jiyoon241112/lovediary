@@ -16,12 +16,14 @@ public class QuestionController {
         this.accountService = accountService;
     }
 
+    // 오늘의 질문 목록 페이지
     @GetMapping("/question")
     public String questionPage(Model model) {
         model.addAttribute("list", questionService.getList());
         return "pages/question/question_list";
     }
 
+    // 오늘의 질문 상세 페이지
     @GetMapping("/question/detail/{idx}")
     public String questionDetailPage(@PathVariable(name = "idx") Long idx, Model model) {
         model.addAttribute("answer", questionService.getOne(idx));
@@ -29,11 +31,13 @@ public class QuestionController {
         return "pages/question/question_detail";
     }
 
+    // 오늘의 질문 등록 페이지
     @GetMapping("/question/regist")
     public String questionRegistPage() {
         return "pages/question/question";
     }
 
+    // 오늘의 질문 수정 페이지
     @GetMapping(value = {"/question/modify", "/question/modify/{idx}"})
     public String questionModifyPage(@PathVariable(name = "idx", required = false) Long idx, Model model) {
         if(idx == null) {

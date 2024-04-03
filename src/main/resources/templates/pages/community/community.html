@@ -3,21 +3,23 @@
 <head th:insert="common/head.html"></head>
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <body>
+	<input type="hidden" id="idx" th:value="${community.idx}">
 	<div class="body">
 		<div class="logo center_a"></div>
 		<p class="title_t center_t bold_t">커뮤니티</p>
 		<section class="center_a card mt_30">
 			<div class="form_group">
-				<input type="text" class="input" placeholder="제목*" />
-				<div id="editor" class="editor"></div>
+				<input type="text" id="title" class="input" placeholder="제목*" th:value="${community.title}" />
+				<div id="editor" class="editor" th:utext="${community.contents}"></div>
 			</div>
 		</section>
 	</div>
 	<div class="footer">
-		<a class="btn disable_btn">돌아가기</a>
-		<a class="btn active_btn">저장</a>
+		<a id="back_btn" class="btn disable_btn">돌아가기</a>
+		<a id="save_btn" class="btn active_btn">저장</a>
 	</div>
 </body>
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script type="application/javascript" th:src="@{/js/editor.js}" defer></script>
+<script type="application/javascript" th:src="@{/js/community_save.js}"></script>
 </html>

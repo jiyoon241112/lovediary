@@ -98,8 +98,9 @@ public class QuestionService {
     }
 
     // 댓글 조회
+    @Transactional
     public List<CoupleAnswerReplyDto> getCommentList(Long idx) {
-        List<CoupleAnswerReply> commentList = coupleAnswerReplyRepository.findByCoupleAnswerIdxOrderByIdx(idx);
+        List<CoupleAnswerReply> commentList = coupleAnswerReplyRepository.findByCoupleAnswerIdxOrderByIdxDesc(idx);
         List<CoupleAnswerReplyDto> resultList = new ArrayList<>();
 
         for(CoupleAnswerReply comment : commentList) {
@@ -110,6 +111,7 @@ public class QuestionService {
     }
 
     // 댓글 저장
+    @Transactional
     public Long saveComment(Long idx, String contents) {
         CoupleAnswerReplyDto replyDto = CoupleAnswerReplyDto.builder()
                 .coupleAnswerIdx(idx)
@@ -120,7 +122,7 @@ public class QuestionService {
         return coupleAnswerReplyRepository.save(replyDto.toEntity()).getIdx();
     }
 
-    // DTO 변환
+    // 오늘의 질문 DTO 변환
     private CoupleAnswerDto convertToDto(CoupleAnswer coupleAnswer) {
         return CoupleAnswerDto.builder()
                 .idx(coupleAnswer.getIdx())
@@ -139,6 +141,7 @@ public class QuestionService {
                 .build();
     }
 
+    // 댓글 DTO 변환
     private CoupleAnswerReplyDto convertToDto(CoupleAnswerReply coupleAnswerReply) {
         return CoupleAnswerReplyDto.builder()
                 .idx(coupleAnswerReply.getIdx())
