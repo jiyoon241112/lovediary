@@ -5,7 +5,7 @@
 	<div class="body">
 		<div class="vertical_set">
 			<div class="logo center_a"></div>
-			<div class="profile_card card center_a">
+			<div id="profile_btn" class="profile_card card center_a">
 				<div class="profile_card_line">
 					<div class="profile_img bold_t">황</div>
 					<div class="heart_img on"></div>
@@ -15,29 +15,29 @@
 			</div>
 		</div>
 		<div class="fixed t_30 r_0 vertical_set w_150">
-			<div class="alarm_btn on"></div>
-			<div class="alarm_btn"></div>
-			<div class="circle_btn community_btn"></div>
-			<div class="circle_btn household_ledger_btn"></div>
-			<div class="circle_btn place_btn"></div>
+			<div id="alarm_btn" class="alarm_btn"></div>
+			<div id="community_btn" class="circle_btn community_btn"></div>
+			<div id="household_ledger_btn" class="circle_btn household_ledger_btn"></div>
+			<div id="place_btn" class="circle_btn place_btn"></div>
 		</div>
-		<div class="fixed b_100 r_30 store_btn"></div>
+		<div id="store_btn" class="fixed b_100 r_30 store_btn"></div>
 		<div class="fixed dog_img"></div>
 		<!--
 			<div class="fixed dog_img sick"></div>
 			<div class="fixed dog_img bad"></div>
 		-->
 		<div class="fixed today">
-			<a class="btn active_btn bold_t w_270">오늘의 질문</a>
+			<a href="javascript:;" id="question_btn" class="btn active_btn bold_t w_270">오늘의 질문</a>
 		</div>
 	</div>
 	<div class="footer main">
 		<div class="circle_group">
-			<div class="circle_btn calendar_btn"></div>
-			<div class="circle_btn drive_btn"></div>
-			<div class="circle_btn diary_btn"></div>
-			<div class="circle_btn chat_btn"></div>
+			<div id="calendar_btn" class="circle_btn calendar_btn"></div>
+			<div id="drive_btn" class="circle_btn drive_btn"></div>
+			<div id="diary_btn" class="circle_btn diary_btn"></div>
+			<div id="chat_btn" class="circle_btn chat_btn"></div>
 		</div>
 	</div>
 </body>
+<script type="application/javascript" th:src="@{/js/main.js}"></script>
 </html>

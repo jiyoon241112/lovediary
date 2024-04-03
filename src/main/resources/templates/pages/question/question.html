@@ -2,28 +2,31 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="common/head.html"></head>
 <body>
+	<input type="hidden" id="idx" th:value="${answer.idx}" />
+	<input type="hidden" id="back" th:value="${back_url}" />
 	<div class="body">
 		<div class="logo center_a"></div>
 		<p class="title_t center_t bold_t">오늘의 질문</p>
 		<section class="center_a card mt_30">
 			<div class="form_group">
-				<p class="f_40 left_t bold_t">애인과 함께 보고싶은 영화는?</p>
-				<textarea class="input question_contents" placeholder="내용을 입력하세요."></textarea>
-				<p class="right_t bold_t"><span>0</span> / 300</p>
+				<p class="f_40 left_t bold_t" th:text="${answer.questionContents}"></p>
+				<textarea id="contents" class="input question_contents" placeholder="내용을 입력하세요." th:text="${#strings.equals(gender, 'M') ? answer.mansAnswerContents : answer.womansAnswerContents}"></textarea>
+				<p class="right_t bold_t"><span id="contents_length">0</span> / 300</p>
 			</div>
 		</section>
 		<div class="circle_group">
-			<div class="center_t">
-				<div class="circle_btn smile_btn on"></div>
-				<div class="circle_btn good_btn"></div>
-				<div class="circle_btn nice_btn"></div>
-				<div class="circle_btn sad_btn"></div>
-				<div class="circle_btn love_btn"></div>
+			<div id="emotion" class="center_t">
+				<div th:class="${#strings.equals(gender, 'M') ? (answer.mansEmotionIdx == 1 ? 'circle_btn smile_btn on' : 'circle_btn smile_btn') : (answer.womansEmotionIdx == 1 ? 'circle_btn smile_btn on' : 'circle_btn smile_btn')}" data-idx="1"></div>
+				<div th:class="${#strings.equals(gender, 'M') ? (answer.mansEmotionIdx == 2 ? 'circle_btn good_btn on' : 'circle_btn good_btn') : (answer.womansEmotionIdx == 2 ? 'circle_btn good_btn on' : 'circle_btn good_btn')}" data-idx="2"></div>
+				<div th:class="${#strings.equals(gender, 'M') ? (answer.mansEmotionIdx == 3 ? 'circle_btn nice_btn on' : 'circle_btn nice_btn') : (answer.womansEmotionIdx == 3 ? 'circle_btn nice_btn on' : 'circle_btn nice_btn')}" data-idx="3"></div>
+				<div th:class="${#strings.equals(gender, 'M') ? (answer.mansEmotionIdx == 4 ? 'circle_btn sad_btn on' : 'circle_btn sad_btn') : (answer.womansEmotionIdx == 4 ? 'circle_btn sad_btn on' : 'circle_btn sad_btn')}" data-idx="4"></div>
+				<div th:class="${#strings.equals(gender, 'M') ? (answer.mansEmotionIdx == 5 ? 'circle_btn love_btn on' : 'circle_btn love_btn') : (answer.womansEmotionIdx == 5 ? 'circle_btn love_btn on' : 'circle_btn love_btn')}" data-idx="5"></div>
 			</div>
 		</div>
 	</div>
 	<div class="footer">
-		<a class="btn active_btn">저장</a>
+		<a href="javascript:;" id="save_btn" class="btn active_btn">저장</a>
 	</div>
 </body>
+<script type="application/javascript" th:src="@{/js/question_save.js}"></script>
 </html>

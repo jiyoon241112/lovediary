@@ -5,7 +5,7 @@ $(".active_btn").click(function() {
 
     let form_data = new FormData;
     form_data.append("title", title);
-    form_data.append("content", diary_content);
+    form_data.append("contents", diary_content);
 
     if(!title) {
         alert("제목을 입력해주세요.");
@@ -13,7 +13,7 @@ $(".active_btn").click(function() {
     }
 
     if(!diary_content) {
-        alert("비밀번호를 입력해주세요.");
+        alert("내용을 입력해주세요.");
         return;
     }
 

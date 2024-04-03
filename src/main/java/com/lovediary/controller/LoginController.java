@@ -29,7 +29,7 @@ import java.util.Map;
  **/
 @Controller
 public class LoginController {
-    private AccountService accountService;
+    private final AccountService accountService;
     public LoginController(AccountService service) {
         this.accountService = service;
     }

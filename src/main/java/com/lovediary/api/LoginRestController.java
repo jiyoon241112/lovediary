@@ -28,7 +28,7 @@ import java.sql.Date;
  **/
 @RestController
 public class LoginRestController {
-    private AccountService accountService;
+    private final AccountService accountService;
     public LoginRestController(AccountService service) {
         this.accountService = service;
     }

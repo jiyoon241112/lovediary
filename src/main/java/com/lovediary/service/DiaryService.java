@@ -85,7 +85,6 @@ public class DiaryService {
                 .idx(diary.getIdx())
                 .coupleIdx(diary.getCoupleIdx())
                 .emotionIdx(diary.getEmotionIdx())
-                .categoryIdx(diary.getCategoryIdx())
                 .title(diary.getTitle())
                 .contents(diary.getContents())
                 .accountIdx(diary.getAccountIdx())

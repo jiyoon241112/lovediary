@@ -30,6 +30,9 @@ public class DiaryRestController {
             return new ResponseData(constValues.ERROR, "내용을 입력해주세요.", null);
         }
 
+        diaryDto.setAccountIdx(2L);
+        diaryDto.setCoupleIdx(1L);
+
         diaryService.saveItem(diaryDto);
 
         return new ResponseData(constValues.DONE, "오늘의 일기가 저장되었습니다.", null);
