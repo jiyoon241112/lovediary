@@ -276,6 +276,7 @@ input[type="checkbox"]:checked + label::after, input[type="radio"]:checked + lab
 .mt_0 {margin-top: 0 !important;}
 .mt_30 {margin-top: 15px !important;}
 .mt_120 {margin-top: 60px !important;}
+.ml_20 {margin-left: 10px !important;}
 .ml_30 {margin-left: 15px !important;}
 .ml_5p {margin-left: 5% !important;}
 .ml_10p {margin-left: 10% !important;}
