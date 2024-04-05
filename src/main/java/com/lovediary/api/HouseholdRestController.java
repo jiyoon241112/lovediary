@@ -6,6 +6,7 @@ import com.lovediary.values.ResponseData;
 import com.lovediary.values.constValues;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -73,5 +74,10 @@ public class HouseholdRestController {
         householdLedgerService.saveItem(householdLedgerDto);
 
         return new ResponseData(constValues.DONE, "가계부가 저장되었습니다.", null);
+    }
+
+    @GetMapping("/household/chart")
+    public ResponseData getChartData() {
+        return new ResponseData(constValues.DONE, "차트 데이터를 조회했습니다.", householdLedgerService.monthTotalAmount());
     }
 }
