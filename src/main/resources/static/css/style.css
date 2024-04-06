@@ -93,6 +93,16 @@ section.card {width: 90%; margin-left: 5%; padding: 10px 0;}
 .popup .background {width: 100%; height: 100%; background: #00000099;}
 .popup section {position: fixed; top: 50%; left: 45%; transform: translate(-50%, -50%);}
 
+/* calendar */
+.calendar {width: 90%; text-align: center; margin: 0 5%; padding-bottom: 20px;}
+.calendar > thead > tr > td {width: 50px; height: 50px;}
+.calendar > thead > tr:first-child > td {font-weight: bold;}
+.calendar > thead > tr:last-child > td {background-color: #ffe5e5; border: solid 2px #ffc6c6; border-radius: 10px; font-weight: bold; box-sizing: border-box;}
+.calendar > tbody > tr > td {width: 50px; height: 50px;}
+.calendar .date.on {background: #ffc6c6; position: relative; border: solid 2px #ffaaaa; border-radius: 100%; box-sizing: border-box; font-weight: bold;}
+.calendar .date.event:after {content: '🔴'; font-size: 8px; position: absolute;}
+.calendar_btn {cursor: pointer;}
+
 /* 로그인 */
 .circle_btn.kakao_login {width: 80px; height: 80px; background-image: url('/resources/kakao_login.svg'); background-size: 80px; background-repeat: no-repeat; background-position: center;}
 .circle_btn.naver_login {width: 80px; height: 80px; background-image: url('/resources/naver_login.svg'); background-size: 80px; background-repeat: no-repeat; background-position: center;}
