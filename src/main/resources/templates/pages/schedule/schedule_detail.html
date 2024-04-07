@@ -2,14 +2,34 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="common/head.html"></head>
 <body class="scroll">
+	<input type="hidden" id="year" th:value="${#dates.format(selected_date, 'yyyy')}"/>
+	<input type="hidden" id="month" th:value="${#dates.format(selected_date, 'MM')}"/>
+	<input type="hidden" id="day" th:value="${#dates.format(selected_date, 'dd')}"/>
 	<div class="body">
 		<div class="logo center_a"></div>
 		<p class="title_t center_t bold_t">일정</p>
 		<section class="center_a mt_30 f_40">
-			<div class="card w_full h_200"></div>
-		<section>
+			<div class="card w_full h_200">
+				<table id="week_calendar" class="calendar">
+					<thead>
+						<tr>
+							<td id="calendar_prev_btn" class="calendar_btn">&#60;&#60;</td>
+							<td colspan="5">
+								<span id="calendar_year"></span>년
+								<span id="calendar_month"></span>월
+							</td>
+							<td id="calendar_next_btn" class="calendar_btn">&#62;&#62;</td>
+						</tr>
+						<tr>
+							<td>일</td><td>월</td><td>화</td><td>수</td><td>목</td><td>금</td><td>토</td>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+		</section>
 		<div class="division_line mb_30"></div>
-		<div class="money vertical_center twin w_90p">
+		<div class="money vertical_center twin w_90p ml_5p">
 			<p class="mt_0 w_70p bold_t left_t skip_text">기상</p>
 			<div class="w_20p mt_0 bold_t">07:00</div>
 		</div>
@@ -20,9 +40,9 @@
 	<div class="footer">
 		<a class="btn disable_btn">돌아가기</a>
 	</div>
-	<div class="popup">
+	<div class="popup" style="display: none;">
 		<div class="background"></div>
-		<section class="center_a card mt_30">
+		<section class="center_a card mt_30" style="display: none;">
 			<p class="title_t center_t bold_t">일정 추가</p>
 			<div class="form_group ml_5p">
 				<input type="text" class="input" placeholder="제목*" />
@@ -38,4 +58,5 @@
 		</section>
 	</div>
 </body>
+<script type="application/javascript" th:src="@{/js/calendar.js}"></script>
 </html>

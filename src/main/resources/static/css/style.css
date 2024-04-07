@@ -24,12 +24,12 @@ a {color: #000000; text-decoration: none;}
 .profile {height: 20px !important; margin-bottom: 15px;}
 
 /* form group */
-.form_group {margin-top: 10px; text-align: center; width: 90%;}
+.form_group {width: 90%; margin-top: 10px; margin-left: 5%; text-align: center;}
 .form_group *:not(.editor *) {margin-top: 5px;}
 .form_group .editor * { text-align: left;}
 
 /* division_line */
-.division_line {width: 90%; margin-top: 30px; border-top: 1px solid #ffaaaa; box-sizing: border-box;}
+.division_line {width: 90%; margin-top: 30px; margin-left: 5%; border-top: 1px solid #ffaaaa; box-sizing: border-box;}
 
 /* input */
 .input {width: 100%; padding: 10px 5px; border: solid 3px #faa; box-sizing: border-box; background-color: #ffffff; color: #ff6969; font-weight: bold; font-size: 15px;}

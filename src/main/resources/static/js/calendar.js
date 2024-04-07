@@ -4,17 +4,28 @@ const today_date = Number($("#day").val());
 
 let year = today_year;
 let month = today_month;
+let day = today_date;
 
 let date = new Date(year, month - 1, day);
 let event_list = {};
 
+// 전주
+$("#week_calendar #calendar_prev_btn").click(function() {
+    prevWeek();
+});
+
+// 익주
+$("#week_calendar #calendar_next_btn").click(function() {
+    nextWeek();
+});
+
 // 전월
-$("#calendar_prev_btn").click(function() {
+$("#full_calendar #calendar_prev_btn").click(function() {
     prevMonth();
 });
 
 // 익월
-$("#calendar_next_btn").click(function() {
+$("#full_calendar #calendar_next_btn").click(function() {
     nextMonth();
 });
 
@@ -23,6 +34,24 @@ $(".calendar tbody").on("click", ".date", function() {
     $(".calendar tbody .date.on").removeClass("on");
     $(this).addClass("on");
 });
+
+function prevWeek() {
+    date = new Date(year, month - 1, date.getDate() - 7);
+    year = date.getFullYear();
+    month = date.getMonth() + 1;
+    day = date.getDate();
+
+    drawWeekCalendar();
+}
+
+function nextWeek() {
+    date = new Date(year, month - 1, date.getDate() + 7);
+    year = date.getFullYear();
+    month = date.getMonth() + 1;
+    day = date.getDate();
+
+    drawWeekCalendar();
+}
 
 function prevMonth() {
     month--;
@@ -48,6 +77,23 @@ function nextMonth() {
     drawCalendar();
 }
 
+function isEventDate(year, month, day) {
+    if(event_list[year]) {
+        if(event_list[year][month + 1]) {
+            if(event_list[year][month + 1][day]) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+function setCalendarTitle() {
+    $("#calendar_year").text(year);
+    $("#calendar_month").text((new Array(2 - String(month).length + 1).join("0")) + month);
+}
+
 function drawCalendar() {
     const dom = $("#full_calendar tbody");
     let row = 1;
@@ -55,8 +101,7 @@ function drawCalendar() {
     let first_date = new Date(year, month - 1, 1);
     let last_date = new Date(year, month, 0);
 
-    $("#calendar_year").text(year);
-    $("#calendar_month").text((new Array(2 - String(month).length + 1).join("0")) + month);
+    setCalendarTitle();
 
     dom.empty();
     dom.append(`<tr data-row="${row++}"></tr>`);
@@ -70,7 +115,6 @@ function drawCalendar() {
 
         let color = "";
         let make_new_row = false;
-        let event_date = false;
 
         let this_year = null;
         let this_month = null;
@@ -127,12 +171,8 @@ function drawCalendar() {
             column.addClass("on");
         }
 
-        if(event_list[this_year]) {
-             if(event_list[this_year][this_month + 1]) {
-                 if(event_list[this_year][this_month + 1][this_day]) {
-                     column.addClass("event");
-                 }
-             }
+        if(isEventDate(this_year, this_month, this_day)) {
+            column.addClass("event");
         }
 
         if(make_new_row) {
@@ -140,6 +180,56 @@ function drawCalendar() {
         }
 
         week_day++;
+    }
+}
+
+function drawWeekCalendar() {
+    const dom = $("#week_calendar tbody");
+
+    let first_date = new Date(year, month - 1, date.getDate() - date.getDay());
+    let last_date = new Date(year, month - 1, first_date.getDate() + 6);
+
+    setCalendarTitle();
+
+    dom.empty();
+    dom.append(`<tr></tr>`);
+
+    // 달력 그리기
+    let tr = dom.find("tr");
+
+    for(let i = 0; i < 7; i++) {
+        let color = "";
+
+        let this_year = first_date.getFullYear();
+        let this_month = first_date.getMonth();
+        let this_day = first_date.getDate();
+
+        // 일요일인 경우
+        if (first_date.getDay() === 0) {
+            color = "#FF4D4D";
+        }
+
+        // 토요일인 경우
+        if (first_date.getDay() === 6) {
+            color = "#4D4DFF";
+        }
+
+        tr.append(`<td class="date" data-year="${this_year}" data-month="${this_month + 1}" data-day="${this_day}">${(new Array(2 - String(this_day).length + 1).join("0")) + this_day}</td>`);
+        let column = tr.find("td:last-of-type");
+
+        if(color) {
+            column.css("color", color);
+        }
+
+        if(this_year === today_year && (this_month + 1) === today_month && this_day === today_date) {
+            column.addClass("on");
+        }
+
+        if(isEventDate(this_year, this_month, this_day)) {
+            column.addClass("event");
+        }
+
+        first_date.setDate(first_date.getDate() + 1);
     }
 }
 
@@ -164,4 +254,10 @@ function getCalendarDate() {
     return [selected_date.data("year"), selected_date.data("month"), selected_date.data("day")];
 }
 
-drawCalendar();
+if($("#full_calendar").length) {
+    drawCalendar();
+}
+
+if($("#week_calendar").length) {
+    drawWeekCalendar();
+}
