@@ -80,3 +80,9 @@ function saveComment(form_data, retry = false) {
         }
     });
 }
+
+// 댓글 상세
+$("#comment_list").on("click", ".comment", function() {
+    const idx = $(this).data("idx");
+    location.href = `/community/comment/${idx}`;
+});

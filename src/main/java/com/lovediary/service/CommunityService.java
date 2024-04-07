@@ -114,7 +114,7 @@ public class CommunityService {
     // 댓글 DTO 변환
     private CommunityReplyDto convertToDto(CommunityReply reply) {
         return CommunityReplyDto.builder()
-                .idx(reply.getCommunityIdx())
+                .idx(reply.getIdx())
                 .communityIdx(reply.getCommunityIdx())
                 .replyIdx(reply.getReplyIdx())
                 .contents(reply.getContents())

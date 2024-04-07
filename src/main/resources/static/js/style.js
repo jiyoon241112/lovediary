@@ -3,6 +3,11 @@ $(".logo").click(function() {
     location.href = "/";
 });
 
+// 뒤로가기
+$("#back_btn").click(function() {
+    history.back();
+});
+
 // 팝업 닫기
 $(".pop_close").click(function() {
     $(".popup, .pop").hide();

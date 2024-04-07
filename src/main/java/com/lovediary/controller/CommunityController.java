@@ -1,6 +1,7 @@
 package com.lovediary.controller;
 
 import com.lovediary.dto.CommunityDto;
+import com.lovediary.dto.CommunityReplyDto;
 import com.lovediary.service.CommunityService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,8 +59,12 @@ public class CommunityController {
     }
     
     // 커뮤니티 댓글 페이지
-    @GetMapping("/community/comment")
-    public String communityPage() {
+    @GetMapping("/community/comment/{idx}")
+    public String communityPage(@PathVariable(name = "idx") Long idx, Model model) {
+        CommunityReplyDto comment = communityService.getCommentOne(idx);
+
+        model.addAttribute("comment", comment);
+        model.addAttribute("list", communityService.getCommentList(comment.getCommunityIdx(), idx));
         return "pages/community/community_comment";
     }
 }
