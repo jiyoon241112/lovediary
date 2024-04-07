@@ -20,22 +20,22 @@
 	</div>
 	<section class="center_a f_40">
 		<ul class="item_list">
-			<li>
+			<li th:each="place : ${list}" th:data-idx="${place.idx}">
+				<div class="relatived w_full">
+					<p class="item_img" style="background-image: url('/resources/theme_new_year.svg');"></p>
+					<div class="absoluted t_0 r_0 heart_img on"></div>
+				</div>
+				<p th:text="${place.title}"></p>
+				<p class="mt_0 f_30" th:text="${place.address}"></p>
+			</li>
+			<!--<li>
 				<div class="relatived w_full">
 					<p class="item_img" style="background-image: url('/resources/theme_new_year.svg');"></p>
 					<div class="absoluted t_0 r_0 heart_img on"></div>
 				</div>
 				<p>방탈출카페 마스터키 역삼동</p>
 				<p class="mt_0 f_30">서울특별시 역삼동</p>
-			</li>
-			<li>
-				<div class="relatived w_full">
-					<p class="item_img" style="background-image: url('/resources/theme_new_year.svg');"></p>
-					<div class="absoluted t_0 r_0 heart_img on"></div>
-				</div>
-				<p>방탈출카페 마스터키 역삼동</p>
-				<p class="mt_0 f_30">서울특별시 역삼동</p>
-			</li>
+			</li>-->
 		</ul>
 	</section>
 </body>
