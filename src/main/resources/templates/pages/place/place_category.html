@@ -7,19 +7,19 @@
 	<section class="center_a f_40">
 		<div class="form_group center_t">
 			<div class="button_input">
-				<input type="text" class="input" placeholder="검색" />
-				<a class="btn active_btn">검색하기</a>
+				<input type="text" id="keyword" class="input" placeholder="검색" />
+				<a id="search_btn" class="btn active_btn">검색하기</a>
 			</div>
 		</div>
 		<ul class="item_list">
-			<li>
+			<li th:each="place : ${list}" th:data-idx="${place.idx}" onclick="clickCategory(this)">
 				<div class="relatived w_full">
 					<p class="theme_new_year_img"></p>
-					<div class="absoluted t_0 r_0 heart_img on"></div>
+					<div th:class="${place.themeIdx != null} ? 'absoluted t_0 r_0 heart_img on' : 'absoluted t_0 r_0 heart_img'"></div>
 				</div>
-				<p class="center_t">신년</p>
+				<p class="center_t" th:text="${place.name}"></p>
 			</li>
-			<li>
+			<!--<li>
 				<div class="relatived w_full">
 					<p class="theme_valentine_img"></p>
 					<div class="absoluted t_0 r_0 heart_img on"></div>
@@ -249,8 +249,9 @@
 					<div class="absoluted t_0 r_0 heart_img"></div>
 				</div>
 				<p class="center_t">애묘</p>
-			</li>
+			</li>-->
 		</ul>
 	</section>
 </body>
+<script type="application/javascript" th:src="@{/js/category.js}"></script>
 </html>
