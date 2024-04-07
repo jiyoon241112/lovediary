@@ -8,39 +8,31 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 /**
  *
- * Diary
+ * BalanceAnswer
  *
- * @author JJY
+ * @author HTH
  * @version 1.0.0
- * @date 2024-03-29
+ * @date 2024-04-07
  * ========================================================
  *  DATE                AUTHOR          NOTE
  * ========================================================
- *  2024-03-29          JJY             최초 등록
+ *  2024-04-07          HTH             최초 등록
  **/
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name="couple_diary")
-public class Diary {
+public class BalanceAnswer {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column
-    private Long coupleIdx;
+    private Long balanceIdx;
 
     @Column
-    private Long emotionIdx;
-
-    @Column
-    private String title;
-
-    @Column
-    private String contents;
+    private Long balanceItemIdx;
 
     @Column
     private Long accountIdx;
@@ -50,12 +42,10 @@ public class Diary {
     private Timestamp registDate;
 
     @Builder
-    public Diary(Long idx, Long coupleIdx, Long emotionIdx, Long categoryIdx, String title, String contents, Long accountIdx,Timestamp registDate, List<DiaryComment> diaryCommentList) {
+    public BalanceAnswer(Long idx, Long balanceIdx, Long balanceItemIdx, Long accountIdx, Timestamp registDate) {
         this.idx = idx;
-        this.coupleIdx = coupleIdx;
-        this.emotionIdx = emotionIdx;
-        this.title = title;
-        this.contents = contents;
+        this.balanceIdx = balanceIdx;
+        this.balanceItemIdx = balanceItemIdx;
         this.accountIdx = accountIdx;
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
     }

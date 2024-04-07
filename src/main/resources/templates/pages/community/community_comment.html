@@ -2,6 +2,8 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="common/head.html"></head>
 <body>
+	<input type="hidden" id="idx" th:value="${comment.communityIdx}">
+	<input type="hidden" id="reply_idx" th:value="${comment.idx}">
 	<div class="body">
 		<p class="title_t center_t bold_t mt_30">커뮤니티</p>
 		<section class="center_a mt_30">
@@ -14,43 +16,44 @@
 								<span class="profile_name">황태현</span>
 							</div>
 							<div>
-								<span class="regist_date">2024-03-24 11:51</span>
+								<span class="regist_date" th:text="${#dates.format(comment.registDate, 'YYYY-MM-dd HH:mm')}"></span>
 							</div>
 						</div>
-						<p>댓글입니다</p>
+						<p th:text="${comment.contents}"></p>
 					</div>
 				</div>
 			</section>
 			<div class="division_line"></div>
-		<section>
+		</section>
 		<section class="center_a mt_30">
 			<div class="form_group">
 				<div class="button_input">
-					<input type="tel" class="input" placeholder="댓글" />
-					<a class="btn active_btn">입력</a>
+					<input type="text" id="comment" class="input" placeholder="댓글" />
+					<a href="javascript:;" id="save_comment" class="btn active_btn">입력</a>
 				</div>
 			</div>
 			<section class="center_a mt_30">
 				<div class="form_group">
-					<div class="comment card">
+					<div class="comment card" th:each="sub_comment : ${list}">
 						<div class="twin profile">
 							<div>
 								<div class="profile_img bold_t mt_0">황</div>
 								<span class="profile_name">황태현</span>
 							</div>
 							<div>
-								<span class="regist_date">2024-03-24 11:51</span>
+								<span class="regist_date"  th:text="${#dates.format(sub_comment.registDate, 'YYYY-MM-dd HH:mm')}"></span>
 							</div>
 						</div>
-						<p>댓글입니다</p>
+						<p th:text="${sub_comment.contents}"></p>
 					</div>
 				</div>
 			</section>
-		<section>
+		</section>
 	</div>
 	<div class="footer">
-		<a class="btn disable_btn">돌아가기</a>
-		<a class="btn active_btn ml_30">수정</a>
+		<a id="back_btn" class="btn disable_btn">돌아가기</a>
+		<a id="modify_btn" class="btn active_btn ml_30">수정</a>
 	</div>
 </body>
+<script type="application/javascript" th:src="@{/js/community.js}"></script>
 </html>

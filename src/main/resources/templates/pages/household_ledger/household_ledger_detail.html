@@ -6,7 +6,7 @@
 	<p class="title_t center_t bold_t">가계부</p>
 	<section class="center_a">
 		<div class="form_group">
-			<div class="comment card h_300"></div>
+			<canvas id="chart" class="comment card h_300"></canvas>
 		</div>
 	</section>
 	<p class="title_t center_t bold_t mt_30">이달의 수입/지출</p>
@@ -28,9 +28,10 @@
 						</ul>
 					</div>
 				</section>
-				
 			</div>
 		</div>
 	</section>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="application/javascript" th:src="@{/js/household_detail.js}" defer></script>
 </html>

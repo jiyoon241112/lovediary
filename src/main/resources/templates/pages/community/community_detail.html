@@ -32,8 +32,8 @@
 				</div>
 			</div>
 			<section class="center_a">
-				<div class="form_group">
-					<div class="comment card" th:each="comment : ${comment_list}">
+				<div id="comment_list" class="form_group">
+					<div class="comment card" th:each="comment : ${comment_list}" th:data-idx="${comment.idx}">
 						<div class="twin profile">
 							<div>
 								<div class="profile_img bold_t mt_0">황</div>

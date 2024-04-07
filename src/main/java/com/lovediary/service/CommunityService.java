@@ -65,7 +65,7 @@ public class CommunityService {
     // 댓글 목록 조회
     @Transactional
     public List<CommunityReplyDto> getCommentList(Long idx, Long replyIdx) {
-        List<CommunityReply> replyList = communityReplyRepository.findByCommunityIdxAndReplyIdxOrderByIdxDesc(idx, replyIdx);
+        List<CommunityReply> replyList = communityReplyRepository.findByCommunityIdxAndReplyIdxAndDeleteYnOrderByIdxDesc(idx, replyIdx, 'N');
         List<CommunityReplyDto> resultList = new ArrayList<>();
 
         for(CommunityReply reply : replyList) {
@@ -114,7 +114,7 @@ public class CommunityService {
     // 댓글 DTO 변환
     private CommunityReplyDto convertToDto(CommunityReply reply) {
         return CommunityReplyDto.builder()
-                .idx(reply.getCommunityIdx())
+                .idx(reply.getIdx())
                 .communityIdx(reply.getCommunityIdx())
                 .replyIdx(reply.getReplyIdx())
                 .contents(reply.getContents())

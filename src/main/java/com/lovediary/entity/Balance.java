@@ -8,55 +8,57 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 /**
  *
- * Diary
+ * Balance
  *
- * @author JJY
+ * @author HTH
  * @version 1.0.0
- * @date 2024-03-29
+ * @date 2024-04-07
  * ========================================================
  *  DATE                AUTHOR          NOTE
  * ========================================================
- *  2024-03-29          JJY             최초 등록
+ *  2024-04-07          HTH             최초 등록
  **/
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name="couple_diary")
-public class Diary {
+public class Balance {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    @Column
-    private Long coupleIdx;
-
-    @Column
-    private Long emotionIdx;
-
-    @Column
+    @Column(length = 100)
     private String title;
 
-    @Column
+    @Column(length = 300)
     private String contents;
 
     @Column
     private Long accountIdx;
 
+    @Column
+    private Character deleteYn;
+
     @CreatedDate
     @Column(updatable = false)
     private Timestamp registDate;
 
+    @Column
+    private Timestamp modifyDate;
+
+    @Column
+    private Timestamp deleteDate;
+
     @Builder
-    public Diary(Long idx, Long coupleIdx, Long emotionIdx, Long categoryIdx, String title, String contents, Long accountIdx,Timestamp registDate, List<DiaryComment> diaryCommentList) {
+    public Balance(Long idx, String title, String contents, Long accountIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate) {
         this.idx = idx;
-        this.coupleIdx = coupleIdx;
-        this.emotionIdx = emotionIdx;
         this.title = title;
         this.contents = contents;
         this.accountIdx = accountIdx;
+        this.deleteYn = deleteYn == null ? 'N' : deleteYn;
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
+        this.modifyDate = modifyDate;
+        this.deleteDate = deleteDate;
     }
 }
