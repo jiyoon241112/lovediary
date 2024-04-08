@@ -3,10 +3,14 @@ package com.lovediary.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.sql.Timestamp;
 
 /**
  *
@@ -24,21 +28,48 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name="date_course")
 public class Course {
     @Id
     private Long idx;
 
     @Column
-    private Long imageIdx;
+    private Long themeIdx;
 
     @Column
-    private String name;
+    private String title;
+
+    @Column
+    private Long accountIdx;
+
+    @Column
+    private Character openYn;
+
+    @Column
+    private Character deleteYn;
+
+    @CreatedDate
+    @Column(updatable = false)
+    private Timestamp registDate;
+
+    @Column
+    private Timestamp modifyDate;
+
+    @Column
+    private Timestamp deleteDate;
 
     @Builder
-    public Course(Long idx, Long imageIdx, String name) {
+    public Course(Long idx, Long themeIdx, String title, Long accountIdx, Character openYn, Character deleteYn, Timestamp registDate,
+                  Timestamp modifyDate, Timestamp deleteDate) {
         this.idx = idx;
-        this.imageIdx = imageIdx;
-        this.name = name;
+        this.themeIdx = themeIdx;
+        this.title = title;
+        this.accountIdx = accountIdx;
+        this.openYn = openYn;
+        this.deleteYn = deleteYn;
+        this.registDate = registDate;
+        this.modifyDate = modifyDate;
+        this.deleteDate = deleteDate;
     }
 
 }

@@ -36,14 +36,14 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
 
     @Query(nativeQuery = true, value =
             "SELECT dp.idx, dp.theme_idx, dp.`type`,dp.`title`, dp.address, pb.place_idx " +
-                    "FROM date_place dp " +
-                    "LEFT JOIN( " +
-                    " SELECT place_idx " +
-                    " FROM place_bookmark pb  " +
-                    ") AS pb " +
-                    "ON dp.idx = pb.place_idx " +
-                    "WHERE dp.delete_yn ='N' " +
-                    "AND dp.title LIKE CONCAT('%', :keyword, '%')")
+            "FROM date_place dp " +
+            "LEFT JOIN( " +
+            " SELECT place_idx " +
+            " FROM place_bookmark pb  " +
+            ") AS pb " +
+            "ON dp.idx = pb.place_idx " +
+            "WHERE dp.delete_yn ='N' " +
+            "AND dp.title LIKE CONCAT('%', :keyword, '%')")
     List<BookMarkPlace> placeList(String keyword);
 
     Place findByIdxAndDeleteYn(Long idx, Character deleteYn);
