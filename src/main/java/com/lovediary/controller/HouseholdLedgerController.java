@@ -26,7 +26,6 @@ public class HouseholdLedgerController {
 
     @GetMapping("/household/detail")
     public String householdLedgerDetailPage(Model model) {
-//        HouseholdLedgerDto householdLedgerDto = householdLedgerService.getOne(idx);
         model.addAttribute("monthAmount", householdLedgerService.monthTotal());
         model.addAttribute("totalAmount", householdLedgerService.monthTotalAmount());
         return "pages/household_ledger/household_ledger_detail";

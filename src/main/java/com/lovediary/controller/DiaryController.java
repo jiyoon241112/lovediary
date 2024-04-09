@@ -1,8 +1,5 @@
 package com.lovediary.controller;
 
-import com.lovediary.dto.AlarmDto;
-import com.lovediary.dto.DiaryDto;
-import com.lovediary.service.AlarmService;
 import com.lovediary.service.DiaryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
