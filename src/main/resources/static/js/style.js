@@ -8,6 +8,11 @@ $("#back_btn").click(function() {
     history.back();
 });
 
+// 팝업 이벤트 버블링 방지
+$(".popup").on("scroll click", function(e) {
+    e.stopPropagation();
+});
+
 // 팝업 닫기
 $(".pop_close").click(function() {
     $(".popup, .pop").hide();
@@ -19,6 +24,6 @@ function onPopup(id = "") {
 
     if(id) {
         id.replace("#", "");
-        $(`#{id}`).show();
+        $(`#${id}`).show();
     }
 }

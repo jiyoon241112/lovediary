@@ -1,41 +1,46 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="common/head.html"></head>
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <body>
+	<input type="hidden" id="idx" th:value="${balance.idx}">
 	<div class="body">
 		<div class="logo center_a"></div>
 		<p class="title_t center_t bold_t">밸런스 게임</p>
 		<section class="center_a card mt_30">
 			<div class="form_group">
-				<input type="text" class="input" placeholder="제목*" />
-				<div class="editor h_300"></div>
+				<input type="text" id="title" class="input" placeholder="제목*" />
+				<div id="editor" class="editor h_300"></div>
 				<div class="division_line w_full"></div>
-				<div class="h_200 w_full scroll">
-					<p class="money bold_t left_t">1</p>
-					<p class="money bold_t left_t">2</p>
+				<div id="answer_list" class="mh_200 w_full scroll">
+					<p class="money bold_t left_t" th:each="item : ${item_list}" th:data-idx="${item.idx}" th:text="${item.title}"></p>
 				</div>
 				<div class="form_group inline_block">
-					<a class="btn w_270 active_btn bold_t">답변 추가</a>
+					<a id="add_answer" class="btn w_270 active_btn bold_t">답변 추가</a>
 				</div>
 			</div>
 		</section>
 	</div>
 	<div class="footer">
-		<a class="btn disable_btn">돌아가기</a>
-		<a class="btn active_btn">저장</a>
+		<a id="back_btn" class="btn disable_btn">돌아가기</a>
+		<a id="save_btn" class="btn active_btn">저장</a>
 	</div>
-	<div class="popup">
-		<div class="background"></div>
-		<section class="center_a card mt_30">
+	<div class="popup" style="display: none;">
+		<div class="background pop_close"></div>
+		<section id="add_answer_pop" class="center_a card mt_30 pop" style="display: none;">
 			<p class="title_t center_t bold_t">답변 추가</p>
 			<div class="form_group ml_5p">
-				<input type="text" class="input" placeholder="답변*" />
+				<input type="hidden" id="answer_idx" value=""/>
+				<input type="text" id="answer_contents" class="input" placeholder="답변*" />
 				<div class="form_group inline_block">
-					<a class="btn w_270 disable_btn bold_t">닫기</a>
-					<a class="btn w_270 active_btn bold_t ml_30">저장</a>
+					<a class="btn w_270 disable_btn bold_t pop_close">닫기</a>
+					<a id="save_answer" class="btn w_270 active_btn bold_t ml_30">저장</a>
 				</div>
 			</div>
 		</section>
 	</div>
 </body>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script type="application/javascript" th:src="@{/js/editor.js}" defer></script>
+<script type="application/javascript" th:src="@{/js/balance_save.js}"></script>
 </html>
