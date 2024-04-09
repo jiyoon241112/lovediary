@@ -24,21 +24,23 @@ public class HouseholdLedgerController {
         return "pages/household_ledger/household_ledger";
     }
 
-    @GetMapping("/household/detail/{idx}")
-    public String householdLedgerDetailPage(@PathVariable("idx") Long idx, Model model) {
-        HouseholdLedgerDto householdLedgerDto = householdLedgerService.getOne(idx);
+    @GetMapping("/household/detail")
+    public String householdLedgerDetailPage(Model model) {
+//        HouseholdLedgerDto householdLedgerDto = householdLedgerService.getOne(idx);
         model.addAttribute("monthAmount", householdLedgerService.monthTotal());
         model.addAttribute("totalAmount", householdLedgerService.monthTotalAmount());
         return "pages/household_ledger/household_ledger_detail";
     }
 
     @GetMapping("/household/regist")
-    public String householdLedgerRegistPage() {
+    public String householdLedgerRegistPage(Model model) {
+        model.addAttribute("detail", new HouseholdLedgerDto());
         return "pages/household_ledger/household_ledger_edit";
     }
 
-    @GetMapping("/household/modify")
-    public String householdLedgerModifyPage() {
+    @GetMapping("/household/modify/{idx}")
+    public String householdLedgerModifyPage(@PathVariable("idx") Long idx, Model model) {
+        model.addAttribute("detail", householdLedgerService.getOne(idx));
         return "pages/household_ledger/household_ledger_edit";
     }
 }
