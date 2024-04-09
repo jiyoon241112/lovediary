@@ -12,8 +12,7 @@ $(".active_btn").click(function() {
     const due_date = $("#due_date").val();
     const amount = $("#amount").val().replace(/,/g, '');
     const contents = $("#content").val();
-    // const categoryIdx = 
-
+    let idx = $(".form_group").data('idx');
     let type = $('input[name=type]:checked').val();
 
     if(!due_date) {
@@ -36,14 +35,18 @@ $(".active_btn").click(function() {
         return;
     }
 
-
     let form_data = new FormData;
     form_data.append("due_date", due_date);
     form_data.append("amount", amount);
     form_data.append("contents", contents);
     form_data.append("type", type);
 
+    if(idx !== undefined && idx !== null) {
+        form_data.append("idx", idx);
+    }
+
     save(form_data);
+
 });
 
 function save(form_data, retry = false) {
@@ -60,7 +63,7 @@ function save(form_data, retry = false) {
             }
 
             if(data.code === "200") {
-                location.replace("/");
+                location.href = "/household";
             }
         }, error: function () {
             if(!retry) save(form_data, true);
