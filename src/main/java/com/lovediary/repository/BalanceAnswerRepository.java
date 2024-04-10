@@ -16,4 +16,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *  2024-04-07          HTH             최초 등록
  **/
 public interface BalanceAnswerRepository extends JpaRepository<BalanceAnswer, Long> {
+    BalanceAnswer findByBalanceIdxAndAccountIdx(Long balanceIdx, Long accountIdx);
 }

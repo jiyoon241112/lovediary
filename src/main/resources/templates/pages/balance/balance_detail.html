@@ -22,7 +22,7 @@
 					<div class="h_200 scroll" th:utext="${balance.contents}">
 					</div>
 					<div id="answer_list" class="w_full">
-						<p class="money bold_t left_t" th:each="item : ${item_list}" th:data-idx="${item.idx}" th:text="${item.title}"></p>
+						<p th:each="item : ${item_list}" th:class="${#strings.equals(selected_idx, item.idx) ? 'money bold_t left_t on' : 'money bold_t left_t'}" th:data-idx="${item.idx}" th:text="${item.title}"></p>
 					</div>
 				</div>
 			</div>

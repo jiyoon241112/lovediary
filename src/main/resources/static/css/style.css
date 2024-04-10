@@ -159,6 +159,7 @@ section.card {width: 90%; margin-left: 5%; padding: 10px 0;}
 
 /* 가계부 */
 .money {height: 40px; line-height: 40px; padding: 0 20px; border-radius: 10px; border: solid 2px #ff6969; background-color: #ffffff; font-size: 15px;}
+.money.on {background-color: #ffc6c6;}
 .plus::before {content: '+ ';}
 .minus::before {content: '- ';}
 
