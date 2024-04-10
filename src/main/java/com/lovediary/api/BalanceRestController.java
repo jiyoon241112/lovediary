@@ -3,6 +3,7 @@ package com.lovediary.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lovediary.dto.BalanceAnswerDto;
 import com.lovediary.dto.BalanceDto;
 import com.lovediary.dto.BalanceItemDto;
 import com.lovediary.service.BalanceService;
@@ -66,6 +67,28 @@ public class BalanceRestController {
         }
 
         return new ResponseData(constValues.DONE, "저장되었습니다.", result);
+    }
+
+    // 선택 저장
+    @PostMapping("/balance/save_answer")
+    public ResponseData saveSelect(@RequestParam(name = "idx") Long idx, @RequestParam(name = "item_idx", required = false) Long itemIdx) {
+        if(idx == null || itemIdx == null) {
+            return new ResponseData(constValues.ERROR, "실패", null);
+        }
+
+        BalanceAnswerDto answer = balanceService.getAnswer(idx, 1L);
+        if(answer == null) {
+            answer = BalanceAnswerDto.builder()
+                        .balanceIdx(idx)
+                        .accountIdx(1L)
+                        .build();
+        }
+
+        answer.setBalanceItemIdx(itemIdx);
+
+        balanceService.saveAnswer(answer);
+
+        return new ResponseData(constValues.DONE, "성공", null);
     }
 
     // 댓글 저장

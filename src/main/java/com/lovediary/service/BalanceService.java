@@ -91,6 +91,20 @@ public class BalanceService {
         return balanceItemRepository.save(balanceItem.toEntity()).getIdx();
     }
 
+    // 선택지 조회
+    @Transactional
+    public BalanceAnswerDto getAnswer(Long idx, Long accountIdx) {
+        BalanceAnswer answer = balanceAnswerRepository.findByBalanceIdxAndAccountIdx(idx, accountIdx);
+
+        return convertToDto(answer);
+    }
+
+    // 선택지 선택
+    @Transactional
+    public Long saveAnswer(BalanceAnswerDto balanceAnswer) {
+        return balanceAnswerRepository.save(balanceAnswer.toEntity()).getIdx();
+    }
+
     // 댓글 목록 조회
     @Transactional
     public List<BalanceReplyDto> getCommentList(Long idx, Long replyIdx) {
@@ -151,6 +165,10 @@ public class BalanceService {
 
     // 답변 DTO 변환
     private BalanceAnswerDto convertToDto(BalanceAnswer answer) {
+        if(answer == null) {
+            return null;
+        }
+
         return BalanceAnswerDto.builder()
                 .idx(answer.getIdx())
                 .balanceIdx(answer.getBalanceIdx())

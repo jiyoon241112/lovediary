@@ -41,12 +41,12 @@ $("#answer_list").on("click", "p", function() {
     form_data.append("idx", idx);
     form_data.append("item_idx", item_idx);
 
-    saveSelect(form_data);
+    saveAnswer(form_data);
 });
 
-function saveSelect(form_data, retry = false) {
+function saveAnswer(form_data, retry = false) {
     $.ajax({
-        url: '/balance/save_select',
+        url: '/balance/save_answer',
         method: 'post',
         data : form_data,
         contentType: false,
@@ -55,15 +55,11 @@ function saveSelect(form_data, retry = false) {
             const msg = data.msg ?? null;
             const code = data.code ?? null;
 
-            if(msg ?? null) {
-                alert(msg);
-            }
-
             if(code === "200") {
                 location.reload();
             }
         }, error: function () {
-            if(!retry) saveComment(form_data, true);
+            if(!retry) saveAnswer(form_data, true);
         }
     });
 }
