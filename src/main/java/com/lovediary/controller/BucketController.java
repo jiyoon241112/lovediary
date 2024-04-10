@@ -39,8 +39,10 @@ public class BucketController {
         return "pages/bucket/bucket";
     }
 
-    @GetMapping("/bucket/item")
-    public String bucketItemPage() {
+    @GetMapping("/bucket/item/{idx}")
+    public String bucketItemPage(@PathVariable("idx") Long idx, Model model) {
+        model.addAttribute("idx", idx);
+        model.addAttribute("detail", bucketService.getItemOne(idx));
         return "pages/bucket/bucket_item";
     }
 }

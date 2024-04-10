@@ -1,9 +1,6 @@
 package com.lovediary.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,7 +26,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="bucket_item")
 public class BucketItem {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column
@@ -88,14 +85,14 @@ public class BucketItem {
         this.title = title;
         this.contents = contents;
         this.address = address;
-        this.achieveYn = achieveYn;
+        this.achieveYn = achieveYn == null ? 'N' : achieveYn;
         this.addressDetail = addressDetail;
         this.latitude = latitude;
         this.longitude = longitude;
         this.achieveDate = achieveDate;
         this.accountIdx = accountIdx;
-        this.deleteYn = deleteYn;
-        this.registDate = registDate;
+        this.deleteYn = deleteYn == null ? 'N' : deleteYn;
+        this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.modifyDate = modifyDate;
         this.deleteDate = deleteDate;
     }
