@@ -1,5 +1,6 @@
 package com.lovediary.controller;
 
+import com.lovediary.dto.BalanceAnswerDto;
 import com.lovediary.dto.BalanceDto;
 import com.lovediary.dto.BalanceItemDto;
 import com.lovediary.dto.BalanceReplyDto;
@@ -40,8 +41,15 @@ public class BalanceController {
 
     @GetMapping("/balance/detail/{idx}")
     public String balanceDetailPage(@PathVariable(name = "idx") Long idx, Model model) {
+        BalanceAnswerDto answer = balanceService.getAnswer(idx, 1L);
+        Long selectedIdx = null;
+        if(answer != null) {
+            selectedIdx = answer.getBalanceItemIdx();
+        }
+
         model.addAttribute("balance", balanceService.getOne(idx));
         model.addAttribute("item_list", balanceService.getItemList(idx));
+        model.addAttribute("selected_idx", selectedIdx);
         model.addAttribute("comment_list", balanceService.getCommentList(idx, null));
         return "pages/balance/balance_detail";
     }

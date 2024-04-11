@@ -6,22 +6,22 @@
 		<div class="logo center_a"></div>
 		<p class="title_t center_t bold_t">가계부</p>
 		<section class="center_a card mt_30">
-			<div class="form_group">
+			<div class="form_group" th:data-idx="${detail.idx}">
 				<div class="space_evenly w_full mb_15">
 					<div class="checkbox">
 						<label class="flex">
-							<input type="radio" id="check2" name="type" value="I"/><label></label>
+							<input type="radio" id="check2" name="type" value="I" th:checked="${#strings.equals(detail.type, 'I')}"/><label></label>
 							<p class="inline_block f_30">입금</p>
 						</label>
 						<label class="flex">
-							<input type="radio" id="check1" name="type" value="O"/><label></label>
+							<input type="radio" id="check1" name="type" value="O" th:checked="${#strings.equals(detail.type, 'O')}"/><label></label>
 							<p class="inline_block f_30">출금</p>
 						</label>
 					</div>
 				</div>
-				<input type="text" id="due_date" class="input" placeholder="발생일*" />
-				<input type="text" id="amount" class="input" placeholder="금액*" oninput="amountFormat()"/>
-				<input type="text" id="content" class="input" placeholder="상세 내역*" />
+				<input type="text" id="due_date" class="input" placeholder="발생일*" th:value="${detail.dueDate}"/>
+				<input type="text" id="amount" class="input" placeholder="금액*" oninput="amountFormat()" th:value="${#numbers.formatInteger(detail.amount, 3, 'COMMA')}"/>
+				<input type="text" id="content" class="input" placeholder="상세 내역*" th:value="${detail.contents}"/>
 				<div class="circle_group">
 					<div class="left_t">
 						<div class="circle_btn ml_30 br_0 income_payment_img on" th:data-idx = "1"></div>

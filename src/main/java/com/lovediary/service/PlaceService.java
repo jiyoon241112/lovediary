@@ -13,14 +13,12 @@ package com.lovediary.service;
  **/
 import com.lovediary.dto.*;
 import com.lovediary.entity.Place;
-import com.lovediary.entity.Timecapsule;
 import com.lovediary.repository.PlaceRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PlaceService {

@@ -1,49 +1,50 @@
 package com.lovediary.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
-
 import java.sql.Timestamp;
 
 /**
  *
- * Course
+ * Bucket
  *
  * @author JJY
  * @version 1.0.0
- * @date 2024-04-03
+ * @date 2024-04-09
  * ========================================================
  *  DATE                AUTHOR          NOTE
  * ========================================================
- *  2024-04-03          JJY             최초 등록
+ *  2024-04-09          JJY             최초 등록
  **/
-
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name="date_course")
-public class Course {
-    @Id
+@Table(name="bucket")
+public class Bucket {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column
-    private Long themeIdx;
+    private Long thumbnailIdx;
 
     @Column
     private String title;
 
     @Column
-    private Long accountIdx;
+    private String contents;
 
     @Column
-    private Character openYn;
+    private Character achieveYn;
+
+    @Column
+    private Timestamp achieveDate;
+
+    @Column
+    private Long accountIdx;
 
     @Column
     private Character deleteYn;
@@ -59,17 +60,18 @@ public class Course {
     private Timestamp deleteDate;
 
     @Builder
-    public Course(Long idx, Long themeIdx, String title, Long accountIdx, Character openYn, Character deleteYn, Timestamp registDate,
-                  Timestamp modifyDate, Timestamp deleteDate) {
+    public Bucket(Long idx, Long thumbnailIdx, String title, String contents, Character achieveYn, Timestamp achieveDate,
+                  Long accountIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate) {
         this.idx = idx;
-        this.themeIdx = themeIdx;
+        this.thumbnailIdx = thumbnailIdx;
         this.title = title;
+        this.contents = contents;
+        this.achieveYn = achieveYn == null ? 'N' : achieveYn;
+        this.achieveDate = achieveDate;
         this.accountIdx = accountIdx;
-        this.openYn = openYn;
-        this.deleteYn = deleteYn;
-        this.registDate = registDate;
+        this.deleteYn = deleteYn == null ? 'N' : deleteYn;
+        this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.modifyDate = modifyDate;
         this.deleteDate = deleteDate;
     }
-
 }

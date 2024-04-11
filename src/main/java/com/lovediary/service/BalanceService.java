@@ -66,6 +66,12 @@ public class BalanceService {
         return convertToDto(balance);
     }
 
+    // 생성/수정
+    @Transactional
+    public Long saveItem(BalanceDto balance) {
+        return balanceRepository.save(balance.toEntity()).getIdx();
+    }
+
     // 선택지 조회
     @Transactional
     public List<BalanceItemDto> getItemList(Long idx) {
@@ -77,6 +83,26 @@ public class BalanceService {
         }
 
         return resultList;
+    }
+
+    // 선택지 생성/수정
+    @Transactional
+    public Long saveItem(BalanceItemDto balanceItem) {
+        return balanceItemRepository.save(balanceItem.toEntity()).getIdx();
+    }
+
+    // 선택지 조회
+    @Transactional
+    public BalanceAnswerDto getAnswer(Long idx, Long accountIdx) {
+        BalanceAnswer answer = balanceAnswerRepository.findByBalanceIdxAndAccountIdx(idx, accountIdx);
+
+        return convertToDto(answer);
+    }
+
+    // 선택지 선택
+    @Transactional
+    public Long saveAnswer(BalanceAnswerDto balanceAnswer) {
+        return balanceAnswerRepository.save(balanceAnswer.toEntity()).getIdx();
     }
 
     // 댓글 목록 조회
@@ -99,6 +125,19 @@ public class BalanceService {
         BalanceReply reply = wrapper.get();
 
         return convertToDto(reply);
+    }
+
+    // 댓글 저장
+    @Transactional
+    public Long saveComment(Long idx, Long replyIdx, String contents) {
+        BalanceReplyDto replyDto = BalanceReplyDto.builder()
+                .balanceIdx(idx)
+                .replyIdx(replyIdx)
+                .contents(contents)
+                .accountIdx(1L)
+                .build();
+
+        return balanceReplyRepository.save(replyDto.toEntity()).getIdx();
     }
 
     // 밸런스 게임 DTO 변환
@@ -126,6 +165,10 @@ public class BalanceService {
 
     // 답변 DTO 변환
     private BalanceAnswerDto convertToDto(BalanceAnswer answer) {
+        if(answer == null) {
+            return null;
+        }
+
         return BalanceAnswerDto.builder()
                 .idx(answer.getIdx())
                 .balanceIdx(answer.getBalanceIdx())

@@ -1,20 +1,20 @@
 package com.lovediary.repository;
 
-import com.lovediary.entity.BalanceAnswer;
+import com.lovediary.entity.Drive;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * 
- * BalanceAnswerRepository
+ * DriveRepository
  * 
  * @author HTH
  * @version 1.0.0
- * @date 2024-04-07
+ * @date 2024-04-10
  * ========================================================
  *  DATE                AUTHOR          NOTE 
  * ========================================================
- *  2024-04-07          HTH             최초 등록
+ *  2024-04-10          HTH             최초 등록
  **/
-public interface BalanceAnswerRepository extends JpaRepository<BalanceAnswer, Long> {
-    BalanceAnswer findByBalanceIdxAndAccountIdx(Long balanceIdx, Long accountIdx);
+public interface DriveRepository extends JpaRepository<Drive, Long> {
+    Drive findByCoupleIdx(Long coupleIdx);
 }

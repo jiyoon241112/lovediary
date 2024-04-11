@@ -2,11 +2,15 @@ $(".active_btn").click(function() {
     location.href = "/household/regist";
 });
 
-function clickHouseHold(element){
+function houseHoldSave(element){
     let idx = $(element).data('idx');
 
-    location.href = "/household/detail/" + idx;
+    location.href = "/household/modify/" + idx;
 }
+
+$(".money").click(function() {
+    location.href = "/household/detail";
+});
 
 let params;
 $('#check1').click(function() {

@@ -7,9 +7,9 @@
 		<div class="logo center_a"></div>
 		<p class="title_t center_t bold_t">버킷리스트</p>
 		<section class="center_a card mt_30">
-			<div class="form_group">
-				<input type="text" class="input" placeholder="제목*" />
-				<div id="editor" class="editor"></div>
+			<div class="form_group" th:data-idx="${detail.idx}">
+				<input type="text" id="bucket_title" class="input" placeholder="제목*" th:value="${detail.title}"/>
+				<div id="editor" class="editor" th:text="${detail.contents}"></div>
 			</div>
 		</section>
 	</div>
@@ -20,4 +20,5 @@
 </body>
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script type="application/javascript" th:src="@{/js/editor.js}" defer></script>
+<script type="application/javascript" th:src="@{/js/bucket_save.js}"></script>
 </html>
