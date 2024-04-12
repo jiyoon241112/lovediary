@@ -8,6 +8,7 @@ import com.lovediary.values.constValues;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 /**
  * 
@@ -47,5 +48,17 @@ public class DiaryRestController {
         diaryService.saveItem(diaryDto);
 
         return new ResponseData(constValues.DONE, "오늘의 일기가 저장되었습니다.", null);
+    }
+
+    // 댓글 저장
+    @PostMapping("/diary/save_comment")
+    public ResponseData saveComment(HttpServletRequest request, @RequestParam(name = "couple_diary_idx") Long idx, @RequestParam(name = "contents") String contents) {
+        if(contents == null || contents.isEmpty()) {
+            return new ResponseData(constValues.ERROR, "내용을 입력해주세요.", null);
+        }
+
+        Long result = diaryService.saveComment(idx, contents);
+
+        return new ResponseData(constValues.DONE, "댓글이 저장되었습니다.", result);
     }
 }

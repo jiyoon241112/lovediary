@@ -35,6 +35,7 @@ public class BucketRestController {
         this.bucketService = service;
     }
 
+    //버킷리스트 저장
     @PostMapping("/bucket/save")
     public ResponseData bucketSave(HttpServletRequest request, BucketDto bucketDto){
         HttpSession session = request.getSession(true);
@@ -55,6 +56,7 @@ public class BucketRestController {
         return new ResponseData(constValues.DONE, "버킷리스트가 저장되었습니다.", null);
     }
 
+    //항목 저장
     @PostMapping("/bucket/item/save")
     public ResponseData bucketItemSave(HttpServletRequest request, @RequestParam(name = "date", required = false) String achieveDate, BucketItemDto bucketItemDto) throws ParseException {
         HttpSession session = request.getSession(true);
