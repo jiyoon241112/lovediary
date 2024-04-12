@@ -1,8 +1,6 @@
 package com.lovediary.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,7 +27,7 @@ import java.sql.Timestamp;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Couple {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column(length = 100)
