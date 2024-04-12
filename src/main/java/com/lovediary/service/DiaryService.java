@@ -1,7 +1,9 @@
 package com.lovediary.service;
 
+import com.lovediary.dto.CommunityReplyDto;
 import com.lovediary.dto.DiaryCommentDto;
 import com.lovediary.dto.DiaryDto;
+import com.lovediary.entity.CommunityReply;
 import com.lovediary.entity.Diary;
 import com.lovediary.entity.DiaryComment;
 import com.lovediary.repository.DiaryCommentRepository;
@@ -78,6 +80,19 @@ public class DiaryService {
     public Long saveItem(DiaryDto diaryDto) {
         return diaryRepository.save(diaryDto.toEntity()).getIdx();
     }
+
+    // 댓글 저장
+    @Transactional
+    public Long saveComment(Long coupleDiaryIdx, String contents) {
+        DiaryCommentDto replyDto = DiaryCommentDto.builder()
+                .coupleDiaryIdx(coupleDiaryIdx)
+                .contents(contents)
+                .accountIdx(2L)
+                .build();
+
+        return diaryCommentRepository.save(replyDto.toEntity()).getIdx();
+    }
+
 
     // Dto 변환
     private DiaryDto convertToDto(Diary diary) {

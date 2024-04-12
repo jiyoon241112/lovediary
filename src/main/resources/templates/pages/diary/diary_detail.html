@@ -25,8 +25,8 @@
 		<section class="center_a">
 			<div class="form_group">
 				<div class="button_input">
-					<input type="tel" class="input" placeholder="댓글" />
-					<a class="btn active_btn">입력</a>
+					<input type="tel" id="comment_input" class="input" placeholder="댓글" />
+					<a id ="comment_btn" class="btn active_btn" th:data-idx="${detail.idx}">입력</a>
 				</div>
 			</div>
 			<section class="center_a">
@@ -45,10 +45,11 @@
 					</div>
 				</div>
 			</section>
-		<section>
+		</section>
 	</div>
 	<div class="footer">
 		<a class="btn disable_btn">돌아가기</a>
 	</div>
 </body>
+<script type="application/javascript" th:src="@{/js/diary_detail.js}"></script>
 </html>
