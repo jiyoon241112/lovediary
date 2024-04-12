@@ -6,6 +6,8 @@ import com.lovediary.dto.FileDto;
 import com.lovediary.values.constValues;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,10 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 /**
  *
@@ -54,18 +53,17 @@ public class FileService {
 
     // 목록 조회
     @Transactional
-    public FileDto getOne(Long idx) {
+    public byte[] getOne(Long idx) throws IOException {
         Optional<File> wrapper = fileRepository.findById(idx);
         File file = wrapper.get();
 
-        return convertToDto(file);
+        return Files.readAllBytes(new java.io.File(uploadPath, file.getPath()).toPath());
     }
 
     // 업로드
     @Transactional
     public Long saveItem(MultipartFile uploadFile, Integer type) throws IOException {
         StringBuilder builder = new StringBuilder();
-        builder.append(uploadPath);
 
         // type 1: 프로필, 2: 커뮤니티/밸런스 게임
         if(type == 1) {
@@ -78,7 +76,7 @@ public class FileService {
 
         // 디렉토리 없으면 생성
         String savePath = builder.toString();
-        java.io.File uploadPathFolder = new java.io.File(builder.toString());
+        java.io.File uploadPathFolder = new java.io.File(uploadPath, builder.toString());
 
         if(!uploadPathFolder.exists()) {
             uploadPathFolder.mkdirs();
@@ -88,7 +86,7 @@ public class FileService {
         builder.append(uploadFile.getOriginalFilename());
         savePath = builder.toString();
 
-        Path path = Paths.get(savePath);
+        Path path = Paths.get(uploadPath + savePath);
         uploadFile.transferTo(path);
 
         // DB INSERT

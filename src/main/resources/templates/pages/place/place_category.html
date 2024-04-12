@@ -14,7 +14,7 @@
 		<ul class="item_list">
 			<li th:each="place : ${list}" th:data-idx="${place.idx}" onclick="clickCategory(this)">
 				<div class="relatived w_full">
-					<p class="theme_new_year_img"></p>
+					<p class="theme_img" th:style="|background-image: url('/view/image/${place.imageIdx}');|"></p>
 					<div th:class="${place.themeIdx != null} ? 'absoluted t_0 r_0 heart_img on' : 'absoluted t_0 r_0 heart_img'"></div>
 				</div>
 				<p class="center_t" th:text="${place.name}"></p>

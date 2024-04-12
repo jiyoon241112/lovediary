@@ -13,7 +13,7 @@ $("#upload_file").on("change", function() {
     form_data.append("file", upload_file);
     form_data.append("type", 1);
 
-    // fileUpload(form_data);
+    fileUpload(form_data);
     getBase64(upload_file, function(e) {
         $("#profile_image").css("background-image", `url('${e.srcElement.result}')`).removeClass("no_image");
     });
