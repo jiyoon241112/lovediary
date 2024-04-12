@@ -26,7 +26,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="couple_diary_reply")
 public class DiaryComment {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column
@@ -58,8 +58,8 @@ public class DiaryComment {
         this.coupleDiaryIdx = coupleDiaryIdx;
         this.contents = contents;
         this.accountIdx = accountIdx;
-        this.deleteYn = deleteYn;
-        this.registDate = registDate;
+        this.deleteYn = deleteYn == null ? 'N' : deleteYn;
+        this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.modifyDate = modifyDate;
         this.deleteDate = deleteDate;
     }

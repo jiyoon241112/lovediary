@@ -1,13 +1,16 @@
 // 버킷리스트 쓰기
 $(".active_btn").click(function() {
+    const idx = $("#item_idx").val();
+    const bucket_idx = $("#bucket_idx").val();
     const title = $("#bucket_title").val();
     const contents = getEditorContent();
-    const achieveDate = $("#achieve_date").val();
+    const achieve_date = $("#achieve_date").val();
     const address = $("#address").val();
-    const addressDetail = $("#address_detail").val();
-    let achieveYn = $('input[name=achieve_yn]:checked').val();
-    let bucketIdx = $(".form_group.mb_30").data('idx');
-        // let idx = $(".form_group").data('idx');
+    const address_detail = $("#address_detail").val();
+    let achieve_yn = $('input[name=achieve_yn]:checked').val();
+    if (achieve_yn == null || achieve_yn == undefined) {
+        achieve_yn = 'N';
+    }
 
     if(!title) {
         alert("제목을 입력해주세요.");
@@ -20,16 +23,14 @@ $(".active_btn").click(function() {
     }
 
     let form_data = new FormData;
+    form_data.append("idx", idx);
+    form_data.append("bucketIdx", bucket_idx);
     form_data.append("title", title);
     form_data.append("contents", contents);
-    form_data.append("date", achieveDate);
+    form_data.append("date", achieve_date);
     form_data.append("address", address);
-    form_data.append("addressDetail", addressDetail);
-    form_data.append("achieveYn", achieveYn);
-    form_data.append("bucketIdx", bucketIdx);
-    // if(idx !== undefined && idx !== null) {
-    //     form_data.append("idx", idx);
-    // }
+    form_data.append("addressDetail", address_detail);
+    form_data.append("achieveYn", achieve_yn);
 
     save(form_data);
 });
@@ -55,3 +56,8 @@ function save(form_data, retry = false) {
         }
     });
 }
+
+$(".disable_btn").click(function (){
+    let idx = $("#bucket_idx").val();
+    location.href= "/bucket/detail/" + idx;
+});

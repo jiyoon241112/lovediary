@@ -3,14 +3,16 @@
 <head th:insert="common/head.html"></head>
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <body>
+	<input type="hidden" id="item_idx" th:value="${detail.idx}">
+	<input type="hidden" id="bucket_idx" th:value="${bucket_idx != null ? bucket_idx : detail.bucketIdx}">
 	<div class="body">
 		<div class="logo center_a"></div>
 		<p class="title_t center_t bold_t">버킷리스트</p>
 		<section class="center_a card mt_30">
-			<div class="form_group mb_30" th:data-idx="${idx}">
+			<div class="form_group mb_30">
 				<input type="text" id="bucket_title" class="input" placeholder="제목*" th:value="${detail.title}"/>
 				<div id="editor" class="editor h_300" th:utext="${detail.contents}"></div>
-				<input type="text" id="achieve_date" class="input" placeholder="목표일자" th:value="${detail.achieveDate}"/>
+				<input type="text" id="achieve_date" class="input" placeholder="목표일자" th:value="${#dates.format(detail.achieveDate, 'YYYY-MM-dd')}"/>
 				<input type="text" id="address" class="input" placeholder="주소" th:value="${detail.address}"/>
 				<input type="text" id="address_detail" class="input" placeholder="상세주소" th:value="${detail.addressDetail}"/>
 				<div class="label_t right_t mr_30">

@@ -15,3 +15,12 @@ function clickItem(element){
     location.href = "/bucket/item/" + idx;
 }
 
+$(".add_btn").click(function (){
+    let idx = $(".bucket_idx").data('idx');
+    location.href = "/bucket/item?bucket_idx=" + idx;
+});
+
+$(".disable_btn").click(function(){
+   location.href = "/bucket";
+});
+

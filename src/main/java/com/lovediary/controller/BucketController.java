@@ -1,12 +1,14 @@
 package com.lovediary.controller;
 
 import com.lovediary.dto.BucketDto;
+import com.lovediary.dto.BucketItemDto;
 import com.lovediary.dto.HouseholdLedgerDto;
 import com.lovediary.service.BucketService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class BucketController {
@@ -39,10 +41,15 @@ public class BucketController {
         return "pages/bucket/bucket";
     }
 
-    @GetMapping("/bucket/item/{idx}")
-    public String bucketItemPage(@PathVariable("idx") Long idx, Model model) {
-        model.addAttribute("idx", idx);
-        model.addAttribute("detail", bucketService.getItemOne(idx));
+    @GetMapping( value = {"/bucket/item", "/bucket/item/{idx}"})
+    public String bucketItemPage(@PathVariable(name = "idx", required = false) Long idx, @RequestParam(name="bucket_idx", required = false) Long bucketIdx, Model model) {
+        BucketItemDto bucketItem = new BucketItemDto();
+
+        if(idx != null) {
+            bucketItem = bucketService.getItemOne(idx);
+        }
+        model.addAttribute("bucket_idx", bucketIdx);
+        model.addAttribute("detail", bucketItem);
         return "pages/bucket/bucket_item";
     }
 }
