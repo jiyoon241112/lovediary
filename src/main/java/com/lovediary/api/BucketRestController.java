@@ -68,12 +68,16 @@ public class BucketRestController {
             return new ResponseData(constValues.ERROR, "내용을 입력해주세요.", null);
         }
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        formatter.setLenient(false);
-        Date date = formatter.parse(achieveDate);
+        Timestamp timestamp = null;
+        if(achieveDate != null && !achieveDate.isEmpty()) {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            formatter.setLenient(false);
+            Date date = formatter.parse(achieveDate);
+            timestamp = new Timestamp(date.getTime());
+        }
 
         bucketItemDto.setAccountIdx(2L);
-        bucketItemDto.setAchieveDate(new Timestamp(date.getTime()));
+        bucketItemDto.setAchieveDate(timestamp);
 
         bucketService.saveBucketItem(bucketItemDto);
 
