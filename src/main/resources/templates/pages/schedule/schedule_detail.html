@@ -29,12 +29,12 @@
 			</div>
 		</section>
 		<div class="division_line mb_30"></div>
-		<div class="money vertical_center twin w_90p ml_5p">
-			<p class="mt_0 w_70p bold_t left_t skip_text">기상</p>
-			<div class="w_20p mt_0 bold_t">07:00</div>
+		<div id="schedule_idx" class="money vertical_center twin w_90p ml_5p" th:each="schedule : ${schedule_list}" th:data-idx="${schedule.idx}" onclick="editSchedule(this)">
+			<p class="mt_0 w_70p bold_t left_t skip_text" th:text="${schedule.title}">기상</p>
+			<div class="w_20p mt_0 bold_t" th:text="${#dates.format(schedule.startDate, 'HH:mm')}">07:00</div>
 		</div>
 		<div class="form_group inline_block">
-			<a class="btn w_270 active_btn bold_t">일정 추가</a>
+			<a id="add_btn" class="btn w_270 active_btn bold_t">일정 추가</a>
 		</div>
 	</div>
 	<div class="footer">
@@ -42,21 +42,24 @@
 	</div>
 	<div class="popup" style="display: none;">
 		<div class="background"></div>
-		<section class="center_a card mt_30" style="display: none;">
+		<section id="schedule_popup" class="center_a card mt_30" style="display: none;">
 			<p class="title_t center_t bold_t">일정 추가</p>
 			<div class="form_group ml_5p">
-				<input type="text" class="input" placeholder="제목*" />
-				<input type="text" class="input" placeholder="시작일자*" />
-				<input type="text" class="input" placeholder="종료일자*" />
-				<input type="text" class="input" placeholder="주소" />
-				<input type="text" class="input" placeholder="상세 주소" />
+				<input type="hidden" id="add_idx" />
+				<input type="text" id="schedule_title" class="input" placeholder="제목*" />
+				<input type="text" id="start_date" class="input" placeholder="시작일자*" />
+				<input type="text" id="end_date" class="input" placeholder="종료일자" />
+				<input type="text" id="address" class="input" placeholder="주소" />
+				<input type="text" id="address_detail" class="input" placeholder="상세 주소" />
 				<div class="form_group inline_block">
-					<a class="btn w_270 disable_btn bold_t">닫기</a>
-					<a class="btn w_270 active_btn bold_t ml_30">저장</a>
+					<a class="btn w_270 disable_btn bold_t pop_close">닫기</a>
+					<a id="schedule_save" class="btn w_270 active_btn bold_t ml_30">저장</a>
 				</div>
 			</div>
 		</section>
 	</div>
 </body>
 <script type="application/javascript" th:src="@{/js/calendar.js}"></script>
+<script type="application/javascript" th:src="@{/js/schedule.js}"></script>
+<script type="application/javascript" th:src="@{/js/style.js}"></script>
 </html>
