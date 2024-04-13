@@ -1,5 +1,6 @@
 package com.lovediary.dto;
 
+import com.lovediary.entity.Account;
 import com.lovediary.entity.CommunityReply;
 import lombok.*;
 
@@ -27,32 +28,42 @@ public class CommunityReplyDto {
     private Long replyIdx;
     private String contents;
     private Long accountIdx;
+    private String accountName;
+    private Long profileIdx;
     private Character deleteYn;
     private Timestamp registDate;
     private Timestamp modifyDate;
     private Timestamp deleteDate;
 
     public CommunityReply toEntity() {
+        Account account = Account.builder()
+                .idx(accountIdx)
+                .name(accountName)
+                .profileIdx(profileIdx)
+                .build();
+
         return CommunityReply.builder()
                 .idx(idx)
                 .communityIdx(communityIdx)
                 .replyIdx(replyIdx)
                 .contents(contents)
-                .accountIdx(accountIdx)
                 .deleteYn(deleteYn)
                 .registDate(registDate)
                 .modifyDate(modifyDate)
                 .deleteDate(deleteDate)
+                .account(account)
                 .build();
     }
 
     @Builder
-    public CommunityReplyDto(Long idx, Long communityIdx, Long replyIdx, String contents, Long accountIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate) {
+    public CommunityReplyDto(Long idx, Long communityIdx, Long replyIdx, String contents, Long accountIdx, String accountName, Long profileIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate) {
         this.idx = idx;
         this.communityIdx = communityIdx;
         this.replyIdx = replyIdx;
         this.contents = contents;
         this.accountIdx = accountIdx;
+        this.accountName = accountName;
+        this.profileIdx = profileIdx;
         this.deleteYn = deleteYn;
         this.registDate = registDate;
         this.modifyDate = modifyDate;

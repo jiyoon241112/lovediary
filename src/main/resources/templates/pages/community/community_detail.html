@@ -11,8 +11,9 @@
 				<div class="comment card">
 					<div class="twin profile">
 						<div>
-							<div class="profile_img bold_t mt_0">황</div>
-							<span class="profile_name">황태현</span>
+							<div th:if="${community.profileIdx == null}" class="profile_img bold_t mt_0" th:text="${community.accountName.charAt(0)}"></div>
+							<div th:unless="${community.profileIdx == null}" class="profile_img on mt_0" th:style="|background-image: url('/view/image/${community.profileIdx}');|">&nbsp;</div>
+							<span class="profile_name" th:text="${community.accountName}"></span>
 						</div>
 						<div>
 							<span class="regist_date" th:text="${#dates.format(community.registDate, 'YYYY-MM-dd HH:mm')}"></span>
@@ -36,8 +37,9 @@
 					<div class="comment card" th:each="comment : ${comment_list}" th:data-idx="${comment.idx}">
 						<div class="twin profile">
 							<div>
-								<div class="profile_img bold_t mt_0">황</div>
-								<span class="profile_name">황태현</span>
+								<div th:if="${comment.profileIdx == null}" class="profile_img bold_t mt_0" th:text="${comment.accountName.charAt(0)}"></div>
+								<div th:unless="${comment.profileIdx == null}" class="profile_img on mt_0" th:style="|background-image: url('/view/image/${comment.profileIdx}');|">&nbsp;</div>
+								<span class="profile_name" th:text="${comment.accountName}"></span>
 							</div>
 							<div>
 								<span class="regist_date" th:text="${comment.modifyDate == null ? #dates.format(comment.registDate, 'yyyy-MM-dd HH:mm') : #dates.format(comment.modifyDate, 'yyyy-MM-dd HH:mm')}"></span>
