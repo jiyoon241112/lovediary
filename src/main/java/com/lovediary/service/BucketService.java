@@ -38,7 +38,7 @@ public class BucketService {
         this.bucketItemRepository = bucketItemRepository;
     }
 
-    // <버킷리스트 페이지>
+    // 버킷리스트 페이지
     @Transactional
     public List<BucketDto> getList() {
         List<Long> accountIdx = new ArrayList<>();
@@ -55,7 +55,7 @@ public class BucketService {
         return resultList;
     }
 
-    // <버킷리스트 상세 페이지>
+    // 버킷리스트 상세 페이지
     @Transactional
     public BucketDto getOne(Long idx) {
         Optional<Bucket> wrapper = bucketRepository.findById(idx);
@@ -64,7 +64,7 @@ public class BucketService {
         return convertToDto(bucket);
     }
 
-    // <버킷리스트 아이템 리스트 페이지>
+    // 버킷리스트 아이템 리스트 페이지
     @Transactional
     public List<BucketItemDto> getBucketItemList(Long idx) {
         List<BucketItem> itemList = bucketItemRepository.findByBucketIdxOrderByIdxDesc(idx);
@@ -77,7 +77,7 @@ public class BucketService {
         return resultList;
     }
 
-    // <버킷리스트 항목 상세 페이지>
+    // 버킷리스트 항목 상세 페이지
     @Transactional
     public BucketItemDto getItemOne(Long idx) {
         Optional<BucketItem> wrapper = bucketItemRepository.findById(idx);
@@ -86,13 +86,13 @@ public class BucketService {
         return convertToDto(bucketItem);
     }
 
-    // <버킷리스트 작성(저장)>
+    // 버킷리스트 작성(저장)
     @Transactional
     public Long saveItem(BucketDto bucketDto) {
         return bucketRepository.save(bucketDto.toEntity()).getIdx();
     }
 
-    // <버킷리스트 항목 작성(저장)>
+    // 버킷리스트 항목 작성(저장)
     @Transactional
     public Long saveBucketItem(BucketItemDto bucketItemDto) {
         return bucketItemRepository.save(bucketItemDto.toEntity()).getIdx();

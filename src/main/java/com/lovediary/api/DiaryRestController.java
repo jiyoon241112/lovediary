@@ -29,6 +29,7 @@ public class DiaryRestController {
         this.diaryService = service;
     }
 
+    //다이어리 저장
     @PostMapping("/diary/save")
     public ResponseData diarySave(HttpServletRequest request, DiaryDto diaryDto){
         HttpSession session = request.getSession(true);

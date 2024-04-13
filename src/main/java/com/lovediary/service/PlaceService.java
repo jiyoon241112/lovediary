@@ -53,7 +53,7 @@ public class PlaceService {
         return convertToDto(place);
     }
 
-    // Dto 변환
+    // 데이트 장소 Dto 변환
     private PlaceDto convertToDto(Place place) {
         return PlaceDto.builder()
                 .idx(place.getIdx())
@@ -64,7 +64,7 @@ public class PlaceService {
                 .build();
     }
 
-    // Dto 변환
+    // 즐겨찾기 Dto 변환
     private BookMarkPlaceDto convertToDto(BookMarkPlace bookMarkPlace) {
         return BookMarkPlaceDto.builder()
                 .idx(bookMarkPlace.getIdx())
