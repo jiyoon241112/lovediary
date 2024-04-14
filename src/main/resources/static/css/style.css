@@ -245,6 +245,7 @@ input[type="checkbox"]:checked + label::after, input[type="radio"]:checked + lab
 .h_600 {height: 600px !important;}
 .h_1200 {height: 1200px !important;}
 .h_1400 {height: 1400px !important;}
+.h_60vh {height: 60vh !important;}
 .h_full {height: 100% !important;}
 
 .r_30 {right: 15px;}

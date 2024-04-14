@@ -39,13 +39,10 @@ public class PlaceController {
     @GetMapping(value = {"/place/list", "/place/list/{idx}"})
     public String placeListPage(@RequestParam(name = "keyword", required = false, defaultValue = "") String keyword,
                                 @PathVariable(name = "idx", required = false) Long idx, Model model) {
+        model.addAttribute("theme_idx", idx);
         model.addAttribute("keyword", keyword);
-        model.addAttribute("list", placeService.getPlaceList(idx, keyword));
-        if(true) {
-            return "pages/place/place_list";
-        } else {
-            return "pages/place/place_list_frame";
-        }
+
+        return "pages/place/place_list";
     }
 
     //데이트 장소 상세 페이지

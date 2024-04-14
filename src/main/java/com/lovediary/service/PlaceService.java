@@ -29,13 +29,15 @@ public class PlaceService {
 
     // <데이트 장소/맛집 리스트>
     @Transactional
-    public List<BookMarkPlaceDto> getPlaceList(Long idx, String keyword) {
-        List<BookMarkPlace> placeList = null;
-        if(idx == null){
-            placeList = placeRepository.placeList(keyword);
-        } else {
+    public List<BookMarkPlaceDto> getPlaceList(Long idx, String keyword, Float latitude, Float longitude) {
+        List<BookMarkPlace> placeList = new ArrayList<>();
+        if(latitude == null || longitude == null) {
             placeList = placeRepository.placeList(idx, keyword);
+        } else {
+            placeList = placeRepository.placeList(idx, keyword, latitude, longitude);
         }
+
+
         List<BookMarkPlaceDto> resultList = new ArrayList<>();
 
         for(BookMarkPlace bookMarkPlace : placeList) {

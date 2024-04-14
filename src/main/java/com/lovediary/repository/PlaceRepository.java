@@ -29,7 +29,7 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
             " FROM place_bookmark pb  " +
             ") AS pb " +
             "ON dp.idx = pb.place_idx " +
-            "WHERE dp.theme_idx = :idx " +
+            "WHERE (:idx IS NULL OR dp.theme_idx = :idx) " +
             "AND dp.delete_yn ='N' " +
             "AND dp.title LIKE CONCAT('%', :keyword, '%')")
     List<BookMarkPlace> placeList(Long idx, String keyword);
@@ -42,9 +42,11 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
             " FROM place_bookmark pb  " +
             ") AS pb " +
             "ON dp.idx = pb.place_idx " +
-            "WHERE dp.delete_yn ='N' " +
-            "AND dp.title LIKE CONCAT('%', :keyword, '%')")
-    List<BookMarkPlace> placeList(String keyword);
+            "WHERE (:idx IS NULL OR dp.theme_idx = :idx) " +
+            "AND dp.delete_yn ='N' " +
+            "AND dp.title LIKE CONCAT('%', :keyword, '%') " +
+            "ORDER BY ABS(dp.latitude - :latitude) + ABS(dp.longitude - :longitude) ")
+    List<BookMarkPlace> placeList(Long idx, String keyword, Float latitude, Float longitude);
 
     Place findByIdxAndDeleteYn(Long idx, Character deleteYn);
 }

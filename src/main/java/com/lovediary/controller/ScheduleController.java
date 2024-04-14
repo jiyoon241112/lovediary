@@ -11,10 +11,12 @@ package com.lovediary.controller;
  * ========================================================
  *  2024-04-13          JJY             최초 등록
  **/
+import com.lovediary.dto.ScheduleDto;
 import com.lovediary.service.ScheduleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Date;
@@ -27,19 +29,35 @@ public class ScheduleController {
         this.scheduleService = service;
     }
     
-    //데이트 장소 달력 페이지
+    // 일정 페이지
     @GetMapping("/schedule")
     public String schedulePage(Model model) {
         model.addAttribute("curr_date", new Timestamp(System.currentTimeMillis()));
         return "pages/schedule/schedule";
     }
 
-    //데이트 장소 달력 상세 페이지
+    // 일정 상세 페이지
     @GetMapping("/schedule/detail")
     public String scheduleDetailPage(@RequestParam(name = "selected") String selectedDate, Model model) {
         model.addAttribute("selected_date", Date.valueOf(selectedDate));
         model.addAttribute("schedule_list", scheduleService.getList(2L, Date.valueOf(selectedDate).toString()));
 
         return "pages/schedule/schedule_detail";
+    }
+
+    // 일정 등록 페이지
+    @GetMapping("/schedule/regist")
+    public String scheduleRegistPage(Model model) {
+        model.addAttribute("schedule", new ScheduleDto());
+
+        return "pages/schedule/schedule_regist";
+    }
+
+    // 일정 수정 페이지
+    @GetMapping("/schedule/modify/{idx}")
+    public String scheduleRegistPage(@PathVariable("idx") Long idx, Model model) {
+        model.addAttribute("schedule", scheduleService.getOne(idx));
+
+        return "pages/schedule/schedule_regist";
     }
 }

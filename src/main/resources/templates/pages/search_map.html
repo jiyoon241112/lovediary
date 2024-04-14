@@ -2,23 +2,17 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="common/head.html"></head>
 <body class="scroll">
-	<div class="body">
-		<div class="logo center_a"></div>
-		<p class="title_t center_t bold_t">주소 검색</p><section class="center_a">
-			<div class="form_group">
-				<div class="button_input">
-					<input type="text" id="keyword" class="input" placeholder="검색" th:value="${keyword}"/>
-					<a id = "search_btn" class="btn active_btn">검색하기</a>
-				</div>
+	<section class="center_a">
+		<div class="form_group">
+			<div class="button_input">
+				<input type="text" id="keyword" class="input" placeholder="검색" th:value="${keyword}"/>
+				<a id="search_btn" class="btn active_btn">검색하기</a>
 			</div>
-		</section>
-		<section class="center_a mt_30 f_40">
-			<div id="map" class="card w_full h_400"></div>
-		</section>
-	</div>
-	<div class="footer">
-		<a class="btn disable_btn">돌아가기</a>
-	</div>
+		</div>
+	</section>
+	<section class="center_a mt_30 f_40">
+		<div id="map" class="card w_full h_300"></div>
+	</section>
 </body>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a06c676c0b58efa3a9891136587b5c39&libraries=services"></script>
 <script type="application/javascript" th:src="@{/js/map.js}"></script>

@@ -68,9 +68,4 @@ public class ScheduleRestController {
 
         return new ResponseData(constValues.DONE, "일정이 저장되었습니다.", null);
     }
-
-    @GetMapping( "/schedule/detail/{idx}")
-    public ResponseData scheduleDetailPage(@PathVariable("idx") Long idx) {
-        return new ResponseData(constValues.DONE, "일정이 저장되었습니다.", scheduleService.getOne(idx));
-    }
 }

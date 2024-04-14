@@ -2,6 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="common/head.html"></head>
 <body class="scroll">
+	<input type="hidden" id="theme_idx" th:value="${theme_idx}" />
 	<div class="logo center_a"></div>
 	<p class="title_t center_t bold_t">데이트 장소/맛집</p>
 	<section class="center_a">
@@ -13,35 +14,16 @@
 		</div>
 	</section>
 	<div class="label_t right_t bold_t mr_30 mt_0 w_full">
-		<div class="w_270 r_30 bold_t btn white_btn">지도로 보기</div>
+		<div id="map_btn" class="w_270 r_30 bold_t btn white_btn">지도로 보기</div>
 		<div id="change_btn" class="w_90 r_30 mr_30 bold_t btn white_btn">
 			<div class="list_frame_img">&nbsp;</div>
 		</div>
 	</div>
 	<section class="center_a f_30">
-		<ul class="list image_list" style="display: none;">
-			<li th:each="place : ${list}" th:data-idx="${place.idx}" onclick="clickPlace(this)">
-				<div>
-					<div class="item_img" style="background-image: url('/resources/theme_new_year.svg');"></div>
-				</div>
-				<p class="left_t">
-					<span class="bold_t" th:text="${place.title}"></span><br>
-					<span class="light_t" th:text="${place.address}">서울특별시 역삼동</span>
-				</p>
-			</li>
-		</ul>
+		<ul id="frame_list" class="list image_list" style="display: none;"></ul>
 	</section>
 	<section class="center_a f_40">
-		<ul class="item_list">
-			<li th:each="place : ${list}" th:data-idx="${place.idx}" onclick="clickPlace(this)">
-				<div class="relatived w_full">
-					<p class="item_img" style="background-image: url('/resources/theme_new_year.svg');"></p>
-					<div class="absoluted t_0 r_0 heart_img on"></div>
-				</div>
-				<p th:text="${place.title}"></p>
-				<p class="mt_0 f_30" th:text="${place.address}"></p>
-			</li>
-		</ul>
+		<ul id="item_list" class="item_list"></ul>
 	</section>
 </body>
 <script type="application/javascript" th:src="@{/js/place.js}"></script>
