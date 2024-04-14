@@ -1,5 +1,16 @@
 package com.lovediary.dto;
-
+/**
+ * 
+ * BookMarkThemeDto
+ * 
+ * @author JJY
+ * @version 1.0.0
+ * @date 2024-04-13
+ * ========================================================
+ *  DATE                AUTHOR          NOTE 
+ * ========================================================
+ *  2024-04-13          JJY             최초 등록
+ **/
 import lombok.*;
 
 @Getter

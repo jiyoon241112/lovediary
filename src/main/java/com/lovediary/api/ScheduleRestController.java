@@ -34,6 +34,7 @@ public class ScheduleRestController {
         this.scheduleService = service;
     }
 
+    //스케줄 저장
     @PostMapping("/schedule/save")
     public ResponseData bucketSave(HttpServletRequest request, @RequestParam("start_date") String startDate, @RequestParam(value = "end_date", required = false) String endDate, ScheduleDto scheduleDto) throws ParseException {
         HttpSession session = request.getSession(true);

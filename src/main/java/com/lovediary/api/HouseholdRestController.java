@@ -34,6 +34,7 @@ public class HouseholdRestController {
 
     public HouseholdRestController(HouseholdLedgerService householdLedgerService){this.householdLedgerService = householdLedgerService;}
 
+    //가계부 저장
     @PostMapping("/household/save")
     public ResponseData timeCapsuleSave(HttpServletRequest request, @RequestParam(name = "due_date") String dueDate, HouseholdLedgerDto householdLedgerDto){
         HttpSession session = request.getSession(true);
@@ -54,10 +55,6 @@ public class HouseholdRestController {
         if(householdLedgerDto.getContents() == null || householdLedgerDto.getContents().isEmpty()) {
             return new ResponseData(constValues.ERROR, "내용을 입력해주세요.", null);
         }
-
-//        if(householdLedgerDto.getCategoryIdx() == null) {
-//            return new ResponseData(constValues.ERROR, "가계부 카테고리를 입력해주세요.", null);
-//        }
 
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
