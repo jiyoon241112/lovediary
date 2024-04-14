@@ -23,7 +23,8 @@ public interface BalanceReplyRepository extends JpaRepository<BalanceReply, Long
             "FROM BalanceReply A " +
             "LEFT JOIN Account B ON A.accountIdx = B.idx " +
             "WHERE A.balanceIdx = :balanceIdx " +
+            "AND ((:replyIdx IS NULL AND A.replyIdx IS NULL) OR (A.replyIdx = :replyIdx)) " +
             "AND A.deleteYn = :deleteYn " +
             "ORDER BY A.idx DESC ")
-    List<BalanceReply> findByBalanceIdxAndReplyIdxAndDeleteYnOrderByIdxDesc(Long balanceIdx, Long ReplyIdx, Character deleteYn);
+    List<BalanceReply> findByBalanceIdxAndReplyIdxAndDeleteYnOrderByIdxDesc(Long balanceIdx, Long replyIdx, Character deleteYn);
 }
