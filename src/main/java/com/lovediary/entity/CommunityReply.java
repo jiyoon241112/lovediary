@@ -54,11 +54,12 @@ public class CommunityReply extends JoinAccount {
     private Timestamp deleteDate;
 
     @Builder
-    public CommunityReply(Long idx, Long communityIdx, Long replyIdx, String contents, Character deleteYn, Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate, Account account) {
+    public CommunityReply(Long idx, Long communityIdx, Long replyIdx, String contents, Long accountIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate, Account account) {
         this.idx = idx;
         this.communityIdx = communityIdx;
         this.replyIdx = replyIdx;
         this.contents = contents;
+        this.accountIdx = accountIdx;
         this.deleteYn = deleteYn == null ? 'N' : deleteYn;
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.modifyDate = modifyDate;

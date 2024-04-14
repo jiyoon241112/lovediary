@@ -48,6 +48,7 @@ public class CommunityReplyDto {
                 .replyIdx(replyIdx)
                 .contents(contents)
                 .deleteYn(deleteYn)
+                .accountIdx(accountIdx)
                 .registDate(registDate)
                 .modifyDate(modifyDate)
                 .deleteDate(deleteDate)

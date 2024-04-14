@@ -46,6 +46,7 @@ public class CommunityDto {
                 .title(title)
                 .contents(contents)
                 .deleteYn(deleteYn)
+                .accountIdx(accountIdx)
                 .registDate(registDate)
                 .modifyDate(modifyDate)
                 .deleteDate(deleteDate)
