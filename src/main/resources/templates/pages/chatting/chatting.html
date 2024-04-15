@@ -2,6 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="common/head.html"></head>
 <body>
+	<input type="hidden" id="couple_idx" th:value="${couple_idx}" />
 	<div class="body f_30">
 		<div class="left_t bold_t w_full mt_30 ml_30">
 			<div class="twin profile">
@@ -37,9 +38,9 @@
 			<a class="btn active_btn ml_30 mr_30">수정</a>
 		</div>
 	</div>
-	<div class="popup">
+	<div class="popup" style="display: none;">
 		<div class="background"></div>
-		<section class="center_a card mt_30">
+		<section class="center_a card mt_30" style="display: none;">
 			<p class="title_t center_t bold_t">이미지 첨부</p>
 			<div class="form_group ml_5p">
 				<label for="upload_file">
@@ -52,7 +53,7 @@
 				</div>
 			</div>
 		</section>
-		<section class="center_a card mt_30">
+		<section class="center_a card mt_30" style="display: none;">
 			<div class="form_group ml_5p mt_0 pt_0">
 				<div class="r_30 bold_t mt_0 pt_0 chat_img">
 					<img src="/resources/coin.svg" class="mt_0 pt_0 chat_img" />
@@ -64,4 +65,6 @@
 		</section>
 	</div>
 </body>
+<script src="https://cdn.socket.io/socket.io-3.0.0.js"></script>
+<script type="application/javascript" th:src="@{/js/chatting.js}"></script>
 </html>
