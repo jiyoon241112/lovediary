@@ -10,7 +10,7 @@ $("#schedule_save").click(function (){
     const end_date = $("#end_date").val();
     const address = $("#address").val();
     const address_detail = $("#address_detail").val();
-    const idx = $("#add_idx").val();
+    const idx = $("#idx").val();
 
     if(!title) {
         alert("제목을 입력해주세요.");

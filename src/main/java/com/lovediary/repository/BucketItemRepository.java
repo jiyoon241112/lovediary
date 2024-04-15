@@ -24,8 +24,8 @@ public interface BucketItemRepository extends JpaRepository<BucketItem, Long> {
     @Query("SELECT A, B " +
             "FROM BucketItem A " +
             "LEFT JOIN Account B ON A.accountIdx = B.idx " +
-            "WHERE A.accountIdx IN (:accountIdx) " +
-            "AND A.deleteYn = 'N' " +
+            "WHERE A.deleteYn = 'N' " +
+            "AND A.bucketIdx = :bucketIdx " +
             "ORDER BY A.idx DESC")
-    List<BucketItem> findByBucketIdxOrderByIdxDesc(List<Long> accountIdx);
+    List<BucketItem> findByBucketIdxOrderByIdxDesc(Long bucketIdx);
 }
