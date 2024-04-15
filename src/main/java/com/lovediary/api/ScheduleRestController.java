@@ -34,6 +34,7 @@ public class ScheduleRestController {
         this.scheduleService = service;
     }
 
+    //스케줄 저장
     @PostMapping("/schedule/save")
     public ResponseData bucketSave(HttpServletRequest request, @RequestParam("start_date") String startDate, @RequestParam(value = "end_date", required = false) String endDate, ScheduleDto scheduleDto) throws ParseException {
         HttpSession session = request.getSession(true);
@@ -66,10 +67,5 @@ public class ScheduleRestController {
         scheduleService.saveItem(scheduleDto);
 
         return new ResponseData(constValues.DONE, "일정이 저장되었습니다.", null);
-    }
-
-    @GetMapping( "/schedule/detail/{idx}")
-    public ResponseData scheduleDetailPage(@PathVariable("idx") Long idx) {
-        return new ResponseData(constValues.DONE, "일정이 저장되었습니다.", scheduleService.getOne(idx));
     }
 }

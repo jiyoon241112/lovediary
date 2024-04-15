@@ -11,8 +11,9 @@
 				<div class="comment card">
 					<div class="twin profile">
 						<div>
-							<div class="profile_img bold_t mt_0">황</div>
-							<span class="profile_name">황태현</span>
+							<div th:if="${detail.profileIdx == null}" class="profile_img bold_t mt_0" th:text="${detail.accountName.charAt(0)}"></div>
+							<div th:unless="${detail.profileIdx == null}" class="profile_img on mt_0" th:style="|background-image: url('/view/image/${detail.profileIdx}');|">&nbsp;</div>
+							<span class="profile_name" th:text="${detail.accountName}"></span>
 						</div>
 						<div>
 							<span class="regist_date" th:text="${#dates.format(detail.registDate, 'YYYY-MM-dd HH:mm')}"></span>

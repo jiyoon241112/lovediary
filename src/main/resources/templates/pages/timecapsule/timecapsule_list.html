@@ -11,7 +11,8 @@
 		<ul class="list">
 			<li th:each="timecapsule : ${list}" th:data-idx="${timecapsule.idx}" onclick="clickTimeCapsule(this)">
 				<div>
-					<div class="profile_img">정</div>
+					<div th:if="${timecapsule.profileIdx == null}" class="profile_img bold_t mt_0" th:text="${timecapsule.accountName.charAt(0)}"></div>
+					<div th:unless="${timecapsule.profileIdx == null}" class="profile_img on mt_0" th:style="|background-image: url('/view/image/${timecapsule.profileIdx}');|">&nbsp;</div>
 				</div>
 				<div class="w_90p">
 					<p class="left_t">

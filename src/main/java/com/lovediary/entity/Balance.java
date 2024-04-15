@@ -24,7 +24,7 @@ import java.sql.Timestamp;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Balance {
+public class Balance extends JoinAccount {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
@@ -34,7 +34,7 @@ public class Balance {
     @Column(length = 300)
     private String contents;
 
-    @Column
+    @Column(name = "account_idx", insertable = false, updatable=false)
     private Long accountIdx;
 
     @Column
@@ -51,7 +51,7 @@ public class Balance {
     private Timestamp deleteDate;
 
     @Builder
-    public Balance(Long idx, String title, String contents, Long accountIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate) {
+    public Balance(Long idx, String title, String contents, Long accountIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate, Account account) {
         this.idx = idx;
         this.title = title;
         this.contents = contents;
@@ -60,5 +60,6 @@ public class Balance {
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.modifyDate = modifyDate;
         this.deleteDate = deleteDate;
+        this.setAccount(account);
     }
 }

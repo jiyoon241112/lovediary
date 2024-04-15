@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="common/head.html"></head>
+<body>
+<input type="hidden" id="idx" th:value="${schedule.idx}">
+<div class="body">
+    <div class="logo center_a"></div>
+    <p class="title_t center_t bold_t">일정</p>
+    <section class="center_a card mt_30">
+        <div class="form_group">
+            <input type="text" id="schedule_title" class="input" placeholder="제목*" th:value="${schedule.title}" />
+            <input type="text" id="start_date" class="input" placeholder="시작일자*" th:value="${schedule.startDateStr}" />
+            <input type="text" id="end_date" class="input" placeholder="종료일자" th:value="${schedule.endDateStr}" />
+            <input type="text" id="address" class="input" placeholder="주소" th:value="${schedule.address}" />
+            <input type="text" id="address_detail" class="input" placeholder="상세 주소" th:value="${schedule.addressDetail}" />
+        </div>
+    </section>
+</div>
+<div class="footer">
+    <a id="back_btn" class="btn disable_btn">돌아가기</a>
+    <a id="schedule_save" class="btn active_btn">저장</a>
+</div>
+<div class="popup" style="display: none;">
+    <div class="background"></div>
+    <section id="map_popup" class="center_a card mt_30" style="display: none;">
+        <p class="title_t center_t bold_t">주소 검색</p>
+        <div class="form_group ml_5p">
+            <iframe src="/map" class="w_full h_60vh"></iframe>
+        </div>
+        <div class="form_group inline_block">
+            <a class="btn w_270 disable_btn bold_t pop_close">닫기</a>
+            <a id="addr_select" class="btn w_270 active_btn bold_t ml_30">선택</a>
+        </div>
+    </section>
+</div>
+</body>
+<script type="application/javascript" th:src="@{/js/schedule_save.js}"></script>
+</html>

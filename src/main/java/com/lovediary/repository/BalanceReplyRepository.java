@@ -2,6 +2,7 @@ package com.lovediary.repository;
 
 import com.lovediary.entity.BalanceReply;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -18,5 +19,12 @@ import java.util.List;
  *  2024-04-07          HTH             최초 등록
  **/
 public interface BalanceReplyRepository extends JpaRepository<BalanceReply, Long> {
-    List<BalanceReply> findByBalanceIdxAndReplyIdxAndDeleteYnOrderByIdxDesc(Long balanceIdx, Long ReplyIdx, Character deleteYn);
+    @Query("SELECT A, B " +
+            "FROM BalanceReply A " +
+            "LEFT JOIN Account B ON A.accountIdx = B.idx " +
+            "WHERE A.balanceIdx = :balanceIdx " +
+            "AND ((:replyIdx IS NULL AND A.replyIdx IS NULL) OR (A.replyIdx = :replyIdx)) " +
+            "AND A.deleteYn = :deleteYn " +
+            "ORDER BY A.idx DESC ")
+    List<BalanceReply> findByBalanceIdxAndReplyIdxAndDeleteYnOrderByIdxDesc(Long balanceIdx, Long replyIdx, Character deleteYn);
 }

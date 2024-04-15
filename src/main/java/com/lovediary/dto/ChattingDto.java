@@ -1,75 +1,75 @@
 package com.lovediary.dto;
 
 import com.lovediary.entity.Account;
-import com.lovediary.entity.Timecapsule;
+import com.lovediary.entity.Chatting;
 import lombok.*;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
- * 
- * TimeCapsuleDto
- * 
- * @author JJY
+ *
+ * ChattingDto
+ *
+ * @author HTH
  * @version 1.0.0
- * @date 2024-04-03
+ * @date 2024-04-15
  * ========================================================
- *  DATE                AUTHOR          NOTE 
+ *  DATE                AUTHOR          NOTE
  * ========================================================
- *  2024-04-03          JJY             최초 등록
+ *  2024-04-15          HTH             최초 등록
  **/
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class TimecapsuleDto {
+public class ChattingDto {
     private Long idx;
-    private Date openDate;
-    private String title;
+    private Long emoticonIdx;
+    private Long imageIdx;
     private String contents;
+    private Character readYn;
+    private Timestamp readDate;
     private Long accountIdx;
     private String accountName;
     private Long profileIdx;
     private Character deleteYn;
     private Timestamp registDate;
-    private Timestamp modifyDate;
     private Timestamp deleteDate;
 
-    public Timecapsule toEntity() {
+    public Chatting toEntity() {
         Account account = Account.builder()
                 .idx(accountIdx)
                 .name(accountName)
                 .profileIdx(profileIdx)
                 .build();
 
-        return Timecapsule.builder()
+        return Chatting.builder()
                 .idx(idx)
-                .openDate(openDate)
-                .title(title)
+                .emoticonIdx(emoticonIdx)
+                .imageIdx(imageIdx)
                 .contents(contents)
+                .readYn(readYn)
+                .readDate(readDate)
                 .accountIdx(accountIdx)
-                .deleteYn(deleteYn)
                 .registDate(registDate)
-                .modifyDate(modifyDate)
                 .deleteDate(deleteDate)
                 .account(account)
                 .build();
     }
 
     @Builder
-    public TimecapsuleDto(Long idx, Date openDate, String title, String contents, Long accountIdx, String accountName, Long profileIdx,  Character deleteYn,
-                          Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate) {
+    public ChattingDto(Long idx, Long emoticonIdx, Long imageIdx, String contents, Character readYn, Timestamp readDate, Long accountIdx, String accountName, Long profileIdx, Character deleteYn, Timestamp registDate, Timestamp deleteDate) {
         this.idx = idx;
-        this.openDate = openDate;
-        this.title = title;
+        this.emoticonIdx = emoticonIdx;
+        this.imageIdx = imageIdx;
         this.contents = contents;
+        this.readYn = readYn;
+        this.readDate = readDate;
         this.accountIdx = accountIdx;
         this.accountName = accountName;
         this.profileIdx = profileIdx;
         this.deleteYn = deleteYn;
         this.registDate = registDate;
-        this.modifyDate = modifyDate;
         this.deleteDate = deleteDate;
     }
 }

@@ -29,6 +29,7 @@ public class BookMarkService {
         this.themeBookMarkRepository = themeBookMarkRepository;
     }
 
+    //테마 즐겨찾기 리스트 페이지
     @Transactional
     public List<BookMarkThemeDto> bookMarkList() {
         List<BookMarkTheme> themeBookMarkList = themeBookMarkRepository.bookMarkList();
@@ -41,6 +42,7 @@ public class BookMarkService {
         return resultList;
     }
 
+    //테마 즐겨찾기 DTO 변환
     private BookMarkThemeDto convertToDto(BookMarkTheme themeBookMark) {
         return BookMarkThemeDto.builder()
                 .idx(themeBookMark.getIdx())

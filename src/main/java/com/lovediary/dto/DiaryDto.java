@@ -1,5 +1,6 @@
 package com.lovediary.dto;
 
+import com.lovediary.entity.Account;
 import com.lovediary.entity.Diary;
 import lombok.*;
 
@@ -28,9 +29,17 @@ public class DiaryDto {
     private String title;
     private String contents;
     private Long accountIdx;
+    private String accountName;
+    private Long profileIdx;
     private Timestamp registDate;
 
     public Diary toEntity() {
+        Account account = Account.builder()
+                .idx(accountIdx)
+                .name(accountName)
+                .profileIdx(profileIdx)
+                .build();
+
         return Diary.builder()
                 .idx(idx)
                 .coupleIdx(coupleIdx)
@@ -39,18 +48,21 @@ public class DiaryDto {
                 .contents(contents)
                 .accountIdx(accountIdx)
                 .registDate(registDate)
+                .account(account)
                 .build();
     }
 
     @Builder
     public DiaryDto(Long idx, Long coupleIdx, Long emotionIdx, String title, String contents,
-                    Long accountIdx,Timestamp registDate) {
+                    Long accountIdx, String accountName ,Long profileIdx, Timestamp registDate) {
         this.idx = idx;
         this.coupleIdx = coupleIdx;
         this.emotionIdx = emotionIdx;
         this.title = title;
         this.contents = contents;
         this.accountIdx = accountIdx;
+        this.accountName = accountName;
+        this.profileIdx = profileIdx;
         this.registDate = registDate;
     }
 }

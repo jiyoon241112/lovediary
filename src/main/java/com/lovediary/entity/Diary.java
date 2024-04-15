@@ -26,7 +26,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="couple_diary")
-public class Diary {
+public class Diary extends JoinAccount {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
@@ -42,7 +42,7 @@ public class Diary {
     @Column
     private String contents;
 
-    @Column
+    @Column(name = "account_idx", insertable = false, updatable=false)
     private Long accountIdx;
 
     @CreatedDate
@@ -50,7 +50,8 @@ public class Diary {
     private Timestamp registDate;
 
     @Builder
-    public Diary(Long idx, Long coupleIdx, Long emotionIdx, Long categoryIdx, String title, String contents, Long accountIdx,Timestamp registDate, List<DiaryComment> diaryCommentList) {
+    public Diary(Long idx, Long coupleIdx, Long emotionIdx, String title, String contents,
+                 Long accountIdx,Timestamp registDate, Account account) {
         this.idx = idx;
         this.coupleIdx = coupleIdx;
         this.emotionIdx = emotionIdx;
@@ -58,5 +59,6 @@ public class Diary {
         this.contents = contents;
         this.accountIdx = accountIdx;
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
+        this.setAccount(account);
     }
 }

@@ -29,13 +29,15 @@ public class PlaceService {
 
     // <데이트 장소/맛집 리스트>
     @Transactional
-    public List<BookMarkPlaceDto> getPlaceList(Long idx, String keyword) {
-        List<BookMarkPlace> placeList = null;
-        if(idx == null){
-            placeList = placeRepository.placeList(keyword);
-        } else {
+    public List<BookMarkPlaceDto> getPlaceList(Long idx, String keyword, Float latitude, Float longitude) {
+        List<BookMarkPlace> placeList = new ArrayList<>();
+        if(latitude == null || longitude == null) {
             placeList = placeRepository.placeList(idx, keyword);
+        } else {
+            placeList = placeRepository.placeList(idx, keyword, latitude, longitude);
         }
+
+
         List<BookMarkPlaceDto> resultList = new ArrayList<>();
 
         for(BookMarkPlace bookMarkPlace : placeList) {
@@ -53,7 +55,7 @@ public class PlaceService {
         return convertToDto(place);
     }
 
-    // Dto 변환
+    // 데이트 장소 Dto 변환
     private PlaceDto convertToDto(Place place) {
         return PlaceDto.builder()
                 .idx(place.getIdx())
@@ -64,7 +66,7 @@ public class PlaceService {
                 .build();
     }
 
-    // Dto 변환
+    // 즐겨찾기 Dto 변환
     private BookMarkPlaceDto convertToDto(BookMarkPlace bookMarkPlace) {
         return BookMarkPlaceDto.builder()
                 .idx(bookMarkPlace.getIdx())

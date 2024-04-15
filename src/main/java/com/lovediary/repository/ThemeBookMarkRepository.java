@@ -6,7 +6,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-
+/**
+ * 
+ * ThemeBookMarkRepository
+ * 
+ * @author JJY
+ * @version 1.0.0
+ * @date 2024-04-13
+ * ========================================================
+ *  DATE                AUTHOR          NOTE 
+ * ========================================================
+ *  2024-04-13          JJY             최초 등록
+ **/
 public interface ThemeBookMarkRepository extends JpaRepository<ThemeBookMark, Long> {
     //즐겨찾기 조회
     @Query(nativeQuery = true, value =

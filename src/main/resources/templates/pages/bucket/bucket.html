@@ -9,7 +9,7 @@
 		<section class="center_a card mt_30">
 			<div class="form_group" th:data-idx="${detail.idx}">
 				<input type="text" id="bucket_title" class="input" placeholder="제목*" th:value="${detail.title}"/>
-				<div id="editor" class="editor" th:text="${detail.contents}"></div>
+				<div id="editor" class="editor" th:utext="${detail.contents}"></div>
 			</div>
 		</section>
 	</div>

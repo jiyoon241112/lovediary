@@ -1,5 +1,6 @@
 package com.lovediary.dto;
 
+import com.lovediary.entity.Account;
 import com.lovediary.entity.Balance;
 import lombok.*;
 
@@ -26,12 +27,20 @@ public class BalanceDto {
     private String title;
     private String contents;
     private Long accountIdx;
+    private String accountName;
+    private Long profileIdx;
     private Character deleteYn;
     private Timestamp registDate;
     private Timestamp modifyDate;
     private Timestamp deleteDate;
 
     public Balance toEntity() {
+        Account account = Account.builder()
+                .idx(accountIdx)
+                .name(accountName)
+                .profileIdx(profileIdx)
+                .build();
+
         return Balance.builder()
                 .idx(idx)
                 .title(title)
@@ -41,15 +50,18 @@ public class BalanceDto {
                 .registDate(registDate)
                 .modifyDate(modifyDate)
                 .deleteDate(deleteDate)
+                .account(account)
                 .build();
     }
 
     @Builder
-    public BalanceDto(Long idx, String title, String contents, Long accountIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate) {
+    public BalanceDto(Long idx, String title, String contents, Long accountIdx, String accountName, Long profileIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate) {
         this.idx = idx;
         this.title = title;
         this.contents = contents;
         this.accountIdx = accountIdx;
+        this.accountName = accountName;
+        this.profileIdx = profileIdx;
         this.deleteYn = deleteYn;
         this.registDate = registDate;
         this.modifyDate = modifyDate;

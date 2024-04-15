@@ -117,6 +117,7 @@ section.card {width: 90%; margin-left: 5%; padding: 10px 0;}
 .heart_img {width: 40px; height: 40px; margin: 0 10px; background-image: url('/resources/heart.svg'); background-size: 40px; background-repeat: no-repeat; background-position: center;}
 .heart_img.on {width: 40px; height: 40px; margin: 0 10px; background-image: url('/resources/heart_on.svg'); background-size: 40px; background-repeat: no-repeat; background-position: center;}
 .profile_img {width: 30px; height: 30px; display: inline-block; background-color: #d1d1d1; border: solid 2px #ffc6c6; border-radius: 100%; line-height: 30px; font-size: 15px; text-align: center;}
+.profile_img.on {background-size: 30px; background-repeat: no-repeat; background-position: center;}
 .profile_name {line-height: 100px; margin-left: 10px;}
 
 .vertical_set.fixed {display: ruby; text-align: center;}
@@ -244,6 +245,7 @@ input[type="checkbox"]:checked + label::after, input[type="radio"]:checked + lab
 .h_600 {height: 600px !important;}
 .h_1200 {height: 1200px !important;}
 .h_1400 {height: 1400px !important;}
+.h_60vh {height: 60vh !important;}
 .h_full {height: 100% !important;}
 
 .r_30 {right: 15px;}

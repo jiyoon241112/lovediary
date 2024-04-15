@@ -36,7 +36,7 @@ public class DiaryService {
         this.diaryCommentRepository = diaryCommentRepository;
     }
 
-    // <커플 다이어리 리스트 페이지>
+    // 커플 다이어리 리스트 페이지
     @Transactional
     public List<DiaryDto> getList() {
         List<Long> accountIdx = new ArrayList<>();
@@ -53,7 +53,7 @@ public class DiaryService {
         return resultList;
     }
 
-    // <커플 다이어리 상세 페이지>
+    // 커플 다이어리 상세 페이지
     @Transactional
     public DiaryDto getOne(Long idx) {
         Optional<Diary> wrapper = diaryRepository.findById(idx);
@@ -62,7 +62,7 @@ public class DiaryService {
         return convertToDto(diary);
     }
 
-    // <커플 다이어리 댓글 상세 페이지>
+    // 커플 다이어리 댓글 상세 페이지
     @Transactional
     public List<DiaryCommentDto> getDiaryCommentList(Long idx) {
         List<DiaryComment> commentList = diaryCommentRepository.findByCoupleDiaryIdxOrderByIdxDesc(idx);
@@ -75,7 +75,7 @@ public class DiaryService {
         return resultList;
     }
 
-    // <커플 다이어리 작성(저장)>
+    // 커플 다이어리 작성(저장)
     @Transactional
     public Long saveItem(DiaryDto diaryDto) {
         return diaryRepository.save(diaryDto.toEntity()).getIdx();
@@ -94,7 +94,7 @@ public class DiaryService {
     }
 
 
-    // Dto 변환
+    // 일기 Dto 변환
     private DiaryDto convertToDto(Diary diary) {
         return DiaryDto.builder()
                 .idx(diary.getIdx())
@@ -103,17 +103,21 @@ public class DiaryService {
                 .title(diary.getTitle())
                 .contents(diary.getContents())
                 .accountIdx(diary.getAccountIdx())
+                .accountName(diary.getAccount().getName())
+                .profileIdx(diary.getAccount().getProfileIdx())
                 .registDate(diary.getRegistDate())
                 .build();
     }
 
-    // Dto 변환
+    // 댓글 Dto 변환
     private DiaryCommentDto convertToDto(DiaryComment diaryComment) {
         return DiaryCommentDto.builder()
                 .idx(diaryComment.getIdx())
                 .coupleDiaryIdx(diaryComment.getCoupleDiaryIdx())
                 .contents(diaryComment.getContents())
                 .accountIdx(diaryComment.getAccountIdx())
+                .accountName(diaryComment.getAccount().getName())
+                .profileIdx(diaryComment.getAccount().getProfileIdx())
                 .deleteYn(diaryComment.getDeleteYn())
                 .registDate(diaryComment.getRegistDate())
                 .modifyDate(diaryComment.getModifyDate())

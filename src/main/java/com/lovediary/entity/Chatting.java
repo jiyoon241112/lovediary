@@ -11,29 +11,37 @@ import java.sql.Timestamp;
 
 /**
  *
- * DiaryComment
+ * Chatting
  *
- * @author JJY
+ * @author HTH
  * @version 1.0.0
- * @date 2024-04-01
+ * @date 2024-04-15
  * ========================================================
  *  DATE                AUTHOR          NOTE
  * ========================================================
- *  2024-04-01          JJY             최초 등록
+ *  2024-04-15          HTH             최초 등록
  **/
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name="couple_diary_reply")
-public class DiaryComment extends JoinAccount {
+public class Chatting extends JoinAccount {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column
-    private Long coupleDiaryIdx;
+    private Long emoticonIdx;
 
     @Column
+    private Long imageIdx;
+
+    @Column(length = 300)
     private String contents;
+
+    @Column
+    private Character readYn;
+
+    @Column
+    private Timestamp readDate;
 
     @Column(name = "account_idx", insertable = false, updatable=false)
     private Long accountIdx;
@@ -46,21 +54,19 @@ public class DiaryComment extends JoinAccount {
     private Timestamp registDate;
 
     @Column
-    private Timestamp modifyDate;
-
-    @Column
     private Timestamp deleteDate;
 
     @Builder
-    public DiaryComment(Long idx, Long coupleDiaryIdx, String contents, Long accountIdx, Character deleteYn, Timestamp registDate,
-                        Timestamp modifyDate, Timestamp deleteDate, Account account) {
+    public Chatting(Long idx, Long emoticonIdx, Long imageIdx, String contents, Character readYn, Timestamp readDate, Long accountIdx, Character deleteYn, Timestamp registDate, Timestamp deleteDate, Account account) {
         this.idx = idx;
-        this.coupleDiaryIdx = coupleDiaryIdx;
+        this.emoticonIdx = emoticonIdx;
+        this.imageIdx = imageIdx;
         this.contents = contents;
+        this.readYn = readYn;
+        this.readDate = readDate;
+        this.deleteYn = deleteYn;
         this.accountIdx = accountIdx;
-        this.deleteYn = deleteYn == null ? 'N' : deleteYn;
-        this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
-        this.modifyDate = modifyDate;
+        this.registDate = registDate;
         this.deleteDate = deleteDate;
         this.setAccount(account);
     }

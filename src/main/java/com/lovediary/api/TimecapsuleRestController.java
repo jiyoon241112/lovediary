@@ -28,6 +28,7 @@ public class TimecapsuleRestController {
         this.timeCapsuleService = service;
     }
 
+    //타임캡슐 저장
     @PostMapping("/timecapsule/save")
     public ResponseData diarySave(HttpServletRequest request, TimecapsuleDto timeCapsuleDto){
         HttpSession session = request.getSession(true);
