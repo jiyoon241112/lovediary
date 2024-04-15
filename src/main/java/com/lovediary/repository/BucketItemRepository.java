@@ -3,6 +3,7 @@ package com.lovediary.repository;
 import com.lovediary.entity.BucketItem;
 import com.lovediary.entity.DiaryComment;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -20,5 +21,11 @@ import java.util.List;
  **/
 
 public interface BucketItemRepository extends JpaRepository<BucketItem, Long> {
-    List<BucketItem> findByBucketIdxOrderByIdxDesc(Long bucketIdx);
+    @Query("SELECT A, B " +
+            "FROM BucketItem A " +
+            "LEFT JOIN Account B ON A.accountIdx = B.idx " +
+            "WHERE A.accountIdx IN (:accountIdx) " +
+            "AND A.deleteYn = 'N' " +
+            "ORDER BY A.idx DESC")
+    List<BucketItem> findByBucketIdxOrderByIdxDesc(List<Long> accountIdx);
 }

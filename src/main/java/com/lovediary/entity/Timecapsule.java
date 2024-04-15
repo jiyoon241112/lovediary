@@ -26,7 +26,7 @@ import java.sql.Timestamp;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="time_capsule")
-public class Timecapsule {
+public class Timecapsule extends JoinAccount {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
@@ -39,7 +39,7 @@ public class Timecapsule {
     @Column
     private String contents;
 
-    @Column
+    @Column(name = "account_idx", insertable = false, updatable=false)
     private Long accountIdx;
 
     @Column
@@ -57,7 +57,7 @@ public class Timecapsule {
 
     @Builder
     public Timecapsule(Long idx, Date openDate, String title, String contents, Long accountIdx, Character deleteYn, Timestamp registDate,
-                       Timestamp modifyDate, Timestamp deleteDate) {
+                       Timestamp modifyDate, Timestamp deleteDate, Account account) {
         this.idx = idx;
         this.openDate = openDate;
         this.title = title;
@@ -67,5 +67,6 @@ public class Timecapsule {
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.modifyDate = modifyDate;
         this.deleteDate = deleteDate;
+        this.setAccount(account);
     }
 }

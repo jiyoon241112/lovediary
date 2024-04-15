@@ -32,7 +32,11 @@ public class TimeCapsuleService {
     // <타입캡슐 리스트 페이지>
     @Transactional
     public List<TimecapsuleDto> getList() {
-        List<Timecapsule> timeCapsuleList = timeCapsuleRepository.findByAccountIdx(2L);
+        List<Long> accountIdx = new ArrayList<>();
+        accountIdx.add(2L);
+        accountIdx.add(3L);
+
+        List<Timecapsule> timeCapsuleList = timeCapsuleRepository.findByAccountIdxInOrderByIdxDesc(accountIdx);
         List<TimecapsuleDto> resultList = new ArrayList<>();
 
         for(Timecapsule timeCapsule : timeCapsuleList) {
@@ -65,6 +69,8 @@ public class TimeCapsuleService {
                 .title(timeCapsule.getTitle())
                 .contents(timeCapsule.getContents())
                 .accountIdx(timeCapsule.getAccountIdx())
+                .accountName(timeCapsule.getAccount().getName())
+                .profileIdx(timeCapsule.getAccount().getProfileIdx())
                 .deleteYn(timeCapsule.getDeleteYn())
                 .registDate(timeCapsule.getRegistDate())
                 .modifyDate(timeCapsule.getModifyDate())

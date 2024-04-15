@@ -1,5 +1,6 @@
 package com.lovediary.dto;
 
+import com.lovediary.entity.Account;
 import com.lovediary.entity.BucketItem;
 import lombok.*;
 
@@ -34,12 +35,20 @@ public class BucketItemDto {
     private Float longitude;
     private Timestamp achieveDate;
     private Long accountIdx;
+    private String accountName;
+    private Long profileIdx;
     private Character deleteYn;
     private Timestamp registDate;
     private Timestamp modifyDate;
     private Timestamp deleteDate;
 
     public BucketItem toEntity() {
+        Account account = Account.builder()
+                .idx(accountIdx)
+                .name(accountName)
+                .profileIdx(profileIdx)
+                .build();
+
         return BucketItem.builder()
                 .idx(idx)
                 .bucketIdx(bucketIdx)
@@ -57,13 +66,14 @@ public class BucketItemDto {
                 .registDate(registDate)
                 .modifyDate(modifyDate)
                 .deleteDate(deleteDate)
+                .account(account)
                 .build();
     }
 
     @Builder
     public BucketItemDto(Long idx, Long bucketIdx, Timestamp targetDate, String title, String contents, String address,
                          Character achieveYn, String addressDetail, Float latitude, Float longitude, Timestamp achieveDate,
-                         Long accountIdx,Character deleteYn, Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate) {
+                         Long accountIdx, String accountName, Long profileIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate) {
         this.idx = idx;
         this.bucketIdx = bucketIdx;
         this.targetDate = targetDate;
@@ -76,6 +86,8 @@ public class BucketItemDto {
         this.longitude = longitude;
         this.achieveDate = achieveDate;
         this.accountIdx = accountIdx;
+        this.accountName = accountName;
+        this.profileIdx = profileIdx;
         this.deleteYn = deleteYn;
         this.registDate = registDate;
         this.modifyDate = modifyDate;
