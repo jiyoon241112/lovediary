@@ -10,8 +10,9 @@
 				<div class="comment card bucket_idx" th:data-idx="${detail.idx}">
 					<div class="twin profile">
 						<div>
-							<div class="profile_img bold_t mt_0">황</div>
-							<span class="profile_name">황태현</span>
+							<div th:if="${detail.profileIdx == null}" class="profile_img bold_t mt_0" th:text="${detail.accountName.charAt(0)}"></div>
+							<div th:unless="${detail.profileIdx == null}" class="profile_img on mt_0" th:style="|background-image: url('/view/image/${detail.profileIdx}');|">&nbsp;</div>
+							<span class="profile_name" th:text="${detail.accountName}"></span>
 						</div>
 						<div>
 							<span class="regist_date" th:text="${#dates.format(detail.registDate, 'YYYY-MM-dd HH:mm')}"></span>
@@ -32,8 +33,9 @@
 					<div class="comment card" th:each="item : ${detail_item}" th:data-idx="${item.idx}" onclick="clickItem(this)">
 						<div class="twin profile">
 							<div>
-								<div class="profile_img bold_t mt_0">황</div>
-								<span class="profile_name">황태현</span>
+								<div th:if="${item.profileIdx == null}" class="profile_img bold_t mt_0" th:text="${item.accountName.charAt(0)}"></div>
+								<div th:unless="${item.profileIdx == null}" class="profile_img on mt_0" th:style="|background-image: url('/view/image/${item.profileIdx}');|">&nbsp;</div>
+								<span class="profile_name" th:text="${item.accountName}"></span>
 							</div>
 							<div>
 								<span class="regist_date" th:text="${#dates.format(item.registDate, 'YYYY-MM-dd HH:mm')}"></span>

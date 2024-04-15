@@ -103,6 +103,8 @@ public class DiaryService {
                 .title(diary.getTitle())
                 .contents(diary.getContents())
                 .accountIdx(diary.getAccountIdx())
+                .accountName(diary.getAccount().getName())
+                .profileIdx(diary.getAccount().getProfileIdx())
                 .registDate(diary.getRegistDate())
                 .build();
     }
@@ -114,6 +116,8 @@ public class DiaryService {
                 .coupleDiaryIdx(diaryComment.getCoupleDiaryIdx())
                 .contents(diaryComment.getContents())
                 .accountIdx(diaryComment.getAccountIdx())
+                .accountName(diaryComment.getAccount().getName())
+                .profileIdx(diaryComment.getAccount().getProfileIdx())
                 .deleteYn(diaryComment.getDeleteYn())
                 .registDate(diaryComment.getRegistDate())
                 .modifyDate(diaryComment.getModifyDate())

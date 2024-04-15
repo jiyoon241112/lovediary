@@ -2,6 +2,7 @@ package com.lovediary.repository;
 
 import com.lovediary.entity.Bucket;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -19,5 +20,11 @@ import java.util.List;
  **/
 
 public interface BucketRepository extends JpaRepository<Bucket, Long> {
+    @Query("SELECT A, B " +
+            "FROM Bucket A " +
+            "LEFT JOIN Account B ON A.accountIdx = B.idx " +
+            "WHERE A.accountIdx IN (:accountIdx) " +
+            "AND A.deleteYn = 'N' " +
+            "ORDER BY A.idx DESC")
     List<Bucket> findByAccountIdxInOrderByIdxDesc(List<Long> accountIdx);
 }

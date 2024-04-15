@@ -25,7 +25,7 @@ import java.sql.Timestamp;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="couple_diary_reply")
-public class DiaryComment {
+public class DiaryComment extends JoinAccount {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
@@ -35,7 +35,7 @@ public class DiaryComment {
     @Column
     private String contents;
 
-    @Column
+    @Column(name = "account_idx", insertable = false, updatable=false)
     private Long accountIdx;
 
     @Column
@@ -53,7 +53,7 @@ public class DiaryComment {
 
     @Builder
     public DiaryComment(Long idx, Long coupleDiaryIdx, String contents, Long accountIdx, Character deleteYn, Timestamp registDate,
-                        Timestamp modifyDate, Timestamp deleteDate, Diary diary) {
+                        Timestamp modifyDate, Timestamp deleteDate, Account account) {
         this.idx = idx;
         this.coupleDiaryIdx = coupleDiaryIdx;
         this.contents = contents;
@@ -62,5 +62,6 @@ public class DiaryComment {
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.modifyDate = modifyDate;
         this.deleteDate = deleteDate;
+        this.setAccount(account);
     }
 }

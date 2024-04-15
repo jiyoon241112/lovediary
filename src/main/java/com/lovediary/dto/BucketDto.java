@@ -1,5 +1,6 @@
 package com.lovediary.dto;
 
+import com.lovediary.entity.Account;
 import com.lovediary.entity.Bucket;
 import lombok.*;
 
@@ -29,12 +30,20 @@ public class BucketDto {
     private Character achieveYn;
     private Timestamp achieveDate;
     private Long accountIdx;
+    private String accountName;
+    private Long profileIdx;
     private Character deleteYn;
     private Timestamp registDate;
     private Timestamp modifyDate;
     private Timestamp deleteDate;
 
     public Bucket toEntity() {
+        Account account = Account.builder()
+                .idx(accountIdx)
+                .name(accountName)
+                .profileIdx(profileIdx)
+                .build();
+
         return Bucket.builder()
                 .idx(idx)
                 .thumbnailIdx(thumbnailIdx)
@@ -47,12 +56,14 @@ public class BucketDto {
                 .registDate(registDate)
                 .modifyDate(modifyDate)
                 .deleteDate(deleteDate)
+                .account(account)
                 .build();
     }
 
     @Builder
     public BucketDto(Long idx, Long thumbnailIdx, String title, String contents, Character achieveYn, Timestamp achieveDate,
-                     Long accountIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate) {
+                     Long accountIdx, String accountName, Long profileIdx, Character deleteYn, Timestamp registDate,
+                     Timestamp modifyDate, Timestamp deleteDate) {
         this.idx = idx;
         this.thumbnailIdx = thumbnailIdx;
         this.title = title;
@@ -60,6 +71,8 @@ public class BucketDto {
         this.achieveYn = achieveYn;
         this.achieveDate = achieveDate;
         this.accountIdx = accountIdx;
+        this.accountName = accountName;
+        this.profileIdx = profileIdx;
         this.deleteYn = deleteYn;
         this.registDate = registDate;
         this.modifyDate = modifyDate;

@@ -25,7 +25,7 @@ import java.sql.Timestamp;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="bucket_item")
-public class BucketItem {
+public class BucketItem extends JoinAccount {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
@@ -59,7 +59,7 @@ public class BucketItem {
     @Column
     private Timestamp achieveDate;
 
-    @Column
+    @Column(name = "account_idx", insertable = false, updatable=false)
     private Long accountIdx;
 
     @Column
@@ -78,7 +78,8 @@ public class BucketItem {
     @Builder
     public BucketItem(Long idx, Long bucketIdx, Timestamp targetDate, String title, String contents, String address,
                       Character achieveYn, String addressDetail, Float latitude, Float longitude, Timestamp achieveDate,
-                      Long accountIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate) {
+                      Long accountIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate, Timestamp deleteDate
+                        , Account account) {
         this.idx = idx;
         this.bucketIdx = bucketIdx;
         this.targetDate = targetDate;
@@ -95,5 +96,6 @@ public class BucketItem {
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.modifyDate = modifyDate;
         this.deleteDate = deleteDate;
+        this.setAccount(account);
     }
 }

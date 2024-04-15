@@ -19,7 +19,7 @@
 						</label>
 					</div>
 				</div>
-				<input type="text" id="due_date" class="input" placeholder="발생일*" th:value="${detail.dueDate}"/>
+				<input type="text" id="due_date" class="input" placeholder="발생일*" th:value="${#dates.format(detail.dueDate, 'yyyy-MM-dd hh:mm')}"/>
 				<input type="text" id="amount" class="input" placeholder="금액*" oninput="amountFormat()" th:value="${#numbers.formatInteger(detail.amount, 3, 'COMMA')}"/>
 				<input type="text" id="content" class="input" placeholder="상세 내역*" th:value="${detail.contents}"/>
 				<div class="circle_group">

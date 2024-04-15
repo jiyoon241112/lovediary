@@ -67,7 +67,11 @@ public class BucketService {
     // 버킷리스트 아이템 리스트 페이지
     @Transactional
     public List<BucketItemDto> getBucketItemList(Long idx) {
-        List<BucketItem> itemList = bucketItemRepository.findByBucketIdxOrderByIdxDesc(idx);
+        List<Long> accountIdx = new ArrayList<>();
+        accountIdx.add(2L);
+        accountIdx.add(3L);
+
+        List<BucketItem> itemList = bucketItemRepository.findByBucketIdxOrderByIdxDesc(accountIdx);
         List<BucketItemDto> resultList = new ArrayList<>();
 
         for(BucketItem bucketItem : itemList) {
@@ -108,6 +112,8 @@ public class BucketService {
                 .achieveYn(bucket.getAchieveYn())
                 .achieveDate(bucket.getAchieveDate())
                 .accountIdx(bucket.getAccountIdx())
+                .accountName(bucket.getAccount().getName())
+                .profileIdx(bucket.getAccount().getProfileIdx())
                 .deleteYn(bucket.getDeleteYn())
                 .registDate(bucket.getRegistDate())
                 .modifyDate(bucket.getModifyDate())
@@ -130,6 +136,8 @@ public class BucketService {
                 .longitude(bucketItem.getLongitude())
                 .achieveDate(bucketItem.getAchieveDate())
                 .accountIdx(bucketItem.getAccountIdx())
+                .accountName(bucketItem.getAccount().getName())
+                .profileIdx(bucketItem.getAccount().getProfileIdx())
                 .deleteYn(bucketItem.getDeleteYn())
                 .registDate(bucketItem.getRegistDate())
                 .modifyDate(bucketItem.getModifyDate())
