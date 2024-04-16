@@ -53,11 +53,14 @@ public class FileService {
 
     // 목록 조회
     @Transactional
-    public byte[] getOne(Long idx) throws IOException {
+    public FileDto getOne(Long idx) {
         Optional<File> wrapper = fileRepository.findById(idx);
         File file = wrapper.get();
 
-        return Files.readAllBytes(new java.io.File(uploadPath, file.getPath()).toPath());
+        FileDto fileDto = convertToDto(file);
+        fileDto.setPath(uploadPath + file.getPath());
+
+        return fileDto;
     }
 
     // 업로드
@@ -100,6 +103,15 @@ public class FileService {
                 .build();
 
         return fileRepository.save(fileDto.toEntity()).getIdx();
+    }
+
+    // 파일 조회
+    @Transactional
+    public byte[] getByte(Long idx) throws IOException {
+        Optional<File> wrapper = fileRepository.findById(idx);
+        File file = wrapper.get();
+
+        return Files.readAllBytes(new java.io.File(uploadPath, file.getPath()).toPath());
     }
 
     // DTO 변환

@@ -96,7 +96,16 @@ $(document).on("click", ".image_preview .chat", function() {
     const image_idx = $(this).data("image");
 
     $("#image").attr("src", `/view/image/${image_idx}`);
+    $("#image_view_pop").data("image", image_idx);
+
     onPopup("image_view_pop");
+});
+
+// 이미지 다운로드
+$("#download_image_btn").click(function() {
+    const image_idx = $("#image_view_pop").data("image");
+
+    location.href = `/download/${image_idx}`;
 });
 
 // 채팅 입력

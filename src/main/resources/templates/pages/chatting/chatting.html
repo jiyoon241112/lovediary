@@ -18,7 +18,7 @@
 	</div>
 	<div class="popup" style="display: none;">
 		<div class="background pop_close"></div>
-		<section id="image_upload_pop" class="center_a card mt_30" style="display: none;">
+		<section id="image_upload_pop" class="center_a card mt_30 pop" style="display: none;">
 			<p class="title_t center_t bold_t">이미지 첨부</p>
 			<div class="form_group ml_5p">
 				<label for="upload_file">
@@ -31,13 +31,14 @@
 				</div>
 			</div>
 		</section>
-		<section id="image_view_pop" class="center_a card mt_30" style="display: none;">
+		<section id="image_view_pop" class="center_a card mt_30 pop" style="display: none;">
 			<div class="form_group ml_5p mt_0 pt_0">
 				<div class="r_30 bold_t mt_0 pt_0 chat_img">
 					<img src="/resources/add.svg" id="image" class="mt_0 pt_0 chat_img" />
 				</div>
 				<div class="form_group inline_block">
 					<a class="btn w_270 disable_btn bold_t pop_close">닫기</a>
+					<a id="download_image_btn" class="btn w_270 active_btn bold_t ml_30">다운로드</a>
 				</div>
 			</div>
 		</section>
