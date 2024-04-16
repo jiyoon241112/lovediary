@@ -7,6 +7,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ *
+ * StoreController
+ *
+ * @author HTH
+ * @version 1.0.0
+ * @date 2024-04-03
+ * ========================================================
+ *  DATE                AUTHOR          NOTE
+ * ========================================================
+ *  2024-04-03          HTH             최초 등록
+ **/
 @Controller
 public class StoreController {
     private final CoupleService coupleService;

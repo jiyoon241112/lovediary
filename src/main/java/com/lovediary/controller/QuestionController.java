@@ -7,6 +7,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+/**
+ *
+ * QuestionController
+ *
+ * @author HTH
+ * @version 1.0.0
+ * @date 2024-04-02
+ * ========================================================
+ *  DATE                AUTHOR          NOTE
+ * ========================================================
+ *  2024-04-02          HTH             최초 등록
+ **/
 @Controller
 public class QuestionController {
     private final QuestionService questionService;

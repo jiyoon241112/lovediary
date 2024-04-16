@@ -8,6 +8,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ *
+ * ChattingController
+ *
+ * @author HTH
+ * @version 1.0.0
+ * @date 2024-04-16
+ * ========================================================
+ *  DATE                AUTHOR          NOTE
+ * ========================================================
+ *  2024-04-16          HTH             최초 등록
+ **/
 @Controller
 public class ChattingController {
     @GetMapping("/chatting")
