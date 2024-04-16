@@ -1,6 +1,8 @@
 package com.lovediary.api;
 
+import com.lovediary.dto.BookMarkPlaceDto;
 import com.lovediary.dto.BucketItemDto;
+import com.lovediary.dto.CalendarListDto;
 import com.lovediary.dto.ScheduleDto;
 import com.lovediary.service.ScheduleService;
 import com.lovediary.values.ResponseData;
@@ -14,6 +16,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -67,5 +70,12 @@ public class ScheduleRestController {
         scheduleService.saveItem(scheduleDto);
 
         return new ResponseData(constValues.DONE, "일정이 저장되었습니다.", null);
+    }
+
+    //일정 여부 조회
+    @GetMapping("/schedule/check")
+    public ResponseData getList(@RequestParam(name = "keyword", required = false, defaultValue = "") String keyword) {
+        List<CalendarListDto> resultList = scheduleService.getCalendarList();
+        return new ResponseData(constValues.DONE, "조회했습니다.", resultList);
     }
 }

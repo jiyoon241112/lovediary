@@ -3,8 +3,8 @@ package com.lovediary.repository;
 import com.lovediary.entity.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import com.lovediary.dto.CalendarList;
 
-import java.sql.Date;
 import java.util.List;
 
 /**
@@ -28,4 +28,11 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
             "AND s.accountIdx = :idx " +
             "AND s.deleteYn = 'N'")
     List<Schedule> findByAccountIdxAndStartDate(Long idx, String startDate);
+
+    @Query(nativeQuery = true, value =
+            "SELECT YEAR(start_date) AS year, MONTH(start_date) AS month, DAY(start_date) AS day " +
+            "FROM schedule  " +
+            "WHERE delete_yn = 'N' " +
+            "GROUP BY YEAR(start_date), MONTH(start_date), DAY(start_date)")
+    List<CalendarList> getCalendarList();
 }
