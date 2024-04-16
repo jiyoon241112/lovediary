@@ -85,7 +85,7 @@ public class AccountService {
     }
 
     // 세션 데이터 조회
-    public SessionData getSesssionData(AccountDto accountDto) {
+    public SessionData getSessionData(AccountDto accountDto) {
         Long coupleIdx = accountDto.getCoupleIdx();
         Long accountIdx = accountDto.getIdx();
 
@@ -96,6 +96,16 @@ public class AccountService {
                 .accountIdx(accountIdx)
                 .partnerIdx(account.getAccountIdx())
                 .build();
+    }
+
+    // 비밀번호 일괄 수정
+    public void changePassword() {
+        List<AccountDto> accountList = this.getList();
+
+        for(AccountDto accountDto : accountList) {
+            accountDto.setPassword(encoder.encode("test1234!!"));
+            accountRepository.save(accountDto.toAccountEntity());
+        }
     }
 
     // DTO 변환

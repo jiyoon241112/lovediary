@@ -24,7 +24,7 @@ public interface ChattingRepository extends JpaRepository<Chatting, Long> {
             "FROM Chatting A " +
             "LEFT JOIN Account B ON A.accountIdx = B.idx " +
             "WHERE A.accountIdx IN (:accountIdx) " +
-            "AND (:registDate IS NULL OR DATE_FORMAT(A.registDate, '%Y-%m-%d') = :registDate) " +
+            "AND DATE_FORMAT(A.registDate, '%Y-%m-%d') = :registDate " +
             "AND A.deleteYn = 'N' " +
             "ORDER BY A.idx DESC")
     List<Chatting> findByAccountIdxInAndRegistDateOrderByIdxDesc(List<Long> accountIdx, String registDate);
@@ -33,7 +33,7 @@ public interface ChattingRepository extends JpaRepository<Chatting, Long> {
             "SELECT MAX(DATE_FORMAT(regist_date, '%Y-%m-%d')) " +
             "FROM chatting " +
             "WHERE account_idx IN (:accountIdx) " +
-            "AND (:registDate IS NULL OR DATE_FORMAT(regist_date, '%Y-%m-%d') = :registDate)" +
-            "AND A.delete_yn = 'N' ")
-    Date findByMaxRegistDate(List<Long> accountIdx, String registDate);
+            "AND (:registDate IS NULL OR :registDate = '' OR DATE_FORMAT(regist_date, '%Y-%m-%d') < :registDate) " +
+            "AND delete_yn = 'N' ")
+    String findByMaxRegistDate(List<Long> accountIdx, String registDate);
 }

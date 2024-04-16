@@ -55,7 +55,7 @@ public class LoginRestController {
         }
 
         // 세션 정보 조회
-        SessionData sessionData = accountService.getSesssionData(account);
+        SessionData sessionData = accountService.getSessionData(account);
 
         // 기존 로그인 정보 제거
         request.getSession().invalidate();
@@ -107,5 +107,11 @@ public class LoginRestController {
         }
 
         return new ResponseData(constValues.DONE, "회원가입을 완료했습니다.", null);
+    }
+
+    // 비밀번호 변경
+    @PostMapping("/password/change")
+    public void passwordChange() {
+        accountService.changePassword();
     }
 }

@@ -22,6 +22,7 @@ public class constValues {
     public static final String PLACE_FILE_PATH = "/place/";
     public static final String THEME_FILE_PATH = "/theme/";
     public static final String DRIVE_FILE_PATH = "/drive/";
+    public static final String CHATTING_FILE_PATH = "/chatting/";
 
     public static final String DONE = "200";
     public static final String ERROR = "400";

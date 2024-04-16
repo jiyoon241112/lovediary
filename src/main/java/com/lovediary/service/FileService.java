@@ -65,11 +65,15 @@ public class FileService {
     public Long saveItem(MultipartFile uploadFile, Integer type) throws IOException {
         StringBuilder builder = new StringBuilder();
 
-        // type 1: 프로필, 2: 커뮤니티/밸런스 게임
+        // type 1: 프로필, 2: 커뮤니티/밸런스 게임, 3: 채팅, 4: 드라이브
         if(type == 1) {
             builder.append(constValues.PROFILE_FILE_PATH);
         } else if(type == 2) {
             builder.append(constValues.COMMUNITY_FILE_PATH);
+        } else if(type == 3) {
+            builder.append(constValues.CHATTING_FILE_PATH);
+        } else if(type == 4) {
+            builder.append(constValues.DRIVE_FILE_PATH);
         } else return null;
 
         builder.append(UUID.randomUUID().toString().replaceAll("-", ""));

@@ -3,63 +3,41 @@
 <head th:insert="common/head.html"></head>
 <body>
 	<input type="hidden" id="couple_idx" th:value="${couple_idx}" />
-	<div class="body f_30">
-		<div class="left_t bold_t w_full mt_30 ml_30">
-			<div class="twin profile">
-				<div>
-					<div class="profile_img bold_t mt_0">황</div>
-					<span>황태현</span>
-				</div>
-			</div>
-		</div>
-		<div class="left_t bold_t w_full">
-			<div class="r_30 bold_t ml_10p chat">안녕 자기</div>
-		</div>
-		<div class="left_t bold_t w_full">
-			<div class="r_30 bold_t ml_10p chat">지금 머해?</div>
-		</div>
-		<div class="right_t bold_t w_full">
-			<div class="r_30 bold_t mr_30 chat">밥 먹고있어</div>
-		</div>
-		<div class="right_t w_full">
-			<div class="r_30 bold_t mr_30 chat">
-				<img src="/resources/coin.svg" class="chat_img" />
-			</div>
-		</div>
-	</div>
+	<input type="hidden" id="account_idx" th:value="${account_idx}" />
+	<div id="chatting" class="body f_30"></div>
 	<div class="footer">
 		<div class="twin">
 			<div class="w_120 r_30 mr_30 bold_t btn white_btn ml_30">
-				<div class="add_image_btn">&nbsp;</div>
+				<div id="image_btn" class="add_image_btn">&nbsp;</div>
 			</div>
 			<div class="form_group">
-				<input type="text" class="input" placeholder="입력" />
+				<input type="text" id="comment" class="input" placeholder="입력" />
 			</div>
-			<a class="btn active_btn ml_30 mr_30">수정</a>
+			<a id="save_comment" class="btn active_btn ml_30 mr_30">입력</a>
 		</div>
 	</div>
 	<div class="popup" style="display: none;">
-		<div class="background"></div>
-		<section class="center_a card mt_30" style="display: none;">
+		<div class="background pop_close"></div>
+		<section id="image_upload_pop" class="center_a card mt_30" style="display: none;">
 			<p class="title_t center_t bold_t">이미지 첨부</p>
 			<div class="form_group ml_5p">
 				<label for="upload_file">
-					<input type="file" class="file" id="upload_file"/>
-					<div class="upload_input no_image"></div>
+					<input type="file" class="file" id="upload_file" accept="image/png, image/jpeg"/>
+					<div id="upload_image" class="upload_input no_image"></div>
 				</label>
 				<div class="form_group inline_block">
-					<a class="btn w_270 disable_btn bold_t">닫기</a>
-					<a class="btn w_270 active_btn bold_t ml_30">저장</a>
+					<a class="btn w_270 disable_btn bold_t pop_close">닫기</a>
+					<a id="save_image_btn" class="btn w_270 active_btn bold_t ml_30">저장</a>
 				</div>
 			</div>
 		</section>
-		<section class="center_a card mt_30" style="display: none;">
+		<section id="image_view_pop" class="center_a card mt_30" style="display: none;">
 			<div class="form_group ml_5p mt_0 pt_0">
 				<div class="r_30 bold_t mt_0 pt_0 chat_img">
-					<img src="/resources/coin.svg" class="mt_0 pt_0 chat_img" />
+					<img src="/resources/add.svg" id="image" class="mt_0 pt_0 chat_img" />
 				</div>
 				<div class="form_group inline_block">
-					<a class="btn w_270 disable_btn bold_t">닫기</a>
+					<a class="btn w_270 disable_btn bold_t pop_close">닫기</a>
 				</div>
 			</div>
 		</section>
