@@ -12,6 +12,27 @@ function editSchedule(element){
     location.href = `/schedule/modify/${idx}`;
 }
 
+function getCalendarListAjax() {
+    $.ajax({
+        url: '/schedule/check',
+        method: 'get',
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            const code = data.code ?? null;
+
+            if(code == 200) {
+                const result = data.result ?? [];
+                result.forEach(item => {
+                    addEvent(item.year, item.month, item.day);
+                });
+            }
+        }, error: function () {
+            if(!retry) getPlaceListAjax(form_data, true);
+        }
+    });
+}
+
 function edit(idx, retry = false) {
     $.ajax({
         url: `/schedule/detail/${idx}`,
@@ -35,3 +56,5 @@ function edit(idx, retry = false) {
         }
     });
 }
+
+getCalendarListAjax();
