@@ -42,6 +42,14 @@ public class CoupleService {
         return coupleRepository.save(coupleDto.toEntity()).getIdx();
     }
 
+    // 사귄 날짜
+    @Transactional
+    public Integer getDDay(Long idx) {
+        Integer dDay = coupleRepository.findDdayByIdx(idx);
+
+        return dDay;
+    }
+
     // DTO 변환
     private CoupleDto convertToDto(Couple couple) {
         return CoupleDto.builder()

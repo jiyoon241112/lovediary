@@ -26,7 +26,7 @@ import java.sql.Timestamp;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Account {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column
@@ -74,8 +74,8 @@ public class Account {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.deleteYn = deleteYn;
-        this.registDate = registDate;
+        this.deleteYn = deleteYn == null ? 'N' : deleteYn;
+        this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.modifyDate = modifyDate;
         this.coupleAccount = coupleAccount;
     }

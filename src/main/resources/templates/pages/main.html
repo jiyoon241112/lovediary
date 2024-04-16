@@ -7,11 +7,13 @@
 			<div class="logo center_a"></div>
 			<div id="profile_btn" class="profile_card card center_a">
 				<div class="profile_card_line">
-					<div class="profile_img bold_t">황</div>
+					<div th:if="${account.profileIdx == null}" class="profile_img bold_t" th:text="${account.name.charAt(0)}"></div>
+					<div th:unless="${account.profileIdx == null}" class="profile_img on" th:style="|background-image: url('/view/image/${account.profileIdx}');|">&nbsp;</div>
 					<div class="heart_img on"></div>
-					<div class="profile_img bold_t">정</div>
+					<div th:if="${partner.profileIdx == null}" class="profile_img bold_t" th:text="${partner.name.charAt(0)}"></div>
+					<div th:unless="${partner.profileIdx == null}" class="profile_img on" th:style="|background-image: url('/view/image/${partner.profileIdx}');|">&nbsp;</div>
 				</div>
-				<p class="f_40 bold_t">D + <span>132</span></p>
+				<p class="f_40 bold_t">D + <span th:text="${d_day}">132</span></p>
 			</div>
 		</div>
 		<div class="fixed t_30 r_0 vertical_set w_150">
@@ -21,11 +23,7 @@
 			<div id="place_btn" class="circle_btn place_btn"></div>
 		</div>
 		<div id="store_btn" class="fixed b_100 r_30 store_btn"></div>
-		<div class="fixed dog_img"></div>
-		<!--
-			<div class="fixed dog_img sick"></div>
-			<div class="fixed dog_img bad"></div>
-		-->
+		<div th:class="|fixed dog_img ${puppy.condition < 50 ? 'bad' : (puppy.hungry < 50 ? 'sick' : '')}|"></div>
 		<div class="fixed today">
 			<a href="javascript:;" id="question_btn" class="btn active_btn bold_t w_270">오늘의 질문</a>
 		</div>
