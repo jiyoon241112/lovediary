@@ -2,6 +2,7 @@ package com.lovediary.controller;
 
 import com.lovediary.dto.AccountDto;
 import com.lovediary.service.AccountService;
+import com.lovediary.service.CoupleService;
 import com.lovediary.values.ResponseData;
 import com.lovediary.values.constValues;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,8 +31,11 @@ import java.util.Map;
 @Controller
 public class LoginController {
     private final AccountService accountService;
-    public LoginController(AccountService service) {
-        this.accountService = service;
+    private final CoupleService coupleService;
+    public LoginController(AccountService accountService, CoupleService coupleService)
+    {
+        this.accountService = accountService;
+        this.coupleService = coupleService;
     }
 
     // 로그인 페이지
@@ -42,11 +46,21 @@ public class LoginController {
 
     // 회원가입 페이지
     @GetMapping(value = {"/join", "/join/{page}"})
-    public String joinPage(@PathVariable(name = "page", required = false) Integer page) {
+    public String joinPage(HttpServletRequest request, @PathVariable(name = "page", required = false) Integer page, Model model) {
         if(page == null || page == 1) {
-            return "pages/login/join";
+            return "pages/join/join";
+        } else if(page == 2) {
+            return "pages/join/join2";
+        } else if(page == 3) {
+            // 커플 고유번호 가져오기
+            HttpSession session = request.getSession(true);
+            Long idx = (Long) session.getAttribute(constValues.COUPLE_DATA);
+
+            model.addAttribute("couple", coupleService.getOne(idx));
+
+            return "pages/join/join3";
         } else {
-            return "pages/login/join2";
+            return "pages/join/join4";
         }
     }
 

@@ -15,7 +15,9 @@ package com.lovediary.values;
  **/
 public class constValues {
     public static final String LOGIN_USER = "USER";
-    public static final String JOIN_DATA = "USER";
+    public static final String JOIN_DATA = "JOIN";
+    public static final String CODE_DATA = "CODE";
+    public static final String COUPLE_DATA = "COUPLE";
 
     public static final String PROFILE_FILE_PATH = "/profile/";
     public static final String COMMUNITY_FILE_PATH = "/community/";

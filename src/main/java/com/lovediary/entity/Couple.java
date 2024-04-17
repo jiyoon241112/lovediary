@@ -42,6 +42,9 @@ public class Couple {
     @Column
     private Long point;
 
+    @Column(length = 4)
+    private String code;
+
     @Column
     private Character deleteYn;
 
@@ -53,14 +56,15 @@ public class Couple {
     private Timestamp modifyDate;
 
     @Builder
-    public Couple(Long idx, String name, Date startDate, String questionTime, Long point, Character deleteYn, Timestamp registDate, Timestamp modifyDate) {
+    public Couple(Long idx, String name, Date startDate, String questionTime, Long point, String code, Character deleteYn, Timestamp registDate, Timestamp modifyDate) {
         this.idx = idx;
         this.name = name;
         this.startDate = startDate;
         this.questionTime = questionTime;
         this.point = point;
-        this.deleteYn = deleteYn;
-        this.registDate = registDate;
+        this.code = code;
+        this.deleteYn = deleteYn == null ? 'N' : deleteYn;
+        this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.modifyDate = modifyDate;
     }
 }

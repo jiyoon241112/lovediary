@@ -71,7 +71,14 @@ public class AccountService {
         return idx;
     }
 
+    // 아이디 중복체크
+    @Transactional
+    public boolean existsId(String id) {
+        return accountRepository.existsById(id);
+    }
+
     // 로그인
+    @Transactional
     public AccountDto getLoginData(AccountDto accountDto) {
         Account account = accountRepository.findByIdAndDeleteYn(accountDto.getId(), 'N');
 
@@ -85,6 +92,7 @@ public class AccountService {
     }
 
     // 세션 데이터 조회
+    @Transactional
     public SessionData getSessionData(AccountDto accountDto) {
         Long coupleIdx = accountDto.getCoupleIdx();
         Long accountIdx = accountDto.getIdx();
@@ -99,6 +107,7 @@ public class AccountService {
     }
 
     // 비밀번호 일괄 수정
+    @Transactional
     public void changePassword() {
         List<AccountDto> accountList = this.getList();
 
@@ -106,6 +115,13 @@ public class AccountService {
             accountDto.setPassword(encoder.encode("test1234!!"));
             accountRepository.save(accountDto.toAccountEntity());
         }
+    }
+
+    // 랜덤 코드 생성
+    public String getCode() {
+        java.util.Random generator = new java.util.Random();
+        generator.setSeed(System.currentTimeMillis());
+        return String.valueOf(generator.nextInt(1000000) % 1000000);
     }
 
     // DTO 변환

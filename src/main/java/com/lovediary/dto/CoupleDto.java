@@ -28,6 +28,7 @@ public class CoupleDto {
     private Date startDate;
     private String questionTime;
     private Long point;
+    private String code;
     private Character deleteYn;
     private Timestamp registDate;
     private Timestamp modifyDate;
@@ -39,6 +40,7 @@ public class CoupleDto {
                 .startDate(startDate)
                 .questionTime(questionTime)
                 .point(point)
+                .code(code)
                 .deleteYn(deleteYn)
                 .registDate(registDate)
                 .modifyDate(modifyDate)
@@ -46,12 +48,13 @@ public class CoupleDto {
     }
 
     @Builder
-    public CoupleDto(Long idx, String name, Date startDate, String questionTime, Long point, Character deleteYn, Timestamp registDate, Timestamp modifyDate) {
+    public CoupleDto(Long idx, String name, Date startDate, String questionTime, Long point, String code, Character deleteYn, Timestamp registDate, Timestamp modifyDate) {
         this.idx = idx;
         this.name = name;
         this.startDate = startDate;
         this.questionTime = questionTime;
         this.point = point;
+        this.code = code;
         this.deleteYn = deleteYn;
         this.registDate = registDate;
         this.modifyDate = modifyDate;

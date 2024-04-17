@@ -22,4 +22,6 @@ public interface CoupleRepository extends JpaRepository<Couple, Long> {
             "FROM couple " +
             "WHERE idx = :idx")
     Integer findDdayByIdx(Long idx);
+
+    Couple findByCode(String code);
 }

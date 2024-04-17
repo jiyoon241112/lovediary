@@ -50,6 +50,28 @@ public class CoupleService {
         return dDay;
     }
 
+    // 코드 확인
+    @Transactional
+    public Long checkCode(String code) {
+        Couple couple = coupleRepository.findByCode(code);
+        if(couple == null) {
+            return null;
+        }
+
+        // 2번 체크가 안되도록 코드 삭제
+        CoupleDto coupleDto = convertToDto(couple);
+        coupleDto.setCode(null);
+
+        return this.saveItem(coupleDto);
+    }
+
+    // 랜덤 코드 생성
+    public String getCode() {
+        java.util.Random generator = new java.util.Random();
+        generator.setSeed(System.currentTimeMillis());
+        return String.valueOf(generator.nextInt(1000000) % 1000000);
+    }
+
     // DTO 변환
     private CoupleDto convertToDto(Couple couple) {
         return CoupleDto.builder()
@@ -58,6 +80,7 @@ public class CoupleService {
                 .startDate(couple.getStartDate())
                 .questionTime(couple.getQuestionTime())
                 .point(couple.getPoint())
+                .code(couple.getCode())
                 .deleteYn(couple.getDeleteYn())
                 .registDate(couple.getRegistDate())
                 .modifyDate(couple.getModifyDate())
