@@ -21,6 +21,9 @@
 					</div>
 					<p class="bold_t" th:text="${community.title}"></p>
 					<div class="h_200 scroll" th:utext="${community.contents}"></div>
+					<div class="right_t">
+						<a class="btn disable_btn small_btn w_150">삭제</a>
+					</div>
 				</div>
 			</div>
 			<div class="division_line"></div>
@@ -47,8 +50,8 @@
 						</div>
 						<p class="pre_line" th:text="${comment.contents}"></p>
 						<div class="right_t">
-							<a class="btn white_btn small_btn w_150">수정</a>
-							<a class="btn disable_btn small_btn w_150">삭제</a>
+							<a id="edit_btn" class="btn white_btn small_btn w_150">수정</a>
+							<a id="delete_btn" class="btn disable_btn small_btn w_150">삭제</a>
 						</div>
 					</div>
 				</div>
@@ -58,6 +61,20 @@
 	<div class="footer">
 		<a id="list_btn" class="btn disable_btn">돌아가기</a>
 		<a id="modify_btn" class="btn active_btn ml_30">수정</a>
+	</div>
+	<div class="popup" style="display: none;">
+		<div class="background pop_close"></div>
+		<section id="comment_edit_pop" class="center_a card mt_30 pop" style="display: none;">
+			<p class="title_t center_t bold_t">댓글 수정</p>
+			<div class="form_group ml_5p">
+				<input type="hidden" id="comment_idx" value=""/>
+				<input type="text" id="comment_contents" class="input" placeholder="댓글*" />
+				<div class="form_group inline_block">
+					<a class="btn w_270 disable_btn bold_t pop_close">닫기</a>
+					<a id="modify_comment" class="btn w_270 active_btn bold_t ml_30">저장</a>
+				</div>
+			</div>
+		</section>
 	</div>
 </body>
 <script type="application/javascript" th:src="@{/js/community.js}"></script>

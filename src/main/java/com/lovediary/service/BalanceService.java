@@ -129,14 +129,7 @@ public class BalanceService {
 
     // 댓글 저장
     @Transactional
-    public Long saveComment(Long idx, Long replyIdx, String contents) {
-        BalanceReplyDto replyDto = BalanceReplyDto.builder()
-                .balanceIdx(idx)
-                .replyIdx(replyIdx)
-                .contents(contents)
-                .accountIdx(1L)
-                .build();
-
+    public Long saveComment(BalanceReplyDto replyDto) {
         return balanceReplyRepository.save(replyDto.toEntity()).getIdx();
     }
 

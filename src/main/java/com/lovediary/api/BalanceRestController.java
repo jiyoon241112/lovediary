@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lovediary.dto.BalanceAnswerDto;
 import com.lovediary.dto.BalanceDto;
 import com.lovediary.dto.BalanceItemDto;
+import com.lovediary.dto.BalanceReplyDto;
 import com.lovediary.service.BalanceService;
 import com.lovediary.values.ResponseData;
 import com.lovediary.values.constValues;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -93,17 +95,45 @@ public class BalanceRestController {
 
     // 댓글 저장
     @PostMapping("/balance/save_comment")
-    public ResponseData saveComment(HttpServletRequest request, @RequestParam(name = "idx") Long idx, @RequestParam(name = "reply_idx", required = false) Long replyIdx, @RequestParam(name = "contents") String contents) {
+    public ResponseData saveComment(HttpServletRequest request,
+                                    @RequestParam(name = "idx", required = false) Long idx,
+                                    @RequestParam(name = "balance_idx", required = false) Long balanceIdx,
+                                    @RequestParam(name = "reply_idx", required = false) Long replyIdx,
+                                    @RequestParam(name = "contents", required = false) String contents) {
         if(contents == null || contents.isEmpty()) {
             return new ResponseData(constValues.ERROR, "내용을 입력해주세요.", null);
         }
 
-        if(replyIdx < 1) {
+        if(replyIdx != null && replyIdx < 1) {
             replyIdx = null;
         }
 
-        Long result = balanceService.saveComment(idx, replyIdx, contents);
+        BalanceReplyDto replyDto = null;
+        if(idx == null) {
+            replyDto = BalanceReplyDto.builder()
+                    .balanceIdx(balanceIdx)
+                    .replyIdx(replyIdx)
+                    .contents(contents)
+                    .accountIdx(1L)
+                    .build();
+        } else {
+            replyDto = balanceService.getCommentOne(idx);
+            replyDto.setContents(contents);
+        }
+
+        Long result = balanceService.saveComment(replyDto);
 
         return new ResponseData(constValues.DONE, "댓글이 저장되었습니다.", result);
+    }
+
+    @PostMapping("/balance/remove_comment")
+    public ResponseData removeComment(@RequestParam(name = "idx") Long idx) {
+        BalanceReplyDto replyDto = balanceService.getCommentOne(idx);
+        replyDto.setDeleteYn('Y');
+        replyDto.setDeleteDate(new Timestamp(System.currentTimeMillis()));
+
+        Long result = balanceService.saveComment(replyDto);
+
+        return new ResponseData(constValues.DONE, "댓글이 삭제되었습니다.", result);
     }
 }
