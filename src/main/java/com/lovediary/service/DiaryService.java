@@ -83,8 +83,9 @@ public class DiaryService {
 
     // 댓글 저장
     @Transactional
-    public Long saveComment(Long coupleDiaryIdx, String contents) {
+    public Long saveComment(Long commentIdx, Long coupleDiaryIdx, String contents) {
         DiaryCommentDto replyDto = DiaryCommentDto.builder()
+                .idx(commentIdx)
                 .coupleDiaryIdx(coupleDiaryIdx)
                 .contents(contents)
                 .accountIdx(2L)

@@ -53,12 +53,13 @@ public class DiaryRestController {
 
     // 댓글 저장
     @PostMapping("/diary/save_comment")
-    public ResponseData saveComment(HttpServletRequest request, @RequestParam(name = "couple_diary_idx") Long idx, @RequestParam(name = "contents") String contents) {
+    public ResponseData saveComment(HttpServletRequest request, @RequestParam(name = "couple_diary_idx") Long idx,
+                                    @RequestParam(name = "idx") Long commentIdx, @RequestParam(name = "contents") String contents) {
         if(contents == null || contents.isEmpty()) {
             return new ResponseData(constValues.ERROR, "내용을 입력해주세요.", null);
         }
 
-        Long result = diaryService.saveComment(idx, contents);
+        Long result = diaryService.saveComment(commentIdx, idx, contents);
 
         return new ResponseData(constValues.DONE, "댓글이 저장되었습니다.", result);
     }
