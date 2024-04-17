@@ -11,6 +11,7 @@ package com.lovediary.controller;
  * ========================================================
  *  2024-04-13          JJY             최초 등록
  **/
+import com.lovediary.dto.TimecapsuleDto;
 import com.lovediary.service.TimeCapsuleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,13 +40,15 @@ public class TimecapsuleController {
 
     // <타입캡슐 등록 페이지>
     @GetMapping("/timecapsule/regist")
-    public String timecapsuleRegistPage() {
+    public String timecapsuleRegistPage(Model model) {
+        model.addAttribute("detail", new TimecapsuleDto());
         return "pages/timecapsule/timecapsule";
     }
 
     // <타입캡슐 수정 페이지>
-    @GetMapping("/timecapsule/modify")
-    public String timecapsuleModifyPage() {
+    @GetMapping("/timecapsule/modify/{idx}")
+    public String timecapsuleModifyPage(@PathVariable("idx") Long idx, Model model) {
+        model.addAttribute("detail", timeCapsuleService.getOne(idx));
         return "pages/timecapsule/timecapsule";
     }
 }
