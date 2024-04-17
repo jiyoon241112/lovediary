@@ -9,7 +9,7 @@
 		<section class="center_a mt_30">
 			<section class="center_a mt_30">
 				<div class="form_group">
-					<div class="comment card">
+					<div class="comment card" th:data-idx="${comment.idx}">
 						<div class="twin profile">
 							<div>
 								<div th:if="${comment.profileIdx == null}" class="profile_img bold_t mt_0" th:text="${comment.accountName.charAt(0)}"></div>
@@ -22,8 +22,8 @@
 						</div>
 						<p th:text="${comment.contents}"></p>
 						<div class="right_t">
-							<a class="btn white_btn small_btn w_150">수정</a>
-							<a class="btn disable_btn small_btn w_150">삭제</a>
+							<a id="comment_edit_btn" class="btn white_btn small_btn w_150">수정</a>
+							<a id="comment_delete_btn" class="btn disable_btn small_btn w_150">삭제</a>
 						</div>
 					</div>
 				</div>
@@ -39,7 +39,7 @@
 			</div>
 			<section class="center_a mt_30">
 				<div class="form_group">
-					<div class="comment card" th:each="sub_comment : ${list}">
+					<div class="comment card" th:each="sub_comment : ${list}" th:data-idx="${sub_comment.idx}">
 						<div class="twin profile">
 							<div>
 								<div th:if="${comment.profileIdx == null}" class="profile_img bold_t mt_0" th:text="${comment.accountName.charAt(0)}"></div>
@@ -52,8 +52,8 @@
 						</div>
 						<p th:text="${sub_comment.contents}"></p>
 						<div class="right_t">
-							<a class="btn white_btn small_btn w_150">수정</a>
-							<a class="btn disable_btn small_btn w_150">삭제</a>
+							<a id="edit_btn" class="btn white_btn small_btn w_150">수정</a>
+							<a id="delete_btn" class="btn disable_btn small_btn w_150">삭제</a>
 						</div>
 					</div>
 				</div>
@@ -62,6 +62,20 @@
 	</div>
 	<div class="footer">
 		<a id="back_btn" class="btn disable_btn">돌아가기</a>
+	</div>
+	<div class="popup" style="display: none;">
+		<div class="background pop_close"></div>
+		<section id="comment_edit_pop" class="center_a card mt_30 pop" style="display: none;">
+			<p class="title_t center_t bold_t">댓글 수정</p>
+			<div class="form_group ml_5p">
+				<input type="hidden" id="comment_idx" value=""/>
+				<input type="text" id="comment_contents" class="input" placeholder="댓글*" />
+				<div class="form_group inline_block">
+					<a class="btn w_270 disable_btn bold_t pop_close">닫기</a>
+					<a id="modify_comment" class="btn w_270 active_btn bold_t ml_30">저장</a>
+				</div>
+			</div>
+		</section>
 	</div>
 </body>
 <script type="application/javascript" th:src="@{/js/community.js}"></script>

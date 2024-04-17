@@ -86,14 +86,7 @@ public class CommunityService {
 
     // 댓글 저장
     @Transactional
-    public Long saveComment(Long idx, Long replyIdx, String contents) {
-        CommunityReplyDto replyDto = CommunityReplyDto.builder()
-                .communityIdx(idx)
-                .replyIdx(replyIdx)
-                .contents(contents)
-                .accountIdx(1L)
-                .build();
-
+    public Long saveComment(CommunityReplyDto replyDto) {
         return communityReplyRepository.save(replyDto.toEntity()).getIdx();
     }
     
