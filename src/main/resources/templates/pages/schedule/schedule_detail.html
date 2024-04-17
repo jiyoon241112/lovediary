@@ -11,6 +11,7 @@
 		<section class="center_a mt_30 f_40">
 			<div class="card w_full h_200">
 				<table id="week_calendar" class="calendar">
+					<input type="hidden" id="select_date" th:value="${selected_date}">
 					<thead>
 						<tr>
 							<td id="calendar_prev_btn" class="calendar_btn">&#60;&#60;</td>
@@ -38,7 +39,7 @@
 		</div>
 	</div>
 	<div class="footer">
-		<a class="btn disable_btn">돌아가기</a>
+		<a id="schedule_return" class="btn disable_btn">돌아가기</a>
 	</div>
 </body>
 <script type="application/javascript" th:src="@{/js/calendar.js}"></script>

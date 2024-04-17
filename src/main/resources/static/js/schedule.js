@@ -57,4 +57,8 @@ function edit(idx, retry = false) {
     });
 }
 
+$("#schedule_return").click(function(){
+   location.replace("/schedule") ;
+});
+
 getCalendarListAjax();

@@ -58,7 +58,9 @@ function save(form_data, retry = false) {
             }
 
             if(data.code === "200") {
-                location.replace("/schedule");
+                let date = $("#start_date").val();
+                let start_date = date.substring(0, 10);
+                location.replace("/schedule/detail?selected="+start_date);
             }
         }, error: function () {
             if(!retry) save(form_data, true);

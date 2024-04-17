@@ -45,7 +45,13 @@ function save(form_data, retry = false) {
             }
 
             if(data.code === "200") {
-                location.replace("/timecapsule");
+                let idx = $("#timecapsule_idx").data('idx');
+                if(idx !== undefined && idx !== null){
+                    location.replace("/timecapsule/detail/"+idx);
+                } else {
+                    location.replace("/timecapsule")
+                }
+
             }
         }, error: function () {
             if(!retry) save(form_data, true);

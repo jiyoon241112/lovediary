@@ -44,6 +44,10 @@ $("#delete_btn").click(function(){
     deleteComment(form_data);
 });
 
+$("#diary_return").click(function(){
+   location.replace("/diary");
+});
+
 function deleteComment(form_data, retry = false) {
     $.ajax({
         url: '/diary/delete_comment',
@@ -80,7 +84,9 @@ function save(form_data, retry = false) {
             }
 
             if(data.code === "200") {
-                location.replace("/diary");
+                let idx = $("#diary_idx").val();
+
+                location.replace("/diary/detail/"+idx);
             }
         }, error: function () {
             if(!retry) save(form_data, true);
