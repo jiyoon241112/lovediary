@@ -2,6 +2,7 @@ package com.lovediary.api;
 
 import com.lovediary.dto.BucketDto;
 import com.lovediary.dto.BucketItemDto;
+import com.lovediary.dto.TimecapsuleDto;
 import com.lovediary.service.BucketService;
 import com.lovediary.values.ResponseData;
 import com.lovediary.values.constValues;
@@ -84,5 +85,21 @@ public class BucketRestController {
         bucketService.saveBucketItem(bucketItemDto);
 
         return new ResponseData(constValues.DONE, "버킷리스트의 항목이 저장되었습니다.", null);
+    }
+
+    // 타임캡슐 삭제
+    @PostMapping("/bucket/delete")
+    public ResponseData deleteBucket(HttpServletRequest request, @RequestParam(name = "idx") Long idx) {
+        if(idx == null) {
+            return new ResponseData(constValues.ERROR, "삭제할 버킷리스트가 없습니다.", null);
+        }
+
+        BucketDto bucketDto = bucketService.getOne(idx);
+        bucketDto.setDeleteYn('Y');
+        bucketDto.setDeleteDate(new Timestamp(System.currentTimeMillis()));
+
+        Long result = bucketService.saveItem(bucketDto);
+
+        return new ResponseData(constValues.DONE, "버킷리스트가 삭제되었습니다.", result);
     }
 }

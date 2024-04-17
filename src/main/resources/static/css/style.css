@@ -53,6 +53,7 @@ select option:checked, select option:focus {background-color: #ff6969; color: #f
 .btn.white_btn {background-color: #ffffff;}
 .btn.active_btn {background-color: #ff6969; color: white;}
 .btn.large_btn {width: 100%;}
+.btn.small_btn {height: 20px; line-height: 20px;}
 
 /* circle group */
 .circle_group {margin-top: 15px;}

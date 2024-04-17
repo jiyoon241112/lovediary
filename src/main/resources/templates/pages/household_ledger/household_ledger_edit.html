@@ -6,7 +6,7 @@
 		<div class="logo center_a"></div>
 		<p class="title_t center_t bold_t">가계부</p>
 		<section class="center_a card mt_30">
-			<div class="form_group" th:data-idx="${detail.idx}">
+			<div id="household_idx" class="form_group" th:data-idx="${detail.idx}">
 				<div class="space_evenly w_full mb_15">
 					<div class="checkbox">
 						<label class="flex">
@@ -49,7 +49,7 @@
 		</section>
 	</div>
 	<div class="footer">
-		<a class="btn disable_btn">돌아가기</a>
+		<a id="household_return" class="btn disable_btn">돌아가기</a>
 		<a class="btn active_btn">저장</a>
 	</div>
 </body>

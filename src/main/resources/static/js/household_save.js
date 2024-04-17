@@ -63,10 +63,20 @@ function save(form_data, retry = false) {
             }
 
             if(data.code === "200") {
-                location.href = "/household";
+                let idx = $("#household_idx").data('idx');
+                if(idx !== undefined && idx !== null) {
+                    location.href = "/household/modify/"+idx;
+                } else {
+                    location.href = "/household";
+                }
+
             }
         }, error: function () {
             if(!retry) save(form_data, true);
         }
     });
 }
+
+$("#household_return").click(function (){
+   location.replace("/household");
+});

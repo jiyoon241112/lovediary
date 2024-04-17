@@ -1,5 +1,6 @@
 package com.lovediary.api;
 
+import com.lovediary.dto.DiaryCommentDto;
 import com.lovediary.dto.TimecapsuleDto;
 import com.lovediary.service.TimeCapsuleService;
 import com.lovediary.values.ResponseData;
@@ -7,7 +8,11 @@ import com.lovediary.values.constValues;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.sql.Timestamp;
+
 /**
  * 
  * TimeCapsuleRestController
@@ -51,5 +56,21 @@ public class TimecapsuleRestController {
         timeCapsuleService.saveItem(timeCapsuleDto);
 
         return new ResponseData(constValues.DONE, "타임캡슐이 저장되었습니다.", null);
+    }
+
+    // 타임캡슐 삭제
+    @PostMapping("/timecapsule/delete")
+    public ResponseData deleteComment(HttpServletRequest request, @RequestParam(name = "idx") Long idx) {
+        if(idx == null) {
+            return new ResponseData(constValues.ERROR, "삭제할 타임캡슐이 없습니다.", null);
+        }
+
+        TimecapsuleDto timecapsuleDto = timeCapsuleService.getOne(idx);
+        timecapsuleDto.setDeleteYn('Y');
+        timecapsuleDto.setDeleteDate(new Timestamp(System.currentTimeMillis()));
+
+        Long result = timeCapsuleService.saveItem(timecapsuleDto);
+
+        return new ResponseData(constValues.DONE, "타임캡슐이 삭제되었습니다.", result);
     }
 }

@@ -34,7 +34,7 @@ function save(form_data, retry = false) {
             }
 
             if(data.code === "200") {
-                location.replace("/");
+                location.replace("/diary");
             }
         }, error: function () {
             if(!retry) save(form_data, true);

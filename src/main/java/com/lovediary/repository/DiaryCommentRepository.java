@@ -18,5 +18,5 @@ import java.util.List;
  *  2024-04-01          JJY             최초 등록
  **/
 public interface DiaryCommentRepository extends JpaRepository<DiaryComment, Long> {
-    List<DiaryComment> findByCoupleDiaryIdxOrderByIdxDesc(Long coupleDiaryIdx);
+    List<DiaryComment> findByCoupleDiaryIdxAndDeleteYnOrderByIdxDesc(Long coupleDiaryIdx, Character deleteYn);
 }

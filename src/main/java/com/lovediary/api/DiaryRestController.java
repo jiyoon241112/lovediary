@@ -1,5 +1,6 @@
 package com.lovediary.api;
 
+import com.lovediary.dto.DiaryCommentDto;
 import com.lovediary.dto.DiaryDto;
 import com.lovediary.repository.DiaryRepository;
 import com.lovediary.service.DiaryService;
@@ -10,6 +11,11 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * 
  * DiaryRestController
@@ -53,13 +59,43 @@ public class DiaryRestController {
 
     // 댓글 저장
     @PostMapping("/diary/save_comment")
-    public ResponseData saveComment(HttpServletRequest request, @RequestParam(name = "couple_diary_idx") Long idx, @RequestParam(name = "contents") String contents) {
+    public ResponseData saveComment(HttpServletRequest request, @RequestParam(name = "couple_diary_idx") Long idx,
+                                    @RequestParam(name = "idx", required = false) Long commentIdx, @RequestParam(name = "contents") String contents) {
         if(contents == null || contents.isEmpty()) {
             return new ResponseData(constValues.ERROR, "내용을 입력해주세요.", null);
         }
 
-        Long result = diaryService.saveComment(idx, contents);
+        DiaryCommentDto replyDto = null;
+        if(commentIdx != null) {
+            replyDto = diaryService.getDiaryCommentOne(commentIdx);
+            replyDto.setContents(contents);
+            replyDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
+        } else {
+            replyDto = DiaryCommentDto.builder()
+                    .coupleDiaryIdx(idx)
+                    .accountIdx(2L)
+                    .contents(contents)
+                    .build();
+        }
+
+        Long result = diaryService.saveComment(replyDto);
 
         return new ResponseData(constValues.DONE, "댓글이 저장되었습니다.", result);
+    }
+
+    // 댓글 삭제
+    @PostMapping("/diary/delete_comment")
+    public ResponseData deleteComment(HttpServletRequest request, @RequestParam(name = "idx") Long commentIdx) {
+        if(commentIdx == null) {
+            return new ResponseData(constValues.ERROR, "삭제할 댓글이 없습니다.", null);
+        }
+
+        DiaryCommentDto replyDto = diaryService.getDiaryCommentOne(commentIdx);
+        replyDto.setDeleteYn('Y');
+        replyDto.setDeleteDate(new Timestamp(System.currentTimeMillis()));
+
+        Long result = diaryService.saveComment(replyDto);
+
+        return new ResponseData(constValues.DONE, "댓글이 삭제되었습니다.", result);
     }
 }

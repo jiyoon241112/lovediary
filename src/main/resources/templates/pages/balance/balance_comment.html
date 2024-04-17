@@ -20,6 +20,10 @@
 							</div>
 						</div>
 						<p th:text="${comment.contents}"></p>
+						<div class="right_t">
+							<a class="btn white_btn small_btn w_150">수정</a>
+							<a class="btn disable_btn small_btn w_150">삭제</a>
+						</div>
 					</div>
 				</div>
 			</section>
@@ -45,6 +49,10 @@
 							</div>
 						</div>
 						<p th:text="${sub_comment.contents}"></p>
+						<div class="right_t">
+							<a class="btn white_btn small_btn w_150">수정</a>
+							<a class="btn disable_btn small_btn w_150">삭제</a>
+						</div>
 					</div>
 				</div>
 			</section>
@@ -52,7 +60,6 @@
 	</div>
 	<div class="footer">
 		<a id="back_btn" class="btn disable_btn">돌아가기</a>
-		<a id="modify_btn" class="btn active_btn ml_30">수정</a>
 	</div>
 </body>
 <script type="application/javascript" th:src="@{/js/balance.js}"></script>
