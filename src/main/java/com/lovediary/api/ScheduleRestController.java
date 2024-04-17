@@ -1,9 +1,6 @@
 package com.lovediary.api;
 
-import com.lovediary.dto.BookMarkPlaceDto;
-import com.lovediary.dto.BucketItemDto;
-import com.lovediary.dto.CalendarListDto;
-import com.lovediary.dto.ScheduleDto;
+import com.lovediary.dto.*;
 import com.lovediary.service.ScheduleService;
 import com.lovediary.values.ResponseData;
 import com.lovediary.values.constValues;
@@ -77,5 +74,21 @@ public class ScheduleRestController {
     public ResponseData getList(@RequestParam(name = "keyword", required = false, defaultValue = "") String keyword) {
         List<CalendarListDto> resultList = scheduleService.getCalendarList();
         return new ResponseData(constValues.DONE, "조회했습니다.", resultList);
+    }
+
+    // 일정 삭제
+    @PostMapping("/schedule/delete")
+    public ResponseData deleteSchedule(HttpServletRequest request, @RequestParam(name = "idx") Long idx) {
+        if(idx == null) {
+            return new ResponseData(constValues.ERROR, "삭제할 일정이 없습니다.", null);
+        }
+
+        ScheduleDto scheduleDto = scheduleService.getOne(idx);
+        scheduleDto.setDeleteYn('Y');
+        scheduleDto.setDeleteDate(new Timestamp(System.currentTimeMillis()));
+
+        Long result = scheduleService.saveItem(scheduleDto);
+
+        return new ResponseData(constValues.DONE, "일정이 삭제되었습니다.", result);
     }
 }

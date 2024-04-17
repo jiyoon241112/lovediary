@@ -85,3 +85,33 @@ function getAddress(detail_address, lat, lng){
     get_lng = lng;
     $("#address").val(address);
 }
+
+$("#delete_btn").click(function(){
+    let idx = $("#idx").val();
+    let form_data = new FormData;
+    form_data.append("idx", idx);
+
+    deleteSchedule(form_data);
+});
+
+function deleteSchedule(form_data, retry = false) {
+    $.ajax({
+        url: '/schedule/delete',
+        method: 'post',
+        data : form_data,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            const msg = data.msg ?? null;
+            if(msg ?? null) {
+                alert(msg);
+            }
+
+            if(data.code === "200") {
+                location.replace("/schedule");
+            }
+        }, error: function () {
+            if(!retry) deleteSchedule(form_data, true);
+        }
+    });
+}
