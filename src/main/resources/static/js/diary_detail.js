@@ -36,6 +36,36 @@ $("#save_answer").click(function (){
     save(form_data);
 });
 
+$("#delete_btn").click(function(){
+    let idx = $(this).closest(".comment.card").data("idx");
+    let form_data = new FormData;
+    form_data.append("idx", idx);
+
+    deleteComment(form_data);
+});
+
+function deleteComment(form_data, retry = false) {
+    $.ajax({
+        url: '/diary/delete_comment',
+        method: 'post',
+        data : form_data,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            const msg = data.msg ?? null;
+            if(msg ?? null) {
+                alert(msg);
+            }
+
+            if(data.code === "200") {
+                location.replace("/diary");
+            }
+        }, error: function () {
+            if(!retry) save(form_data, true);
+        }
+    });
+}
+
 function save(form_data, retry = false) {
     $.ajax({
         url: '/diary/save_comment',

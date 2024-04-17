@@ -65,7 +65,7 @@ public class DiaryService {
     // 커플 다이어리 댓글 상세 페이지
     @Transactional
     public List<DiaryCommentDto> getDiaryCommentList(Long idx) {
-        List<DiaryComment> commentList = diaryCommentRepository.findByCoupleDiaryIdxOrderByIdxDesc(idx);
+        List<DiaryComment> commentList = diaryCommentRepository.findByCoupleDiaryIdxAndDeleteYnOrderByIdxDesc(idx,'N');
         List<DiaryCommentDto> resultList = new ArrayList<>();
 
         for(DiaryComment diaryComment : commentList) {
@@ -73,6 +73,15 @@ public class DiaryService {
         }
 
         return resultList;
+    }
+
+    // 커플 다이어리 댓글 단건 조회
+    @Transactional
+    public DiaryCommentDto getDiaryCommentOne(Long idx) {
+        Optional<DiaryComment> wrapper = diaryCommentRepository.findById(idx);
+        DiaryComment reply = wrapper.get();
+
+        return convertToDto(reply);
     }
 
     // 커플 다이어리 작성(저장)
@@ -83,17 +92,9 @@ public class DiaryService {
 
     // 댓글 저장
     @Transactional
-    public Long saveComment(Long commentIdx, Long coupleDiaryIdx, String contents) {
-        DiaryCommentDto replyDto = DiaryCommentDto.builder()
-                .idx(commentIdx)
-                .coupleDiaryIdx(coupleDiaryIdx)
-                .contents(contents)
-                .accountIdx(2L)
-                .build();
-
+    public Long saveComment(DiaryCommentDto replyDto) {
         return diaryCommentRepository.save(replyDto.toEntity()).getIdx();
     }
-
 
     // 일기 Dto 변환
     private DiaryDto convertToDto(Diary diary) {
