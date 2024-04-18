@@ -63,13 +63,20 @@ public class TimeCapsuleService {
 
     // Dto 변환
     private TimecapsuleDto convertToDto(Timecapsule timeCapsule) {
+        String name = null;
+        if(timeCapsule.getAccount().getCoupleAccount() == null) {
+            name = timeCapsule.getAccount().getName();
+        } else {
+            name = timeCapsule.getAccount().getCoupleAccount().getLoveName();
+        }
+
         return TimecapsuleDto.builder()
                 .idx(timeCapsule.getIdx())
                 .openDate(timeCapsule.getOpenDate())
                 .title(timeCapsule.getTitle())
                 .contents(timeCapsule.getContents())
                 .accountIdx(timeCapsule.getAccountIdx())
-                .accountName(timeCapsule.getAccount().getName())
+                .accountName(name)
                 .profileIdx(timeCapsule.getAccount().getProfileIdx())
                 .deleteYn(timeCapsule.getDeleteYn())
                 .registDate(timeCapsule.getRegistDate())
