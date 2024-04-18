@@ -153,3 +153,34 @@ function deleteComment(form_data, retry = false) {
         }
     });
 }
+
+// 게시글 삭제
+$("#remove_item_btn").click(function() {
+    if(!confirm("삭제하시겠습니까?")) {
+        return;
+    }
+
+    deleteItem();
+});
+
+function deleteItem(retry = false) {
+    $.ajax({
+        url: '/community/remove',
+        method: 'post',
+        data : {idx: $("#idx").val()},
+        success: function (data) {
+            const msg = data.msg ?? null;
+            const code = data.code ?? null;
+
+            if(msg ?? null) {
+                alert(msg);
+            }
+
+            if(code === "200") {
+                location.replace(`/community`)
+            }
+        }, error: function () {
+            if(!retry) deleteItem(true);
+        }
+    });
+}

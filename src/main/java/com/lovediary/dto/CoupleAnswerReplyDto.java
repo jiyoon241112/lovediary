@@ -1,5 +1,6 @@
 package com.lovediary.dto;
 
+import com.lovediary.entity.Account;
 import com.lovediary.entity.CoupleAnswerReply;
 import lombok.*;
 
@@ -26,11 +27,19 @@ public class CoupleAnswerReplyDto {
     private Long coupleAnswerIdx;
     private String contents;
     private Long accountIdx;
+    private String accountName;
+    private Long profileIdx;
     private Character deleteYn;
     private Timestamp registDate;
     private Timestamp modifyDate;
 
     public CoupleAnswerReply toEntity() {
+        Account account = Account.builder()
+                .idx(accountIdx)
+                .name(accountName)
+                .profileIdx(profileIdx)
+                .build();
+
         return CoupleAnswerReply.builder()
                 .idx(idx)
                 .coupleAnswerIdx(coupleAnswerIdx)
@@ -39,15 +48,18 @@ public class CoupleAnswerReplyDto {
                 .deleteYn(deleteYn)
                 .registDate(registDate)
                 .modifyDate(modifyDate)
+                .account(account)
                 .build();
     }
 
     @Builder
-    public CoupleAnswerReplyDto(Long idx, Long coupleAnswerIdx, String contents, Long accountIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate) {
+    public CoupleAnswerReplyDto(Long idx, Long coupleAnswerIdx, String contents, Long accountIdx, String accountName, Long profileIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate) {
         this.idx = idx;
         this.coupleAnswerIdx = coupleAnswerIdx;
         this.contents = contents;
         this.accountIdx = accountIdx;
+        this.accountName = accountName;
+        this.profileIdx = profileIdx;
         this.deleteYn = deleteYn;
         this.registDate = registDate;
         this.modifyDate = modifyDate;

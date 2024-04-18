@@ -18,8 +18,9 @@
 				<div class="comment card">
 					<div class="twin profile">
 						<div>
-							<div class="profile_img bold_t mt_0">황</div>
-							<span class="profile_name">황태현</span>
+							<div th:if="${answer.mansProfileIdx == null}" class="profile_img bold_t mt_0" th:text="${answer.mansAccountName.charAt(0)}"></div>
+							<div th:unless="${answer.mansProfileIdx == null}" class="profile_img on mt_0" th:style="|background-image: url('/view/image/${answer.mansProfileIdx}');|">&nbsp;</div>
+							<span class="profile_name" th:text="${answer.mansAccountName}"></span>
 						</div>
 						<div>&nbsp;</div>
 					</div>
@@ -29,8 +30,9 @@
 				<div class="comment card">
 					<div class="twin profile">
 						<div>
-							<div class="profile_img bold_t mt_0">정</div>
-							<span class="profile_name">정지윤</span>
+							<div th:if="${answer.womansProfileIdx == null}" class="profile_img bold_t mt_0" th:text="${answer.womansAccountName.charAt(0)}"></div>
+							<div th:unless="${answer.womansProfileIdx == null}" class="profile_img on mt_0" th:style="|background-image: url('/view/image/${answer.womansProfileIdx}');|">&nbsp;</div>
+							<span class="profile_name" th:text="${answer.womansAccountName}"></span>
 						</div>
 						<div>&nbsp;</div>
 					</div>
@@ -49,20 +51,21 @@
 			</div>
 			<section class="center_a">
 				<div id="comment_list" class="form_group">
-					<div class="comment card" th:each="comment : ${comment_list}">
+					<div class="comment card" th:each="comment : ${comment_list}" th:data-idx="${comment.idx}">
 						<div class="twin">
 							<div class="twin profile">
 								<div>
-									<div class="profile_img bold_t mt_0">정</div>
-									<span class="profile_name">정지윤</span>
+									<div th:if="${comment.profileIdx == null}" class="profile_img bold_t mt_0" th:text="${comment.accountName.charAt(0)}"></div>
+									<div th:unless="${comment.profileIdx == null}" class="profile_img on mt_0" th:style="|background-image: url('/view/image/${comment.profileIdx}');|">&nbsp;</div>
+									<span class="profile_name" th:text="${comment.accountName}"></span>
 								</div>
 								<span class="regist_date" th:text="${comment.modifyDate == null ? #dates.format(comment.registDate, 'yyyy-MM-dd HH:mm') : #dates.format(comment.modifyDate, 'yyyy-MM-dd HH:mm')}"></span>
 							</div>
 						</div>
 						<p class="pre_line" th:text="${comment.contents}"></p>
 						<div class="right_t">
-							<a class="btn white_btn small_btn w_150">수정</a>
-							<a class="btn disable_btn small_btn w_150">삭제</a>
+							<a id="edit_btn" class="btn white_btn small_btn w_150">수정</a>
+							<a id="delete_btn" class="btn disable_btn small_btn w_150">삭제</a>
 						</div>
 					</div>
 				</div>

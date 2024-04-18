@@ -43,12 +43,6 @@ public class QuestionController {
         return "pages/question/question_detail";
     }
 
-    // 오늘의 질문 등록 페이지
-    @GetMapping("/question/regist")
-    public String questionRegistPage() {
-        return "pages/question/question";
-    }
-
     // 오늘의 질문 수정 페이지
     @GetMapping(value = {"/question/modify", "/question/modify/{idx}"})
     public String questionModifyPage(@PathVariable(name = "idx", required = false) Long idx, Model model) {

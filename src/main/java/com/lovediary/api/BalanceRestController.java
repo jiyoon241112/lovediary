@@ -3,10 +3,7 @@ package com.lovediary.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lovediary.dto.BalanceAnswerDto;
-import com.lovediary.dto.BalanceDto;
-import com.lovediary.dto.BalanceItemDto;
-import com.lovediary.dto.BalanceReplyDto;
+import com.lovediary.dto.*;
 import com.lovediary.service.BalanceService;
 import com.lovediary.values.ResponseData;
 import com.lovediary.values.constValues;
@@ -54,6 +51,9 @@ public class BalanceRestController {
         BalanceDto balance = null;
         if(idx != null) {
             balance = balanceService.getOne(idx);
+            balance.setTitle(title);
+            balance.setContents(contents);
+            balance.setModifyDate(new Timestamp(System.currentTimeMillis()));
         } else {
             balance = BalanceDto.builder()
                     .title(title)
@@ -69,6 +69,19 @@ public class BalanceRestController {
         }
 
         return new ResponseData(constValues.DONE, "저장되었습니다.", result);
+    }
+
+    // 삭제
+    @PostMapping("/balance/remove")
+    public ResponseData remove(HttpServletRequest request,
+                               @RequestParam(name = "idx", required = false) Long idx) {
+        BalanceDto balance = balanceService.getOne(idx);
+        balance.setDeleteYn('Y');
+        balance.setDeleteDate(new Timestamp(System.currentTimeMillis()));
+
+        balanceService.saveItem(balance);
+
+        return new ResponseData(constValues.DONE, "삭제되었습니다.", null);
     }
 
     // 선택 저장

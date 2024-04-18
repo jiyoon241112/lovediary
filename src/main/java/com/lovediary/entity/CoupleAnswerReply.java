@@ -25,7 +25,7 @@ import java.sql.Timestamp;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CoupleAnswerReply {
+public class CoupleAnswerReply extends JoinAccount {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
@@ -35,7 +35,7 @@ public class CoupleAnswerReply {
     @Column(length = 300)
     private String contents;
 
-    @Column
+    @Column(name = "account_idx", insertable = false, updatable=false)
     private Long accountIdx;
 
     @Column
@@ -49,7 +49,7 @@ public class CoupleAnswerReply {
     private Timestamp modifyDate;
 
     @Builder
-    public CoupleAnswerReply(Long idx, Long coupleAnswerIdx, String contents, Long accountIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate) {
+    public CoupleAnswerReply(Long idx, Long coupleAnswerIdx, String contents, Long accountIdx, Character deleteYn, Timestamp registDate, Timestamp modifyDate, Account account) {
         this.idx = idx;
         this.coupleAnswerIdx = coupleAnswerIdx;
         this.contents = contents;
@@ -57,5 +57,6 @@ public class CoupleAnswerReply {
         this.deleteYn = deleteYn == null ? 'N' : deleteYn;
         this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.modifyDate = modifyDate;
+        this.setAccount(account);
     }
 }

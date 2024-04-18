@@ -135,12 +135,19 @@ public class BalanceService {
 
     // 밸런스 게임 DTO 변환
     private BalanceDto convertToDto(Balance balance) {
+        String name = null;
+        if(balance.getAccount().getCoupleAccount() == null) {
+            name = balance.getAccount().getName();
+        } else {
+            name = balance.getAccount().getCoupleAccount().getLoveName();
+        }
+
         return BalanceDto.builder()
                 .idx(balance.getIdx())
                 .title(balance.getTitle())
                 .contents(balance.getContents())
                 .accountIdx(balance.getAccount().getIdx())
-                .accountName(balance.getAccount().getName())
+                .accountName(name)
                 .profileIdx(balance.getAccount().getProfileIdx())
                 .deleteYn(balance.getDeleteYn())
                 .registDate(balance.getRegistDate())
@@ -175,13 +182,20 @@ public class BalanceService {
 
     // 댓글 DTO 변환
     private BalanceReplyDto convertToDto(BalanceReply reply) {
+        String name = null;
+        if(reply.getAccount().getCoupleAccount() == null) {
+            name = reply.getAccount().getName();
+        } else {
+            name = reply.getAccount().getCoupleAccount().getLoveName();
+        }
+
         return BalanceReplyDto.builder()
                 .idx(reply.getIdx())
                 .balanceIdx(reply.getBalanceIdx())
                 .replyIdx(reply.getReplyIdx())
                 .contents(reply.getContents())
                 .accountIdx(reply.getAccount().getIdx())
-                .accountName(reply.getAccount().getName())
+                .accountName(name)
                 .profileIdx(reply.getAccount().getProfileIdx())
                 .deleteYn(reply.getDeleteYn())
                 .registDate(reply.getRegistDate())

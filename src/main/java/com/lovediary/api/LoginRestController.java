@@ -127,6 +127,11 @@ public class LoginRestController {
                 sessionData.setBirthDay(Date.valueOf(birthDay));
             }
 
+            // 닉네임이 없을 경우 이름으로 설정
+            if(accountDto.getLoveName() == null || accountDto.getLoveName().isEmpty()) {
+                accountDto.setLoveName(accountDto.getName());
+            }
+
             Long idx = (Long) session.getAttribute(constValues.COUPLE_DATA);
             sessionData.setCoupleIdx(idx);
 

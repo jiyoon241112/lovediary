@@ -33,7 +33,10 @@ public class CommunityRestController {
 
     // 저장
     @PostMapping("/community/save")
-    public ResponseData save(HttpServletRequest request, @RequestParam(name = "idx", required = false) Long idx, @RequestParam(name = "title") String title, @RequestParam(name = "contents") String contents) {
+    public ResponseData save(HttpServletRequest request,
+                             @RequestParam(name = "idx", required = false) Long idx,
+                             @RequestParam(name = "title") String title,
+                             @RequestParam(name = "contents") String contents) {
         if(title == null || title.isEmpty()) {
             return new ResponseData(constValues.ERROR, "제목을 입력해주세요.", null);
         }
@@ -45,6 +48,9 @@ public class CommunityRestController {
         CommunityDto community = null;
         if(idx != null) {
             community = communityService.getOne(idx);
+            community.setTitle(title);
+            community.setContents(contents);
+            community.setModifyDate(new Timestamp(System.currentTimeMillis()));
         } else {
             community = CommunityDto.builder()
                     .title(title)
@@ -56,6 +62,19 @@ public class CommunityRestController {
         Long result = communityService.saveItem(community);
 
         return new ResponseData(constValues.DONE, "저장되었습니다.", result);
+    }
+
+    // 삭제
+    @PostMapping("/community/remove")
+    public ResponseData remove(HttpServletRequest request,
+                               @RequestParam(name = "idx", required = false) Long idx) {
+        CommunityDto community = communityService.getOne(idx);
+        community.setDeleteYn('Y');
+        community.setDeleteDate(new Timestamp(System.currentTimeMillis()));
+
+        communityService.saveItem(community);
+
+        return new ResponseData(constValues.DONE, "삭제되었습니다.", null);
     }
 
     // 댓글 저장
@@ -84,6 +103,7 @@ public class CommunityRestController {
         } else {
             replyDto = communityService.getCommentOne(idx);
             replyDto.setContents(contents);
+            replyDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
         }
 
         Long result = communityService.saveComment(replyDto);

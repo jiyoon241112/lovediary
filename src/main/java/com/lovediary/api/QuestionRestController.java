@@ -72,13 +72,42 @@ public class QuestionRestController {
 
     // 댓글 저장
     @PostMapping("/question/save_comment")
-    public ResponseData saveComment(HttpServletRequest request, @RequestParam(name = "idx") Long idx, @RequestParam(name = "contents") String contents) {
+    public ResponseData saveComment(HttpServletRequest request,
+                                    @RequestParam(name = "idx", required = false) Long idx,
+                                    @RequestParam(name = "question_idx", required = false) Long questionIdx,
+                                    @RequestParam(name = "contents", required = false) String contents) {
         if(contents == null || contents.isEmpty()) {
             return new ResponseData(constValues.ERROR, "댓글 내용을 입력해주세요.", null);
         }
 
-        questionService.saveComment(idx, contents);
+        CoupleAnswerReplyDto replyDto = null;
+        if(idx != null) {
+            replyDto = questionService.getCommentOne(idx);
+            replyDto.setContents(contents);
+            replyDto.setModifyDate(new Timestamp(System.currentTimeMillis()));
+        } else {
+            replyDto = CoupleAnswerReplyDto.builder()
+                        .coupleAnswerIdx(questionIdx)
+                        .contents(contents)
+                        .accountIdx(1L)
+                        .build();
+        }
+
+        questionService.saveComment(replyDto);
 
         return new ResponseData(constValues.DONE, "댓글이 저장되었습니다.", null);
     }
+
+    // 댓글 저장
+    @PostMapping("/question/remove_comment")
+    public ResponseData removeComment(HttpServletRequest request,
+                                      @RequestParam(name = "idx", required = false) Long idx) {
+        CoupleAnswerReplyDto replyDto = questionService.getCommentOne(idx);
+        replyDto.setDeleteYn('Y');
+
+        questionService.saveComment(replyDto);
+
+        return new ResponseData(constValues.DONE, "댓글이 삭제되었습니다.", null);
+    }
+
 }
