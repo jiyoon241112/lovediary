@@ -99,6 +99,13 @@ public class DiaryService {
 
     // 일기 Dto 변환
     private DiaryDto convertToDto(Diary diary) {
+        String name = null;
+        if(diary.getAccount().getCoupleAccount() == null) {
+            name = diary.getAccount().getName();
+        } else {
+            name = diary.getAccount().getCoupleAccount().getLoveName();
+        }
+
         return DiaryDto.builder()
                 .idx(diary.getIdx())
                 .coupleIdx(diary.getCoupleIdx())
@@ -106,7 +113,7 @@ public class DiaryService {
                 .title(diary.getTitle())
                 .contents(diary.getContents())
                 .accountIdx(diary.getAccountIdx())
-                .accountName(diary.getAccount().getName())
+                .accountName(name)
                 .profileIdx(diary.getAccount().getProfileIdx())
                 .registDate(diary.getRegistDate())
                 .build();
@@ -114,12 +121,19 @@ public class DiaryService {
 
     // 댓글 Dto 변환
     private DiaryCommentDto convertToDto(DiaryComment diaryComment) {
+        String name = null;
+        if(diaryComment.getAccount().getCoupleAccount() == null) {
+            name = diaryComment.getAccount().getName();
+        } else {
+            name = diaryComment.getAccount().getCoupleAccount().getLoveName();
+        }
+
         return DiaryCommentDto.builder()
                 .idx(diaryComment.getIdx())
                 .coupleDiaryIdx(diaryComment.getCoupleDiaryIdx())
                 .contents(diaryComment.getContents())
                 .accountIdx(diaryComment.getAccountIdx())
-                .accountName(diaryComment.getAccount().getName())
+                .accountName(name)
                 .profileIdx(diaryComment.getAccount().getProfileIdx())
                 .deleteYn(diaryComment.getDeleteYn())
                 .registDate(diaryComment.getRegistDate())

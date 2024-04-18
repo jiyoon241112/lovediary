@@ -101,6 +101,13 @@ public class BucketService {
 
     // 버킷리스트 Dto 변환
     private BucketDto convertToDto(Bucket bucket) {
+        String name = null;
+        if(bucket.getAccount().getCoupleAccount() == null) {
+            name = bucket.getAccount().getName();
+        } else {
+            name = bucket.getAccount().getCoupleAccount().getLoveName();
+        }
+
         return BucketDto.builder()
                 .idx(bucket.getIdx())
                 .thumbnailIdx(bucket.getThumbnailIdx())
@@ -109,7 +116,7 @@ public class BucketService {
                 .achieveYn(bucket.getAchieveYn())
                 .achieveDate(bucket.getAchieveDate())
                 .accountIdx(bucket.getAccountIdx())
-                .accountName(bucket.getAccount().getName())
+                .accountName(name)
                 .profileIdx(bucket.getAccount().getProfileIdx())
                 .deleteYn(bucket.getDeleteYn())
                 .registDate(bucket.getRegistDate())
@@ -120,6 +127,13 @@ public class BucketService {
 
     // 버킷리스트 항목 Dto 변환
     private BucketItemDto convertToDto(BucketItem bucketItem) {
+        String name = null;
+        if(bucketItem.getAccount().getCoupleAccount() == null) {
+            name = bucketItem.getAccount().getName();
+        } else {
+            name = bucketItem.getAccount().getCoupleAccount().getLoveName();
+        }
+
         return BucketItemDto.builder()
                 .idx(bucketItem.getIdx())
                 .bucketIdx(bucketItem.getBucketIdx())
@@ -133,7 +147,7 @@ public class BucketService {
                 .longitude(bucketItem.getLongitude())
                 .achieveDate(bucketItem.getAchieveDate())
                 .accountIdx(bucketItem.getAccountIdx())
-                .accountName(bucketItem.getAccount().getName())
+                .accountName(name)
                 .profileIdx(bucketItem.getAccount().getProfileIdx())
                 .deleteYn(bucketItem.getDeleteYn())
                 .registDate(bucketItem.getRegistDate())
