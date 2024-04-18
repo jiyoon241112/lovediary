@@ -33,7 +33,7 @@ function deleteTimecapsule(form_data, retry = false) {
             location.replace("/timecapsule");
          }
       }, error: function () {
-         if(!retry) save(form_data, true);
+         if(!retry) deleteTimecapsule(form_data, true);
       }
    });
 }

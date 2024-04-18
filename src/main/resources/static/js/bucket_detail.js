@@ -49,7 +49,7 @@ function deleteBucket(form_data, retry = false) {
                 location.replace("/bucket");
             }
         }, error: function () {
-            if(!retry) save(form_data, true);
+            if(!retry) deleteBucket(form_data, true);
         }
     });
 }

@@ -65,7 +65,7 @@ function deleteComment(form_data, retry = false) {
                 location.replace("/diary");
             }
         }, error: function () {
-            if(!retry) save(form_data, true);
+            if(!retry) deleteComment(form_data, true);
         }
     });
 }

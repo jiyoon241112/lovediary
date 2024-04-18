@@ -21,7 +21,6 @@
 					</div>
 					<div class="editor_viewer" th:utext="${detail.contents}"></div>
 					<div class="right_t">
-						<a id="edit_btn" class="btn white_btn small_btn w_150">수정</a>
 						<a id="delete_btn" class="btn disable_btn small_btn w_150">삭제</a>
 					</div>
 				</div>
@@ -30,6 +29,7 @@
 	</div>
 	<div class="footer">
 		<a id="return_btn" class="btn disable_btn">돌아가기</a>
+		<a id="edit_btn" class="btn active_btn ml_30">수정</a>
 	</div>
 </body>
 <script type="application/javascript" th:src="@{/js/timecapsule_detail.js}"></script>
