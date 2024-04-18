@@ -9,6 +9,7 @@ import com.lovediary.entity.BucketItem;
 import com.lovediary.entity.DiaryComment;
 import com.lovediary.repository.BucketItemRepository;
 import com.lovediary.repository.BucketRepository;
+import com.lovediary.values.SessionData;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -40,10 +41,10 @@ public class BucketService {
 
     // 버킷리스트 페이지
     @Transactional
-    public List<BucketDto> getList() {
+    public List<BucketDto> getList(SessionData session) {
         List<Long> accountIdx = new ArrayList<>();
-        accountIdx.add(2L);
-        accountIdx.add(3L);
+        accountIdx.add(session.getAccountIdx());
+        accountIdx.add(session.getPartnerIdx());
 
         List<Bucket> bucketList = bucketRepository.findByAccountIdxInOrderByIdxDesc(accountIdx);
         List<BucketDto> resultList = new ArrayList<>();

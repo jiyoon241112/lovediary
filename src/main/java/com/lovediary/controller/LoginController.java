@@ -3,6 +3,7 @@ package com.lovediary.controller;
 import com.lovediary.dto.AccountDto;
 import com.lovediary.service.AccountService;
 import com.lovediary.service.CoupleService;
+import com.lovediary.util.Session;
 import com.lovediary.values.ResponseData;
 import com.lovediary.values.constValues;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ import java.util.Map;
  *  2024-03-27          HTH             최초 등록
  **/
 @Controller
-public class LoginController {
+public class LoginController extends Session {
     private final AccountService accountService;
     private final CoupleService coupleService;
     public LoginController(AccountService accountService, CoupleService coupleService)
@@ -53,7 +54,7 @@ public class LoginController {
             return "pages/join/join2";
         } else if(page == 3) {
             // 커플 고유번호 가져오기
-            HttpSession session = request.getSession(true);
+            HttpSession session = this.getSessionData(request);
             Long idx = (Long) session.getAttribute(constValues.COUPLE_DATA);
 
             model.addAttribute("couple", coupleService.getOne(idx));

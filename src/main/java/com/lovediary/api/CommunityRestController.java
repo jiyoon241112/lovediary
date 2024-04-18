@@ -3,7 +3,9 @@ package com.lovediary.api;
 import com.lovediary.dto.CommunityDto;
 import com.lovediary.dto.CommunityReplyDto;
 import com.lovediary.service.CommunityService;
+import com.lovediary.util.Session;
 import com.lovediary.values.ResponseData;
+import com.lovediary.values.SessionData;
 import com.lovediary.values.constValues;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +27,7 @@ import java.sql.Timestamp;
  *  2024-04-03          HTH             최초 등록
  **/
 @RestController
-public class CommunityRestController {
+public class CommunityRestController extends Session {
     private final CommunityService communityService;
     public CommunityRestController(CommunityService communityService) {
         this.communityService = communityService;
@@ -55,7 +57,7 @@ public class CommunityRestController {
             community = CommunityDto.builder()
                     .title(title)
                     .contents(contents)
-                    .accountIdx(1L)
+                    .accountIdx(this.getLoginData(request).getAccountIdx())
                     .build();
         }
 
@@ -98,7 +100,7 @@ public class CommunityRestController {
                     .communityIdx(communityIdx)
                     .replyIdx(replyIdx)
                     .contents(contents)
-                    .accountIdx(1L)
+                    .accountIdx(this.getLoginData(request).getAccountIdx())
                     .build();
         } else {
             replyDto = communityService.getCommentOne(idx);

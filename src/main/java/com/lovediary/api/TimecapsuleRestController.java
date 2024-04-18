@@ -3,6 +3,7 @@ package com.lovediary.api;
 import com.lovediary.dto.DiaryCommentDto;
 import com.lovediary.dto.TimecapsuleDto;
 import com.lovediary.service.TimeCapsuleService;
+import com.lovediary.util.Session;
 import com.lovediary.values.ResponseData;
 import com.lovediary.values.constValues;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +28,7 @@ import java.sql.Timestamp;
  **/
 
 @RestController
-public class TimecapsuleRestController {
+public class TimecapsuleRestController extends Session {
     private TimeCapsuleService timeCapsuleService;
     public TimecapsuleRestController(TimeCapsuleService service) {
         this.timeCapsuleService = service;
@@ -35,10 +36,8 @@ public class TimecapsuleRestController {
 
     //타임캡슐 저장
     @PostMapping("/timecapsule/save")
-    public ResponseData diarySave(HttpServletRequest request, TimecapsuleDto timeCapsuleDto){
-        HttpSession session = request.getSession(true);
-        session.getAttribute(constValues.LOGIN_USER);
-
+    public ResponseData diarySave(HttpServletRequest request,
+                                  TimecapsuleDto timeCapsuleDto){
         if(timeCapsuleDto.getTitle() == null || timeCapsuleDto.getTitle().isEmpty()) {
             return new ResponseData(constValues.ERROR, "제목을 입력해주세요.", null);
         }
@@ -51,7 +50,7 @@ public class TimecapsuleRestController {
             return new ResponseData(constValues.ERROR, "열릴 날짜를 입력해주세요.", null);
         }
 
-        timeCapsuleDto.setAccountIdx(2L);
+        timeCapsuleDto.setAccountIdx(this.getLoginData(request).getAccountIdx());
 
         timeCapsuleService.saveItem(timeCapsuleDto);
 
@@ -60,7 +59,8 @@ public class TimecapsuleRestController {
 
     // 타임캡슐 삭제
     @PostMapping("/timecapsule/delete")
-    public ResponseData deleteComment(HttpServletRequest request, @RequestParam(name = "idx") Long idx) {
+    public ResponseData deleteComment(HttpServletRequest request,
+                                      @RequestParam(name = "idx") Long idx) {
         if(idx == null) {
             return new ResponseData(constValues.ERROR, "삭제할 타임캡슐이 없습니다.", null);
         }

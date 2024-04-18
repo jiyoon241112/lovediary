@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lovediary.dto.*;
 import com.lovediary.service.BalanceService;
+import com.lovediary.util.Session;
 import com.lovediary.values.ResponseData;
 import com.lovediary.values.constValues;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +29,7 @@ import java.util.List;
  *  2024-04-09          HTH             최초 등록
  **/
 @RestController
-public class BalanceRestController {
+public class BalanceRestController extends Session {
     private final BalanceService balanceService;
     public BalanceRestController(BalanceService balanceService) {
         this.balanceService = balanceService;
@@ -36,7 +37,11 @@ public class BalanceRestController {
 
     // 저장
     @PostMapping("/balance/save")
-    public ResponseData save(HttpServletRequest request, @RequestParam(name = "idx", required = false) Long idx, @RequestParam(name = "title") String title, @RequestParam(name = "contents") String contents, @RequestParam(name = "item_list") String itemListStr) throws JsonProcessingException {
+    public ResponseData save(HttpServletRequest request,
+                             @RequestParam(name = "idx", required = false) Long idx,
+                             @RequestParam(name = "title") String title,
+                             @RequestParam(name = "contents") String contents,
+                             @RequestParam(name = "item_list") String itemListStr) throws JsonProcessingException {
         if(title == null || title.isEmpty()) {
             return new ResponseData(constValues.ERROR, "제목을 입력해주세요.", null);
         }
@@ -58,7 +63,7 @@ public class BalanceRestController {
             balance = BalanceDto.builder()
                     .title(title)
                     .contents(contents)
-                    .accountIdx(1L)
+                    .accountIdx(this.getLoginData(request).getAccountIdx())
                     .build();
         }
 
@@ -86,16 +91,20 @@ public class BalanceRestController {
 
     // 선택 저장
     @PostMapping("/balance/save_answer")
-    public ResponseData saveSelect(@RequestParam(name = "idx") Long idx, @RequestParam(name = "item_idx", required = false) Long itemIdx) {
+    public ResponseData saveSelect(HttpServletRequest request,
+                                   @RequestParam(name = "idx") Long idx,
+                                   @RequestParam(name = "item_idx", required = false) Long itemIdx) {
         if(idx == null || itemIdx == null) {
             return new ResponseData(constValues.ERROR, "실패", null);
         }
 
-        BalanceAnswerDto answer = balanceService.getAnswer(idx, 1L);
+        Long accountIdx = this.getLoginData(request).getAccountIdx();
+
+        BalanceAnswerDto answer = balanceService.getAnswer(idx, accountIdx);
         if(answer == null) {
             answer = BalanceAnswerDto.builder()
                         .balanceIdx(idx)
-                        .accountIdx(1L)
+                        .accountIdx(accountIdx)
                         .build();
         }
 
@@ -127,7 +136,7 @@ public class BalanceRestController {
                     .balanceIdx(balanceIdx)
                     .replyIdx(replyIdx)
                     .contents(contents)
-                    .accountIdx(1L)
+                    .accountIdx(this.getLoginData(request).getAccountIdx())
                     .build();
         } else {
             replyDto = balanceService.getCommentOne(idx);

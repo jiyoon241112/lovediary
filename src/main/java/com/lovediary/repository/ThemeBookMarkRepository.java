@@ -28,7 +28,7 @@ public interface ThemeBookMarkRepository extends JpaRepository<ThemeBookMark, Lo
             "  FROM theme_bookmark  " +
             ") AS tb " +
             "ON t.idx = tb.theme_idx " +
-            "WHERE tb.account_idx = 3 OR tb.account_idx IS NULL " +
+            "WHERE tb.account_idx = :accountIdx OR tb.account_idx IS NULL " +
             "ORDER  BY tb.account_idx DESC ")
-    List<BookMarkTheme> bookMarkList();
+    List<BookMarkTheme> bookMarkList(Long accountIdx);
 }

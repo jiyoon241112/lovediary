@@ -3,6 +3,8 @@ package com.lovediary.controller;
 import com.lovediary.service.AccountService;
 import com.lovediary.service.CoupleService;
 import com.lovediary.service.PuppyService;
+import com.lovediary.util.Session;
+import com.lovediary.values.SessionData;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  *  2024-04-16          HTH             최초 등록
  **/
 @Controller
-public class MainController {
+public class MainController extends Session {
     private final AccountService accountService;
     private final CoupleService coupleService;
     private final PuppyService puppyService;
@@ -33,16 +35,12 @@ public class MainController {
 
     @GetMapping(value = {"", "/"})
     public String mainPage(HttpServletRequest request, Model model) {
-//        HttpSession session = request.getSession(false);
-//        SessionData sessionData = (SessionData) session.getAttribute(constValues.LOGIN_USER);
-//
-//        model.addAttribute("couple_idx", sessionData.getCoupleIdx());
-//        model.addAttribute("account_idx", sessionData.getAccountIdx());
+        SessionData session = this.getLoginData(request);
 
-        model.addAttribute("account", accountService.getOne(2L));
-        model.addAttribute("partner", accountService.getOne(3L));
-        model.addAttribute("d_day", coupleService.getDDay(1L));
-        model.addAttribute("puppy", puppyService.getOne(1L));
+        model.addAttribute("account", accountService.getOne(session.getAccountIdx()));
+        model.addAttribute("partner", accountService.getOne(session.getAccountIdx()));
+        model.addAttribute("d_day", coupleService.getDDay(session.getCoupleIdx()));
+        model.addAttribute("puppy", puppyService.getOne(session.getCoupleIdx()));
 
         return "pages/main";
     }

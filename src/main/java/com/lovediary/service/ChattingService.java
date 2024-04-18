@@ -3,10 +3,10 @@ package com.lovediary.service;
 import com.lovediary.dto.ChattingDto;
 import com.lovediary.entity.Chatting;
 import com.lovediary.repository.ChattingRepository;
+import com.lovediary.values.SessionData;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +31,13 @@ public class ChattingService {
 
     // 목록 조회
     @Transactional
-    public List<ChattingDto> getList(String date) {
+    public List<ChattingDto> getList(String date, SessionData session) {
         List<Long> accountIdx = new ArrayList<>();
-        accountIdx.add(2L);
-        accountIdx.add(3L);
+        accountIdx.add(session.getAccountIdx());
+        accountIdx.add(session.getPartnerIdx());
 
         if(date == null || date.isEmpty()) {
-            date = this.getLastDate(date);
+            date = this.getLastDate(date, session);
         }
 
         // 채팅 기록 없음
@@ -53,7 +53,7 @@ public class ChattingService {
                 resultList.add(convertToDto(chatting));
             }
 
-            date = this.getLastDate(date);
+            date = this.getLastDate(date, session);
         }
 
         return resultList;
@@ -67,10 +67,10 @@ public class ChattingService {
 
     // 최근 채팅 일자 조회
     @Transactional
-    public String getLastDate(String date) {
+    public String getLastDate(String date, SessionData sessionData) {
         List<Long> accountIdx = new ArrayList<>();
-        accountIdx.add(2L);
-        accountIdx.add(3L);
+        accountIdx.add(sessionData.getAccountIdx());
+        accountIdx.add(sessionData.getPartnerIdx());
 
         return chattingRepository.findByMaxRegistDate(accountIdx, date);
     }

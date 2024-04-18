@@ -1,5 +1,6 @@
 package com.lovediary.controller;
 
+import com.lovediary.util.Session;
 import com.lovediary.values.SessionData;
 import com.lovediary.values.constValues;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,17 +22,13 @@ import org.springframework.web.bind.annotation.GetMapping;
  *  2024-04-16          HTH             최초 등록
  **/
 @Controller
-public class ChattingController {
+public class ChattingController extends Session {
     @GetMapping("/chatting")
     public String chattingPage(HttpServletRequest request, Model model) {
-//        HttpSession session = request.getSession(false);
-//        SessionData sessionData = (SessionData) session.getAttribute(constValues.LOGIN_USER);
-//
-//        model.addAttribute("couple_idx", sessionData.getCoupleIdx());
-//        model.addAttribute("account_idx", sessionData.getAccountIdx());
+        SessionData sessionData = this.getLoginData(request);
 
-        model.addAttribute("couple_idx", 1L);
-        model.addAttribute("account_idx", 2L);
+        model.addAttribute("couple_idx", sessionData.getCoupleIdx());
+        model.addAttribute("account_idx", sessionData.getAccountIdx());
 
         return "pages/chatting/chatting";
     }

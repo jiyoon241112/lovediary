@@ -2,6 +2,7 @@ package com.lovediary.api;
 
 import com.lovediary.dto.AccountDto;
 import com.lovediary.service.AccountService;
+import com.lovediary.util.Session;
 import com.lovediary.values.ResponseData;
 import com.lovediary.values.SessionData;
 import com.lovediary.values.constValues;
@@ -27,7 +28,7 @@ import java.sql.Date;
  *  2024-03-29          HTH             최초 등록
  **/
 @RestController
-public class LoginRestController {
+public class LoginRestController extends Session {
     private final AccountService accountService;
     public LoginRestController(AccountService service) {
         this.accountService = service;
@@ -61,7 +62,7 @@ public class LoginRestController {
         request.getSession().invalidate();
 
         // 로그인 정보를 세션에 저장
-        HttpSession session = request.getSession(true);
+        HttpSession session = this.getSessionData(request);
         session.setAttribute(constValues.LOGIN_USER, sessionData);
 
         return new ResponseData(constValues.DONE, "로그인 했습니다.", null);
@@ -71,7 +72,7 @@ public class LoginRestController {
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
         // 로그인 정보 제거
-        HttpSession session = request.getSession(false);
+        HttpSession session = this.getSessionData(request);
         session.invalidate();
 
         return "redirect:/";
@@ -80,7 +81,7 @@ public class LoginRestController {
     // 회원가입
     @PostMapping("/join/{page}")
     public ResponseData join(HttpServletRequest request, @PathVariable(name = "page") Integer page, @RequestParam(value = "birth_day", required = false) String birthDay, AccountDto accountDto) {
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(false);
 
         if(page == 1) {
             // 성별이 없을 때
@@ -151,7 +152,7 @@ public class LoginRestController {
         String code = accountService.getCode();
 
         // 코드를 세션에 저장
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(false);
         session.setAttribute(constValues.CODE_DATA, code);
 
         return new ResponseData(constValues.DONE, "인증번호가 발송되었습니다.", code);
@@ -177,7 +178,7 @@ public class LoginRestController {
     // 인증번호 삭제
     @PostMapping("/remove/code")
     public ResponseData removeCode(HttpServletRequest request) {
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(false);
         session.removeAttribute(constValues.CODE_DATA);
         
         return new ResponseData(constValues.DONE, "저장되었습니다.", null);

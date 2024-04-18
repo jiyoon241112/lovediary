@@ -25,9 +25,9 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
             "SELECT s " +
             "FROM Schedule s " +
             "WHERE DATE_FORMAT(s.startDate, '%Y-%m-%d') = :startDate " +
-            "AND s.accountIdx = :idx " +
+            "AND s.accountIdx IN (:idx) " +
             "AND s.deleteYn = 'N'")
-    List<Schedule> findByAccountIdxAndStartDate(Long idx, String startDate);
+    List<Schedule> findByAccountIdxInAndStartDate(List<Long> idx, String startDate);
 
     @Query(nativeQuery = true, value =
             "SELECT YEAR(start_date) AS year, MONTH(start_date) AS month, DAY(start_date) AS day " +

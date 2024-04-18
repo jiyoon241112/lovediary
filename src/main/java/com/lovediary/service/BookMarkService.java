@@ -31,8 +31,8 @@ public class BookMarkService {
 
     //테마 즐겨찾기 리스트 페이지
     @Transactional
-    public List<BookMarkThemeDto> bookMarkList() {
-        List<BookMarkTheme> themeBookMarkList = themeBookMarkRepository.bookMarkList();
+    public List<BookMarkThemeDto> bookMarkList(Long accountIdx) {
+        List<BookMarkTheme> themeBookMarkList = themeBookMarkRepository.bookMarkList(accountIdx);
         List<BookMarkThemeDto> resultList = new ArrayList<>();
 
         for(BookMarkTheme themeBookMark : themeBookMarkList) {

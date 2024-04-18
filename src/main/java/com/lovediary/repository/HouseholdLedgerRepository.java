@@ -19,7 +19,7 @@ import java.util.List;
  **/
 
 public interface HouseholdLedgerRepository extends JpaRepository<HouseholdLedger, Long> {
-    List<HouseholdLedger> findByAccountIdx(Long idx);
+    List<HouseholdLedger> findByAccountIdxIn(List<Long> accountIdx);
 
-    List<HouseholdLedger> findByAccountIdxAndType(Long idx, Character type);
+    List<HouseholdLedger> findByAccountIdxInAndType(List<Long> accountIdx, Character type);
 }

@@ -20,7 +20,7 @@
 					</div>
 					<p class="bold_t" th:text="${detail.title}"></p>
 					<div class="h_400 scroll" th:utext="${detail.contents}"></div>
-					<div class="right_t">
+					<div th:if="${detail.accountIdx == session_data.accountIdx}" class="right_t">
 						<a id="delete_btn" class="btn disable_btn small_btn w_150">삭제</a>
 					</div>
 				</div>
@@ -60,7 +60,7 @@
 	</div>
 	<div class="footer">
 		<a id="return_bucket" class="btn disable_btn">돌아가기</a>
-		<a class="btn active_btn ml_30" onclick="editBucket(this)">수정</a>
+		<a th:if="${detail.accountIdx == session_data.accountIdx}" class="btn active_btn ml_30" onclick="editBucket(this)">수정</a>
 	</div>
 </body>
 <script type="application/javascript" th:src="@{/js/bucket_detail.js}"></script>

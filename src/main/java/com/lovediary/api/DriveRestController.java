@@ -4,8 +4,10 @@ import com.lovediary.dto.DriveDto;
 import com.lovediary.dto.DriveFileDto;
 import com.lovediary.service.DriveService;
 import com.lovediary.service.FileService;
+import com.lovediary.util.Session;
 import com.lovediary.values.ResponseData;
 import com.lovediary.values.constValues;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +28,7 @@ import java.io.IOException;
  *  2024-04-16          HTH             최초 등록
  **/
 @RestController
-public class DriveRestController {
+public class DriveRestController extends Session {
     private final DriveService driveService;
     private final FileService fileService;
     public DriveRestController(DriveService driveService, FileService fileService) {
@@ -35,12 +37,13 @@ public class DriveRestController {
     }
 
     @PostMapping("/drive/upload")
-    public ResponseData saveUploadFile(@RequestParam(name = "file", required = false) MultipartFile uploadFile) throws IOException {
+    public ResponseData saveUploadFile(HttpServletRequest request,
+                                       @RequestParam(name = "file", required = false) MultipartFile uploadFile) throws IOException {
         if(uploadFile == null) {
             return new ResponseData(constValues.ERROR, "파일을 업로드해주세요.", null);
         }
 
-        DriveDto driveDto = driveService.getDrive(1L);
+        DriveDto driveDto = driveService.getDrive(this.getLoginData(request).getCoupleIdx());
         Long uploadIdx = fileService.saveItem(uploadFile, 4);
 
         DriveFileDto fileDto = DriveFileDto.builder()

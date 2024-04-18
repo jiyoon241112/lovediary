@@ -20,7 +20,7 @@
 							</div>
 						</div>
 						<p th:text="${comment.contents}"></p>
-						<div class="right_t">
+						<div th:if="${comment.accountIdx == session_data.accountIdx}" class="right_t">
 							<a id="comment_edit_btn" class="btn white_btn small_btn w_150">수정</a>
 							<a id="comment_delete_btn" class="btn disable_btn small_btn w_150">삭제</a>
 						</div>
@@ -49,7 +49,7 @@
 							</div>
 						</div>
 						<p th:text="${sub_comment.contents}"></p>
-						<div class="right_t">
+						<div th:if="${sub_comment.accountIdx == session_data.accountIdx}" class="right_t">
 							<a id="edit_btn" class="btn white_btn small_btn w_150">수정</a>
 							<a id="delete_btn" class="btn disable_btn small_btn w_150">삭제</a>
 						</div>

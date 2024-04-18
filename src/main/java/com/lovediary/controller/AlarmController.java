@@ -2,6 +2,8 @@ package com.lovediary.controller;
 
 import com.lovediary.dto.AlarmDto;
 import com.lovediary.service.AlarmService;
+import com.lovediary.util.Session;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,22 +23,17 @@ import org.springframework.web.bind.annotation.PutMapping;
  *  2024-03-26          HTH             최초 등록
  **/
 @Controller
-public class AlarmController {
+public class AlarmController extends Session {
     private final AlarmService alarmService;
     public AlarmController(AlarmService service) {
         this.alarmService = service;
     }
 
     @GetMapping("/alarm")
-    public String alarmPage(Model model) {
-        model.addAttribute("list", alarmService.getList());
-        return "pages/alarm/alarm";
-    }
+    public String alarmPage(HttpServletRequest request,
+                            Model model) {
+        model.addAttribute("list", alarmService.getList(this.getLoginData(request)));
 
-    @PutMapping("/alarm/read/{idx}")
-    public String alarmRead(@PathVariable("idx") Long idx) {
-        AlarmDto alarmDto = alarmService.getOne(idx);
-        alarmDto.setReadYn('Y');
-        return "redirect:/";
+        return "pages/alarm/alarm";
     }
 }

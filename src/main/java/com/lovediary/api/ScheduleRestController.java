@@ -2,6 +2,7 @@ package com.lovediary.api;
 
 import com.lovediary.dto.*;
 import com.lovediary.service.ScheduleService;
+import com.lovediary.util.Session;
 import com.lovediary.values.ResponseData;
 import com.lovediary.values.constValues;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +29,7 @@ import java.util.List;
  *  2024-04-12          JJY             최초 등록
  **/
 @RestController
-public class ScheduleRestController {
+public class ScheduleRestController extends Session {
     private ScheduleService scheduleService;
     public ScheduleRestController(ScheduleService service) {
         this.scheduleService = service;
@@ -36,7 +37,10 @@ public class ScheduleRestController {
 
     //스케줄 저장
     @PostMapping("/schedule/save")
-    public ResponseData bucketSave(HttpServletRequest request, @RequestParam("start_date") String startDate, @RequestParam(value = "end_date", required = false) String endDate, ScheduleDto scheduleDto) throws ParseException {
+    public ResponseData bucketSave(HttpServletRequest request,
+                                   @RequestParam("start_date") String startDate,
+                                   @RequestParam(value = "end_date", required = false) String endDate,
+                                   ScheduleDto scheduleDto) throws ParseException {
         HttpSession session = request.getSession(true);
         session.getAttribute(constValues.LOGIN_USER);
 
@@ -60,7 +64,7 @@ public class ScheduleRestController {
             timestamp = new Timestamp(closeDate.getTime());
         }
 
-        scheduleDto.setAccountIdx(2L);
+        scheduleDto.setAccountIdx(this.getLoginData(request).getAccountIdx());
         scheduleDto.setStartDate(timestampStart);
         scheduleDto.setEndDate(timestamp);
 
@@ -78,7 +82,8 @@ public class ScheduleRestController {
 
     // 일정 삭제
     @PostMapping("/schedule/delete")
-    public ResponseData deleteSchedule(HttpServletRequest request, @RequestParam(name = "idx") Long idx) {
+    public ResponseData deleteSchedule(HttpServletRequest request,
+                                       @RequestParam(name = "idx") Long idx) {
         if(idx == null) {
             return new ResponseData(constValues.ERROR, "삭제할 일정이 없습니다.", null);
         }

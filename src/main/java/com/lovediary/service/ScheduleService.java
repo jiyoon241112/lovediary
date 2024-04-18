@@ -3,6 +3,7 @@ package com.lovediary.service;
 import com.lovediary.dto.*;
 import com.lovediary.entity.Schedule;
 import com.lovediary.repository.ScheduleRepository;
+import com.lovediary.values.SessionData;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +32,12 @@ public class ScheduleService {
 
     // <스케줄 리스트 페이지>
     @Transactional
-    public List<ScheduleDto> getList(Long idx, String startDate) {
-        List<Schedule> scheduleList = scheduleRepository.findByAccountIdxAndStartDate(idx, startDate);
+    public List<ScheduleDto> getList(String startDate, SessionData session) {
+        List<Long> accountIdx = new ArrayList<>();
+        accountIdx.add(session.getAccountIdx());
+        accountIdx.add(session.getPartnerIdx());
+
+        List<Schedule> scheduleList = scheduleRepository.findByAccountIdxInAndStartDate(accountIdx, startDate);
         List<ScheduleDto> resultList = new ArrayList<>();
 
         for(Schedule schedule : scheduleList) {

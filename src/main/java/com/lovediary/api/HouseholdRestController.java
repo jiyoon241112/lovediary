@@ -2,6 +2,7 @@ package com.lovediary.api;
 
 import com.lovediary.dto.HouseholdLedgerDto;
 import com.lovediary.service.HouseholdLedgerService;
+import com.lovediary.util.Session;
 import com.lovediary.values.ResponseData;
 import com.lovediary.values.constValues;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,17 +30,16 @@ import java.util.Date;
  *  2024-04-03          JJY             최초 등록
  **/
 @RestController
-public class HouseholdRestController {
+public class HouseholdRestController extends Session {
     private HouseholdLedgerService householdLedgerService;
 
     public HouseholdRestController(HouseholdLedgerService householdLedgerService){this.householdLedgerService = householdLedgerService;}
 
     //가계부 저장
     @PostMapping("/household/save")
-    public ResponseData timeCapsuleSave(HttpServletRequest request, @RequestParam(name = "due_date") String dueDate, HouseholdLedgerDto householdLedgerDto){
-        HttpSession session = request.getSession(true);
-        session.getAttribute(constValues.LOGIN_USER);
-
+    public ResponseData timeCapsuleSave(HttpServletRequest request,
+                                        @RequestParam(name = "due_date") String dueDate,
+                                        HouseholdLedgerDto householdLedgerDto){
         if(dueDate == null || dueDate.isEmpty()) {
             return new ResponseData(constValues.ERROR, "발생일을 입력해주세요.", null);
         }
@@ -65,7 +65,7 @@ public class HouseholdRestController {
             householdLedgerDto.setDueDate(null);
         }
 
-        householdLedgerDto.setAccountIdx(2L);
+        householdLedgerDto.setAccountIdx(this.getLoginData(request).getAccountIdx());
         householdLedgerDto.setCategoryIdx(1L);
 
         householdLedgerService.saveItem(householdLedgerDto);
