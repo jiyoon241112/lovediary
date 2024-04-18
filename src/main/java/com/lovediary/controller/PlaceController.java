@@ -13,6 +13,8 @@ package com.lovediary.controller;
  **/
 import com.lovediary.service.BookMarkService;
 import com.lovediary.service.PlaceService;
+import com.lovediary.util.Session;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
@@ -20,7 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class PlaceController {
+public class PlaceController extends Session {
     private BookMarkService bookMarkService;
     private PlaceService placeService;
     public PlaceController(BookMarkService service, PlaceService placeService) {
@@ -30,8 +32,9 @@ public class PlaceController {
     
     //데이트 장소 카테고리 리스트 페이지
     @GetMapping("/place")
-    public String placePage(Model model) {
-        model.addAttribute("list", bookMarkService.bookMarkList());
+    public String placePage(HttpServletRequest request, Model model) {
+        model.addAttribute("list", bookMarkService.bookMarkList(this.getLoginData(request).getAccountIdx()));
+
         return "pages/place/place_category";
     }
 
@@ -47,8 +50,11 @@ public class PlaceController {
 
     //데이트 장소 상세 페이지
     @GetMapping("/place/detail/{idx}")
-    public String placeDetailPage(@PathVariable(name = "idx", required = false) Long idx, Model model) {
+    public String placeDetailPage(HttpServletRequest request,
+                                  @PathVariable(name = "idx", required = false) Long idx,
+                                  Model model) {
         model.addAttribute("detail", placeService.getOne(idx));
+
         return "pages/place/place_detail";
     }
 

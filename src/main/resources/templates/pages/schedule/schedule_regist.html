@@ -13,6 +13,9 @@
             <input type="text" id="end_date" class="input" placeholder="종료일자" th:value="${schedule.endDateStr}" />
             <input type="text" id="address" class="input" placeholder="주소" th:value="${schedule.address}" />
             <input type="text" id="address_detail" class="input" placeholder="상세 주소" th:value="${schedule.addressDetail}" />
+            <div th:if="${schedule.accountIdx == session_data.accountIdx}" class="right_t">
+                <a id="delete_btn" class="btn disable_btn small_btn w_150">삭제</a>
+            </div>
         </div>
     </section>
 </div>
@@ -25,7 +28,7 @@
     <section id="map_popup" class="center_a card mt_30" style="display: none;">
         <p class="title_t center_t bold_t">주소 검색</p>
         <div class="form_group ml_5p">
-            <iframe src="/map" class="w_full h_60vh"></iframe>
+            <iframe src="/map" id="address_info" class="w_full h_60vh"></iframe>
         </div>
         <div class="form_group inline_block">
             <a class="btn w_270 disable_btn bold_t pop_close">닫기</a>

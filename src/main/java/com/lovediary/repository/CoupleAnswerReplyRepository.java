@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CoupleAnswerReplyRepository extends JpaRepository<CoupleAnswerReply, Long> {
-    List<CoupleAnswerReply> findByCoupleAnswerIdxOrderByIdxDesc(Long coupleAnswerIdx);
+    List<CoupleAnswerReply> findByCoupleAnswerIdxAndDeleteYnOrderByIdxDesc(Long coupleAnswerIdx, Character deleteYn);
 }

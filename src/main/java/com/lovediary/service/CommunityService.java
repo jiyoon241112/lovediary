@@ -86,25 +86,25 @@ public class CommunityService {
 
     // 댓글 저장
     @Transactional
-    public Long saveComment(Long idx, Long replyIdx, String contents) {
-        CommunityReplyDto replyDto = CommunityReplyDto.builder()
-                .communityIdx(idx)
-                .replyIdx(replyIdx)
-                .contents(contents)
-                .accountIdx(1L)
-                .build();
-
+    public Long saveComment(CommunityReplyDto replyDto) {
         return communityReplyRepository.save(replyDto.toEntity()).getIdx();
     }
     
     // 커뮤니티 DTO 변환
     private CommunityDto convertToDto(Community community) {
+        String name = null;
+        if(community.getAccount().getCoupleAccount() == null) {
+            name = community.getAccount().getName();
+        } else {
+            name = community.getAccount().getCoupleAccount().getLoveName();
+        }
+
         return CommunityDto.builder()
                 .idx(community.getIdx())
                 .title(community.getTitle())
                 .contents(community.getContents())
                 .accountIdx(community.getAccount().getIdx())
-                .accountName(community.getAccount().getName())
+                .accountName(name)
                 .profileIdx(community.getAccount().getProfileIdx())
                 .deleteYn(community.getDeleteYn())
                 .registDate(community.getRegistDate())
@@ -115,13 +115,20 @@ public class CommunityService {
 
     // 댓글 DTO 변환
     private CommunityReplyDto convertToDto(CommunityReply reply) {
+        String name = null;
+        if(reply.getAccount().getCoupleAccount() == null) {
+            name = reply.getAccount().getName();
+        } else {
+            name = reply.getAccount().getCoupleAccount().getLoveName();
+        }
+
         return CommunityReplyDto.builder()
                 .idx(reply.getIdx())
                 .communityIdx(reply.getCommunityIdx())
                 .replyIdx(reply.getReplyIdx())
                 .contents(reply.getContents())
                 .accountIdx(reply.getAccount().getIdx())
-                .accountName(reply.getAccount().getName())
+                .accountName(name)
                 .profileIdx(reply.getAccount().getProfileIdx())
                 .deleteYn(reply.getDeleteYn())
                 .registDate(reply.getRegistDate())

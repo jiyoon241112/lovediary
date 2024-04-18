@@ -1,15 +1,13 @@
 package com.lovediary.service;
 
-import com.lovediary.dto.ScheduleDto;
-import com.lovediary.dto.TimecapsuleDto;
+import com.lovediary.dto.*;
 import com.lovediary.entity.Schedule;
-import com.lovediary.entity.Timecapsule;
 import com.lovediary.repository.ScheduleRepository;
+import com.lovediary.values.SessionData;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,8 +32,12 @@ public class ScheduleService {
 
     // <스케줄 리스트 페이지>
     @Transactional
-    public List<ScheduleDto> getList(Long idx, String startDate) {
-        List<Schedule> scheduleList = scheduleRepository.findByAccountIdxAndStartDate(idx, startDate);
+    public List<ScheduleDto> getList(String startDate, SessionData session) {
+        List<Long> accountIdx = new ArrayList<>();
+        accountIdx.add(session.getAccountIdx());
+        accountIdx.add(session.getPartnerIdx());
+
+        List<Schedule> scheduleList = scheduleRepository.findByAccountIdxInAndStartDate(accountIdx, startDate);
         List<ScheduleDto> resultList = new ArrayList<>();
 
         for(Schedule schedule : scheduleList) {
@@ -79,6 +81,28 @@ public class ScheduleService {
                 .registDate(schedule.getRegistDate())
                 .modifyDate(schedule.getModifyDate())
                 .deleteDate(schedule.getDeleteDate())
+                .build();
+    }
+
+    // <스케줄 리스트 페이지>
+    @Transactional
+    public List<CalendarListDto> getCalendarList() {
+        List<CalendarList> calendarList = scheduleRepository.getCalendarList();
+        List<CalendarListDto> resultList = new ArrayList<>();
+
+        for(CalendarList calendar : calendarList) {
+            resultList.add(convertToDto(calendar));
+        }
+
+        return resultList;
+    }
+
+    // Dto 변환
+    private CalendarListDto convertToDto(CalendarList calendar) {
+        return CalendarListDto.builder()
+                .year(calendar.getYear())
+                .month(calendar.getMonth())
+                .day(calendar.getDay())
                 .build();
     }
 }

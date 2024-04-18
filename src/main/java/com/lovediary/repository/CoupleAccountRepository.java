@@ -3,6 +3,8 @@ package com.lovediary.repository;
 import com.lovediary.entity.CoupleAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 /**
  * 
  * CoupleAccountRepository
@@ -17,4 +19,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  **/
 public interface CoupleAccountRepository extends JpaRepository<CoupleAccount, Long> {
     CoupleAccount findByCoupleIdxAndAccountIdxIsNot(Long coupleIdx, Long accountIdx);
+
+    List<CoupleAccount> findByCoupleIdx(Long coupleIdx);
 }

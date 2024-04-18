@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="common/head.html"></head>
+<body>
+<div class="body">
+    <div class="logo center_a"></div>
+    <p class="title center_t bold_t f_30 h_auto">이곳에서 여러분만의</p>
+    <p class="title center_t bold_t f_30">알콩달콩한 추억을 만들어보세요!</p>
+    <section class="center_a">
+        <div class="form_group">
+            <div class="space_evenly w_full mb_15">
+                <div class="checkbox">
+                    <label class="flex">
+                        <input type="radio" id="check2" name="type" value="2" /><label></label>
+                        <p class="inline_block f_30">코드입력</p>
+                    </label>
+                    <label class="flex">
+                        <input type="radio" id="check1" name="type" value="1" checked /><label></label>
+                        <p class="inline_block f_30">등록</p>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div id="tab1" class="form_group join_tab">
+            <input type="text" id="name" class="input" placeholder="커플명*" />
+        </div>
+        <div id="tab2" class="form_group join_tab" style="display: none;">
+            <div class="button_input">
+                <input type="number" id="code" class="input" placeholder="코드*" />
+                <a id="code_btn" class="btn active_btn">입력하기</a>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="footer">
+    <a id="next_btn" class="btn active_btn">다음</a>
+</div>
+</body>
+<script type="application/javascript" th:src="@{/js/join2.js}"></script>
+</html>

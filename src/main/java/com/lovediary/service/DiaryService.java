@@ -8,6 +8,7 @@ import com.lovediary.entity.Diary;
 import com.lovediary.entity.DiaryComment;
 import com.lovediary.repository.DiaryCommentRepository;
 import com.lovediary.repository.DiaryRepository;
+import com.lovediary.values.SessionData;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -38,10 +39,10 @@ public class DiaryService {
 
     // 커플 다이어리 리스트 페이지
     @Transactional
-    public List<DiaryDto> getList() {
+    public List<DiaryDto> getList(SessionData session) {
         List<Long> accountIdx = new ArrayList<>();
-        accountIdx.add(2L);
-        accountIdx.add(3L);
+        accountIdx.add(session.getAccountIdx());
+        accountIdx.add(session.getPartnerIdx());
 
         List<Diary> diaryList = diaryRepository.findByAccountIdxInOrderByIdxDesc(accountIdx);
         List<DiaryDto> resultList = new ArrayList<>();
@@ -65,7 +66,7 @@ public class DiaryService {
     // 커플 다이어리 댓글 상세 페이지
     @Transactional
     public List<DiaryCommentDto> getDiaryCommentList(Long idx) {
-        List<DiaryComment> commentList = diaryCommentRepository.findByCoupleDiaryIdxOrderByIdxDesc(idx);
+        List<DiaryComment> commentList = diaryCommentRepository.findByCoupleDiaryIdxAndDeleteYnOrderByIdxDesc(idx,'N');
         List<DiaryCommentDto> resultList = new ArrayList<>();
 
         for(DiaryComment diaryComment : commentList) {
@@ -73,6 +74,15 @@ public class DiaryService {
         }
 
         return resultList;
+    }
+
+    // 커플 다이어리 댓글 단건 조회
+    @Transactional
+    public DiaryCommentDto getDiaryCommentOne(Long idx) {
+        Optional<DiaryComment> wrapper = diaryCommentRepository.findById(idx);
+        DiaryComment reply = wrapper.get();
+
+        return convertToDto(reply);
     }
 
     // 커플 다이어리 작성(저장)
@@ -83,19 +93,19 @@ public class DiaryService {
 
     // 댓글 저장
     @Transactional
-    public Long saveComment(Long coupleDiaryIdx, String contents) {
-        DiaryCommentDto replyDto = DiaryCommentDto.builder()
-                .coupleDiaryIdx(coupleDiaryIdx)
-                .contents(contents)
-                .accountIdx(2L)
-                .build();
-
+    public Long saveComment(DiaryCommentDto replyDto) {
         return diaryCommentRepository.save(replyDto.toEntity()).getIdx();
     }
 
-
     // 일기 Dto 변환
     private DiaryDto convertToDto(Diary diary) {
+        String name = null;
+        if(diary.getAccount().getCoupleAccount() == null) {
+            name = diary.getAccount().getName();
+        } else {
+            name = diary.getAccount().getCoupleAccount().getLoveName();
+        }
+
         return DiaryDto.builder()
                 .idx(diary.getIdx())
                 .coupleIdx(diary.getCoupleIdx())
@@ -103,7 +113,7 @@ public class DiaryService {
                 .title(diary.getTitle())
                 .contents(diary.getContents())
                 .accountIdx(diary.getAccountIdx())
-                .accountName(diary.getAccount().getName())
+                .accountName(name)
                 .profileIdx(diary.getAccount().getProfileIdx())
                 .registDate(diary.getRegistDate())
                 .build();
@@ -111,12 +121,19 @@ public class DiaryService {
 
     // 댓글 Dto 변환
     private DiaryCommentDto convertToDto(DiaryComment diaryComment) {
+        String name = null;
+        if(diaryComment.getAccount().getCoupleAccount() == null) {
+            name = diaryComment.getAccount().getName();
+        } else {
+            name = diaryComment.getAccount().getCoupleAccount().getLoveName();
+        }
+
         return DiaryCommentDto.builder()
                 .idx(diaryComment.getIdx())
                 .coupleDiaryIdx(diaryComment.getCoupleDiaryIdx())
                 .contents(diaryComment.getContents())
                 .accountIdx(diaryComment.getAccountIdx())
-                .accountName(diaryComment.getAccount().getName())
+                .accountName(name)
                 .profileIdx(diaryComment.getAccount().getProfileIdx())
                 .deleteYn(diaryComment.getDeleteYn())
                 .registDate(diaryComment.getRegistDate())

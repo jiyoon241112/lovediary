@@ -53,11 +53,14 @@ public class FileService {
 
     // 목록 조회
     @Transactional
-    public byte[] getOne(Long idx) throws IOException {
+    public FileDto getOne(Long idx) {
         Optional<File> wrapper = fileRepository.findById(idx);
         File file = wrapper.get();
 
-        return Files.readAllBytes(new java.io.File(uploadPath, file.getPath()).toPath());
+        FileDto fileDto = convertToDto(file);
+        fileDto.setPath(uploadPath + file.getPath());
+
+        return fileDto;
     }
 
     // 업로드
@@ -65,11 +68,15 @@ public class FileService {
     public Long saveItem(MultipartFile uploadFile, Integer type) throws IOException {
         StringBuilder builder = new StringBuilder();
 
-        // type 1: 프로필, 2: 커뮤니티/밸런스 게임
+        // type 1: 프로필, 2: 커뮤니티/밸런스 게임, 3: 채팅, 4: 드라이브
         if(type == 1) {
             builder.append(constValues.PROFILE_FILE_PATH);
         } else if(type == 2) {
             builder.append(constValues.COMMUNITY_FILE_PATH);
+        } else if(type == 3) {
+            builder.append(constValues.CHATTING_FILE_PATH);
+        } else if(type == 4) {
+            builder.append(constValues.DRIVE_FILE_PATH);
         } else return null;
 
         builder.append(UUID.randomUUID().toString().replaceAll("-", ""));
@@ -96,6 +103,15 @@ public class FileService {
                 .build();
 
         return fileRepository.save(fileDto.toEntity()).getIdx();
+    }
+
+    // 파일 조회
+    @Transactional
+    public byte[] getByte(Long idx) throws IOException {
+        Optional<File> wrapper = fileRepository.findById(idx);
+        File file = wrapper.get();
+
+        return Files.readAllBytes(new java.io.File(uploadPath, file.getPath()).toPath());
     }
 
     // DTO 변환

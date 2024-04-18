@@ -5,6 +5,7 @@ import com.lovediary.entity.Chatting;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -34,6 +35,7 @@ public class ChattingDto {
     private Long profileIdx;
     private Character deleteYn;
     private Timestamp registDate;
+    private String registDateStr;
     private Timestamp deleteDate;
 
     public Chatting toEntity() {
@@ -59,6 +61,8 @@ public class ChattingDto {
 
     @Builder
     public ChattingDto(Long idx, Long emoticonIdx, Long imageIdx, String contents, Character readYn, Timestamp readDate, Long accountIdx, String accountName, Long profileIdx, Character deleteYn, Timestamp registDate, Timestamp deleteDate) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
         this.idx = idx;
         this.emoticonIdx = emoticonIdx;
         this.imageIdx = imageIdx;
@@ -70,6 +74,7 @@ public class ChattingDto {
         this.profileIdx = profileIdx;
         this.deleteYn = deleteYn;
         this.registDate = registDate;
+        this.registDateStr = registDate == null ? null : dateFormat.format(new java.util.Date(registDate.getTime()));
         this.deleteDate = deleteDate;
     }
 }

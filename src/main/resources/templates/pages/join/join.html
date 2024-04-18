@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="common/head.html"></head>
+<body>
+<div class="body">
+    <div class="logo center_a"></div>
+    <p class="title center_t bold_t f_30 h_auto">이곳에서 여러분만의</p>
+    <p class="title center_t bold_t f_30">알콩달콩한 추억을 만들어보세요!</p>
+    <section class="center_a">
+        <div class="form_group">
+            <div class="space_evenly w_full mb_15">
+                <div class="checkbox">
+                    <label class="flex">
+                        <input type="radio" id="check1" name="gender" value="W" /><label></label>
+                        <p class="inline_block f_30">여자</p>
+                    </label>
+                    <label class="flex">
+                        <input type="radio" id="check2" name="gender" value="M" /><label></label>
+                        <p class="inline_block f_30">남자</p>
+                    </label>
+                </div>
+            </div>
+            <input type="text" id="name" class="input" placeholder="이름*" />
+            <input type="text" id="love_name" class="input" placeholder="닉네임" />
+            <div class="button_input">
+                <input type="tel" id="phone" class="input" placeholder="핸드폰 번호*" />
+                <a id="send_sms_btn" class="btn active_btn">인증하기</a>
+                <a id="change_phone_btn" class="btn active_btn" style="display: none;">수정하기</a>
+            </div>
+            <div id="code_input" class="button_input" style="display: none;">
+                <input type="number" id="code" class="input" placeholder="인증하기*" />
+                <a id="check_code_btn" class="btn active_btn">인증완료</a>
+            </div>
+        </div>
+        <div class="division_line"></div>
+        <div class="form_group">
+            <input type="text" id="id" class="input" placeholder="ID*" />
+            <input type="password" id="password" class="input" placeholder="비밀번호*" />
+            <input type="password" id="password_check" class="input" placeholder="비밀번호 확인*" />
+        </div>
+    </section>
+</div>
+<div class="footer">
+    <a id="next_btn" class="btn active_btn">다음</a>
+</div>
+</body>
+<script type="application/javascript" th:src="@{/js/join.js}"></script>
+</html>

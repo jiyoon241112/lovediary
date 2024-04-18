@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="common/head.html"></head>
+<body>
+<div class="body">
+    <div class="logo center_a"></div>
+    <p class="title center_t bold_t f_30 h_auto">이곳에서 여러분만의</p>
+    <p class="title center_t bold_t f_30">알콩달콩한 추억을 만들어보세요!</p>
+    <section class="center_a">
+        <label for="upload_file">
+            <input type="file" class="file" id="upload_file" accept="image/png, image/jpeg"/>
+            <input type="hidden" id="profile_idx" />
+            <div id="profile_image" class="profile_input no_image"></div>
+        </label>
+        <div class="form_group">
+            <input type="text" id="birth_day" class="input" placeholder="생년월일" />
+            <select id="mbti" size="3" class="input">
+                <option value="" selected disabled>MBTI</option>
+                <option value="ISTJ">ISTJ</option>
+                <option value="ISTP">ISTP</option>
+                <option value="ISFJ">ISFJ</option>
+                <option value="ISFP">ISFP</option>
+                <option value="INTJ">INTJ</option>
+                <option value="INTP">INTP</option>
+                <option value="INFJ">INFJ</option>
+                <option value="INFP">INFP</option>
+                <option value="ESTJ">ESTJ</option>
+                <option value="ESTP">ESTP</option>
+                <option value="ESFJ">ESFJ</option>
+                <option value="ESFP">ESFP</option>
+                <option value="ENTJ">ENTJ</option>
+                <option value="ENTP">ENTP</option>
+                <option value="ENFJ">ENFJ</option>
+                <option value="ENFP">ENFP</option>
+            </select>
+            <div class="space_evenly w_full mb_15">
+                <div class="checkbox">
+                    <label class="flex">
+                        <input type="radio" id="check1" name="blood_type" value="O" /><label></label>
+                        <p class="inline_block f_30">O</p>
+                    </label>
+                    <label class="flex">
+                        <input type="radio" id="check2" name="blood_type" value="AB" /><label></label>
+                        <p class="inline_block f_30">AB</p>
+                    </label>
+                    <label class="flex">
+                        <input type="radio" id="check3" name="blood_type" value="B" /><label></label>
+                        <p class="inline_block f_30">B</p>
+                    </label>
+                    <label class="flex">
+                        <input type="radio" id="check4" name="blood_type" value="A" /><label></label>
+                        <p class="inline_block f_30">A</p>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="footer">
+    <a id="join_btn" class="btn active_btn">회원가입</a>
+</div>
+</body>
+<script type="application/javascript" th:src="@{/js/join4.js}"></script>
+</html>

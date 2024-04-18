@@ -62,11 +62,11 @@ public class Chatting extends JoinAccount {
         this.emoticonIdx = emoticonIdx;
         this.imageIdx = imageIdx;
         this.contents = contents;
-        this.readYn = readYn;
+        this.readYn = readYn == null ? 'Y' : readYn;
         this.readDate = readDate;
-        this.deleteYn = deleteYn;
+        this.deleteYn = deleteYn == null ? 'N' : deleteYn;
         this.accountIdx = accountIdx;
-        this.registDate = registDate;
+        this.registDate = registDate == null ? new Timestamp(System.currentTimeMillis()) : registDate;
         this.deleteDate = deleteDate;
         this.setAccount(account);
     }

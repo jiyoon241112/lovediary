@@ -27,9 +27,17 @@ public class CoupleAnswerDto {
     private Long questionIdx;
     private String questionContents;
     private Character mansAnswerYn;
+
+    private Long mansAccountIdx;
+    private String mansAccountName;
+    private Long mansProfileIdx;
     private Long mansEmotionIdx;
     private String mansAnswerContents;
     private Timestamp mansAnswerDate;
+
+    private Long womansAccountIdx;
+    private String womansAccountName;
+    private Long womansProfileIdx;
     private Character womansAnswerYn;
     private Long womansEmotionIdx;
     private String womansAnswerContents;

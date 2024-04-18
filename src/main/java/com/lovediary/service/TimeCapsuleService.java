@@ -3,6 +3,7 @@ package com.lovediary.service;
 import com.lovediary.dto.TimecapsuleDto;
 import com.lovediary.entity.Timecapsule;
 import com.lovediary.repository.TimecapsuleRepository;
+import com.lovediary.values.SessionData;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +32,10 @@ public class TimeCapsuleService {
 
     // <타입캡슐 리스트 페이지>
     @Transactional
-    public List<TimecapsuleDto> getList() {
+    public List<TimecapsuleDto> getList(SessionData session) {
         List<Long> accountIdx = new ArrayList<>();
-        accountIdx.add(2L);
-        accountIdx.add(3L);
+        accountIdx.add(session.getAccountIdx());
+        accountIdx.add(session.getPartnerIdx());
 
         List<Timecapsule> timeCapsuleList = timeCapsuleRepository.findByAccountIdxInOrderByIdxDesc(accountIdx);
         List<TimecapsuleDto> resultList = new ArrayList<>();
@@ -63,13 +64,20 @@ public class TimeCapsuleService {
 
     // Dto 변환
     private TimecapsuleDto convertToDto(Timecapsule timeCapsule) {
+        String name = null;
+        if(timeCapsule.getAccount().getCoupleAccount() == null) {
+            name = timeCapsule.getAccount().getName();
+        } else {
+            name = timeCapsule.getAccount().getCoupleAccount().getLoveName();
+        }
+
         return TimecapsuleDto.builder()
                 .idx(timeCapsule.getIdx())
                 .openDate(timeCapsule.getOpenDate())
                 .title(timeCapsule.getTitle())
                 .contents(timeCapsule.getContents())
                 .accountIdx(timeCapsule.getAccountIdx())
-                .accountName(timeCapsule.getAccount().getName())
+                .accountName(name)
                 .profileIdx(timeCapsule.getAccount().getProfileIdx())
                 .deleteYn(timeCapsule.getDeleteYn())
                 .registDate(timeCapsule.getRegistDate())

@@ -5,6 +5,8 @@ import com.lovediary.dto.BalanceDto;
 import com.lovediary.dto.BalanceItemDto;
 import com.lovediary.dto.BalanceReplyDto;
 import com.lovediary.service.BalanceService;
+import com.lovediary.util.Session;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,21 +28,24 @@ import java.util.ArrayList;
  *  2024-04-07          HTH             최초 등록
  **/
 @Controller
-public class BalanceController {
+public class BalanceController extends Session {
     private final BalanceService balanceService;
     public BalanceController(BalanceService balanceService) {
         this.balanceService = balanceService;
     }
 
     @GetMapping("/balance")
-    public String balanceListPage(@RequestParam(name = "keyword", required = false, defaultValue = "") String keyword, Model model) {
+    public String balanceListPage(@RequestParam(name = "keyword", required = false, defaultValue = "") String keyword,
+                                  Model model) {
         model.addAttribute("keyword", keyword);
         model.addAttribute("list", balanceService.getList(keyword));
+
         return "pages/balance/balance_list";
     }
 
     @GetMapping("/balance/detail/{idx}")
-    public String balanceDetailPage(@PathVariable(name = "idx") Long idx, Model model) {
+    public String balanceDetailPage(HttpServletRequest request,
+                                    @PathVariable(name = "idx") Long idx, Model model) {
         BalanceAnswerDto answer = balanceService.getAnswer(idx, 1L);
         Long selectedIdx = null;
         if(answer != null) {
@@ -51,6 +56,8 @@ public class BalanceController {
         model.addAttribute("item_list", balanceService.getItemList(idx));
         model.addAttribute("selected_idx", selectedIdx);
         model.addAttribute("comment_list", balanceService.getCommentList(idx, null));
+        model.addAttribute("session_data", this.getLoginData(request));
+
         return "pages/balance/balance_detail";
     }
 
@@ -58,6 +65,7 @@ public class BalanceController {
     public String balanceRegistPage(Model model) {
         model.addAttribute("balance", new BalanceDto());
         model.addAttribute("item_list", new ArrayList<BalanceItemDto>());
+
         return "pages/balance/balance";
     }
 
@@ -65,15 +73,20 @@ public class BalanceController {
     public String balanceModifyPage(@PathVariable(name = "idx") Long idx, Model model) {
         model.addAttribute("balance", balanceService.getOne(idx));
         model.addAttribute("item_list", balanceService.getItemList(idx));
+
         return "pages/balance/balance";
     }
 
     @GetMapping("/balance/comment/{idx}")
-    public String balanceCommentPage(@PathVariable(name = "idx") Long idx, Model model) {
+    public String balanceCommentPage(HttpServletRequest request,
+                                     @PathVariable(name = "idx") Long idx,
+                                     Model model) {
         BalanceReplyDto comment = balanceService.getCommentOne(idx);
 
         model.addAttribute("comment", comment);
         model.addAttribute("list", balanceService.getCommentList(comment.getBalanceIdx(), idx));
+        model.addAttribute("session_data", this.getLoginData(request));
+
         return "pages/balance/balance_comment";
     }
 }

@@ -40,7 +40,7 @@ $("#comment").on("keydown", function(key) {
 });
 
 $("#save_comment").click(function() {
-    const idx = $("#idx").val();
+    const community_idx = $("#idx").val();
     const reply_idx = $("#reply_idx").length ? $("#reply_idx").val() : 0;
     const comment = $("#comment").val();
 
@@ -50,9 +50,20 @@ $("#save_comment").click(function() {
     }
 
     let form_data = new FormData;
-    form_data.append("idx", idx);
+    form_data.append("community_idx", community_idx);
     form_data.append("reply_idx", reply_idx);
     form_data.append("contents", comment);
+
+    saveComment(form_data);
+});
+
+$("#modify_comment").click(function (){
+    const idx = $("#comment_idx").val();
+    const contents = $("#comment_contents").val();
+
+    let form_data = new FormData;
+    form_data.append("idx", idx);
+    form_data.append("contents", contents);
 
     saveComment(form_data);
 });
@@ -86,3 +97,90 @@ $("#comment_list").on("click", ".comment", function() {
     const idx = $(this).data("idx");
     location.href = `/community/comment/${idx}`;
 });
+
+// 댓글 수정
+$("#edit_btn, #comment_edit_btn").click(function(e){
+    e.stopPropagation();
+
+    const comment_txt = $(this).closest(".comment.card").find("p").text();
+    const idx = $(this).closest(".comment.card").data("idx");
+
+    $("#comment_idx").val(idx);
+    $("#comment_edit_pop #comment_contents").val(comment_txt);
+    onPopup("comment_edit_pop");
+});
+
+// 댓글 삭제
+$("#delete_btn, #comment_delete_btn").click(function(e){
+    e.stopPropagation();
+
+    if(!confirm("삭제하시겠습니까?")) {
+        return;
+    }
+
+    const idx = $(this).closest(".comment.card").data("idx");
+
+    let form_data = new FormData;
+    form_data.append("idx", idx);
+
+    deleteComment(form_data);
+});
+
+function deleteComment(form_data, retry = false) {
+    $.ajax({
+        url: '/community/remove_comment',
+        method: 'post',
+        data : form_data,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            const msg = data.msg ?? null;
+            const code = data.code ?? null;
+
+            if(msg ?? null) {
+                alert(msg);
+            }
+
+            if(code === "200") {
+                if($("#reply_idx").length) {
+                    location.replace(`/community/detail/${$("#idx").val()}`)
+                } else {
+                    location.reload();
+                }
+            }
+        }, error: function () {
+            if(!retry) deleteComment(form_data, true);
+        }
+    });
+}
+
+// 게시글 삭제
+$("#remove_item_btn").click(function() {
+    if(!confirm("삭제하시겠습니까?")) {
+        return;
+    }
+
+    deleteItem();
+});
+
+function deleteItem(retry = false) {
+    $.ajax({
+        url: '/community/remove',
+        method: 'post',
+        data : {idx: $("#idx").val()},
+        success: function (data) {
+            const msg = data.msg ?? null;
+            const code = data.code ?? null;
+
+            if(msg ?? null) {
+                alert(msg);
+            }
+
+            if(code === "200") {
+                location.replace(`/community`)
+            }
+        }, error: function () {
+            if(!retry) deleteItem(true);
+        }
+    });
+}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="common/head.html"></head>
+<body>
+<div class="body">
+    <div class="logo center_a"></div>
+    <p class="title center_t bold_t f_30">코드를 상대방에게 보내주세요!</p>
+    <section class="center_a">
+        <div class="form_group justify_center">
+            <p id="copy_code" class="input center_t br_20px w_50p f_40" th:text="${couple.code}" />
+        </div>
+    </section>
+</div>
+<div class="footer">
+    <a id="next_btn" class="btn disable_btn">다음</a>
+</div>
+</body>
+<script type="application/javascript" th:src="@{/js/join3.js}"></script>
+</html>

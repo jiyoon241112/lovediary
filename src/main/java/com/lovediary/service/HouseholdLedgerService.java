@@ -20,6 +20,7 @@ import com.lovediary.entity.Timecapsule;
 import com.lovediary.repository.HouseholdMonthTotalRepository;
 import com.lovediary.repository.HouseholdLedgerRepository;
 import com.lovediary.repository.HouseholdTotalRepository;
+import com.lovediary.values.SessionData;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -39,11 +40,19 @@ public class HouseholdLedgerService {
 
     // <가계부 리스트 페이지>
     @Transactional
-    public List<HouseholdLedgerDto> getList(Character type) {
-        List<HouseholdLedger> householdLedgerList = householdLedgerRepository.findByAccountIdx(2L);
+    public List<HouseholdLedgerDto> getList(Character type, SessionData session) {
+        List<HouseholdLedger> householdLedgerList = new ArrayList<>();
+
+        List<Long> accountIdx = new ArrayList<>();
+        accountIdx.add(session.getAccountIdx());
+        accountIdx.add(session.getPartnerIdx());
+
         if(type != null){
-            householdLedgerList = householdLedgerRepository.findByAccountIdxAndType(2L, type);
+            householdLedgerList = householdLedgerRepository.findByAccountIdxInAndType(accountIdx, type);
+        } else {
+            householdLedgerList = householdLedgerRepository.findByAccountIdxIn(accountIdx);
         }
+
         List<HouseholdLedgerDto> resultList = new ArrayList<>();
 
         for(HouseholdLedger householdLedger : householdLedgerList) {

@@ -16,18 +16,7 @@ $(document).ready(function() {
         let latlng = mouseEvent.latLng;
 
         // 마커 위치를 클릭한 위치로 옮깁니다
-        if(!select_marker) {
-            const imageSize = new kakao.maps.Size(38, 48);
-            const imageOption = {offset: new kakao.maps.Point(18, 48)};
-
-            select_marker = new kakao.maps.Marker({
-                position: latlng,
-                map: map,
-                image: new kakao.maps.MarkerImage("/resources/marker.svg", imageSize, imageOption)
-            });
-        } else {
-            select_marker.setPosition(latlng);
-        }
+        markerSelect(latlng);
     });
 
     ps = new window.kakao.maps.services.Places();
@@ -87,6 +76,16 @@ function setMarker(lat, lng) {
         map: map
     });
 
+    kakao.maps.event.addListener(marker, 'click', function() {
+        searchDetailAddrFromCoords(marker.getPosition(), function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                const detailAddr = !!result[0].road_address ? result[0].road_address.address_name: result[0].address.address_name;
+                parent.getAddress(detailAddr, marker.getPosition().getLat(), marker.getPosition().getLng());
+            }
+        });
+        markerSelect(marker.getPosition());
+    });
+
     marker_list.push(marker);
 }
 
@@ -98,4 +97,43 @@ function removeMarker() {
     });
 
     marker_list = [];
+}
+
+function chooseAddressInfo(){
+    if(select_marker !== null && select_marker.getPosition() !== null){
+        searchDetailAddrFromCoords(select_marker.getPosition(), function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                const detailAddr = !!result[0].road_address ? result[0].road_address.address_name: result[0].address.address_name;
+                parent.getAddress(detailAddr, select_marker.getPosition().getLat(), select_marker.getPosition().getLng());
+            }
+        });
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+function searchAddrFromCoords(coords, callback) {
+    // 좌표로 행정동 주소 정보를 요청합니다
+    gc.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
+}
+
+function searchDetailAddrFromCoords(coords, callback) {
+    // 좌표로 법정동 상세 주소 정보를 요청합니다
+    gc.coord2Address(coords.getLng(), coords.getLat(), callback);
+}
+
+function markerSelect(latlng) {
+    if(!select_marker) {
+        const imageSize = new kakao.maps.Size(38, 48);
+        const imageOption = {offset: new kakao.maps.Point(18, 48)};
+
+        select_marker = new kakao.maps.Marker({
+            position: latlng,
+            map: map,
+            image: new kakao.maps.MarkerImage("/resources/marker.svg", imageSize, imageOption)
+        });
+    } else {
+        select_marker.setPosition(latlng);
+    }
 }

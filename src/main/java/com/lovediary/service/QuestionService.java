@@ -2,12 +2,8 @@ package com.lovediary.service;
 
 import com.lovediary.dto.CoupleAnswerDto;
 import com.lovediary.dto.CoupleAnswerReplyDto;
-import com.lovediary.entity.CoupleAnswer;
-import com.lovediary.entity.CoupleAnswerReply;
-import com.lovediary.entity.CoupleQuestion;
-import com.lovediary.repository.CoupleAnswerReplyRepository;
-import com.lovediary.repository.CoupleAnswerRepository;
-import com.lovediary.repository.CoupleQuestionRepository;
+import com.lovediary.entity.*;
+import com.lovediary.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +27,15 @@ import java.util.Random;
  **/
 @Service
 public class QuestionService {
+    private final CoupleAccountRepository coupleAccountRepository;
     private final CoupleQuestionRepository coupleQuestionRepository;
     private final CoupleAnswerRepository coupleAnswerRepository;
     private final CoupleAnswerReplyRepository coupleAnswerReplyRepository;
-    public QuestionService(CoupleQuestionRepository coupleQuestionRepository, CoupleAnswerRepository coupleAnswerRepository, CoupleAnswerReplyRepository coupleAnswerReplyRepository) {
+    public QuestionService(CoupleAccountRepository coupleAccountRepository,
+                           CoupleQuestionRepository coupleQuestionRepository,
+                           CoupleAnswerRepository coupleAnswerRepository,
+                           CoupleAnswerReplyRepository coupleAnswerReplyRepository) {
+        this.coupleAccountRepository = coupleAccountRepository;
         this.coupleQuestionRepository = coupleQuestionRepository;
         this.coupleAnswerRepository = coupleAnswerRepository;
         this.coupleAnswerReplyRepository = coupleAnswerReplyRepository;
@@ -59,7 +60,24 @@ public class QuestionService {
         Optional<CoupleAnswer> wrapper = coupleAnswerRepository.findById(idx);
         CoupleAnswer answer = wrapper.get();
 
-        return convertToDto(answer);
+        CoupleAnswerDto answerDto = convertToDto(answer);
+        List<CoupleAccount> coupleAccountList = coupleAccountRepository.findByCoupleIdx(answerDto.getCoupleIdx());
+
+        for(CoupleAccount coupleAccount : coupleAccountList) {
+            Account account = coupleAccount.getAccount();
+
+            if(coupleAccount.getGender().equals('M')) {
+                answerDto.setMansAccountIdx(account.getIdx());
+                answerDto.setMansAccountName(coupleAccount.getLoveName());
+                answerDto.setMansProfileIdx(account.getProfileIdx());
+            } else {
+                answerDto.setWomansAccountIdx(account.getIdx());
+                answerDto.setWomansAccountName(coupleAccount.getLoveName());
+                answerDto.setWomansProfileIdx(account.getProfileIdx());
+            }
+        }
+
+        return answerDto;
     }
 
     // 수정
@@ -100,7 +118,7 @@ public class QuestionService {
     // 댓글 조회
     @Transactional
     public List<CoupleAnswerReplyDto> getCommentList(Long idx) {
-        List<CoupleAnswerReply> commentList = coupleAnswerReplyRepository.findByCoupleAnswerIdxOrderByIdxDesc(idx);
+        List<CoupleAnswerReply> commentList = coupleAnswerReplyRepository.findByCoupleAnswerIdxAndDeleteYnOrderByIdxDesc(idx, 'N');
         List<CoupleAnswerReplyDto> resultList = new ArrayList<>();
 
         for(CoupleAnswerReply comment : commentList) {
@@ -110,15 +128,18 @@ public class QuestionService {
         return resultList;
     }
 
+    // 댓글 조회
+    @Transactional
+    public CoupleAnswerReplyDto getCommentOne(Long idx) {
+        Optional<CoupleAnswerReply> wrapper = coupleAnswerReplyRepository.findById(idx);
+        CoupleAnswerReply comment = wrapper.get();
+
+        return convertToDto(comment);
+    }
+
     // 댓글 저장
     @Transactional
-    public Long saveComment(Long idx, String contents) {
-        CoupleAnswerReplyDto replyDto = CoupleAnswerReplyDto.builder()
-                .coupleAnswerIdx(idx)
-                .contents(contents)
-                .accountIdx(1L)
-                .build();
-
+    public Long saveComment(CoupleAnswerReplyDto replyDto) {
         return coupleAnswerReplyRepository.save(replyDto.toEntity()).getIdx();
     }
 
@@ -143,11 +164,20 @@ public class QuestionService {
 
     // 댓글 DTO 변환
     private CoupleAnswerReplyDto convertToDto(CoupleAnswerReply coupleAnswerReply) {
+        String name = null;
+        if(coupleAnswerReply.getAccount().getCoupleAccount() == null) {
+            name = coupleAnswerReply.getAccount().getName();
+        } else {
+            name = coupleAnswerReply.getAccount().getCoupleAccount().getLoveName();
+        }
+
         return CoupleAnswerReplyDto.builder()
                 .idx(coupleAnswerReply.getIdx())
                 .coupleAnswerIdx(coupleAnswerReply.getCoupleAnswerIdx())
                 .contents(coupleAnswerReply.getContents())
-                .accountIdx(coupleAnswerReply.getAccountIdx())
+                .accountIdx(coupleAnswerReply.getAccount().getIdx())
+                .accountName(name)
+                .profileIdx(coupleAnswerReply.getAccount().getProfileIdx())
                 .deleteYn(coupleAnswerReply.getDeleteYn())
                 .registDate(coupleAnswerReply.getRegistDate())
                 .modifyDate(coupleAnswerReply.getModifyDate())

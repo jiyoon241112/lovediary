@@ -8,7 +8,7 @@
 		<p class="title center_t bold_t" th:text="${detail.title}"></p>
 		<section class="center_a">
 			<div class="form_group">
-				<div class="comment card">
+				<div id="timecapsule_idx" class="comment card" th:data-idx="${detail.idx}">
 					<div class="twin profile">
 						<div>
 							<div th:if="${detail.profileIdx == null}" class="profile_img bold_t mt_0" th:text="${detail.accountName.charAt(0)}"></div>
@@ -20,12 +20,17 @@
 						</div>
 					</div>
 					<div class="editor_viewer" th:utext="${detail.contents}"></div>
+					<div th:if="${detail.accountIdx == session_data.accountIdx}" class="right_t">
+						<a id="delete_btn" class="btn disable_btn small_btn w_150">삭제</a>
+					</div>
 				</div>
 			</div>
 		</section>
 	</div>
 	<div class="footer">
-		<a class="btn disable_btn">돌아가기</a>
+		<a id="return_btn" class="btn disable_btn">돌아가기</a>
+		<a th:if="${detail.accountIdx == session_data.accountIdx}" id="edit_btn" class="btn active_btn ml_30">수정</a>
 	</div>
 </body>
+<script type="application/javascript" th:src="@{/js/timecapsule_detail.js}"></script>
 </html>
