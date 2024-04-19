@@ -1,77 +1,29 @@
-// 프로필 이미지 업로드
-$("#upload_file").on("change", function() {
-    const files = $(this)[0].files;
-    if(!files.length) {
-        alert("파일을 업로드해주세요.");
-        $(this).val("");
-        return;
-    }
-
-    const upload_file = files[0];
-
-    let form_data = new FormData;
-    form_data.append("file", upload_file);
-    form_data.append("type", 1);
-
-    fileUpload(form_data);
-    getBase64(upload_file, function(e) {
-        $("#profile_image").css("background-image", `url('${e.srcElement.result}')`).removeClass("no_image");
-    });
-    $(this).val("");
+// 코드 복사
+$("#copy_code").click(function() {
+    navigator.clipboard.writeText($(this).text())
 });
 
-function fileUpload(form_data, retry = false) {
+// 코드 입력 확인
+let interval = setInterval(checkJoin, 3000);
+
+function checkJoin(retry = false) {
     $.ajax({
-        url: '/upload',
+        url: '/couple/check',
         method: 'post',
-        data : form_data,
-        contentType: false,
-        processData: false,
+        async: false,
         success: function (data) {
-            if(data.code === "200") {
-                $("#profile_idx").val(data.result);
+            const code = data.code ?? null;
+
+            if(code === "200") {
+                alert("코드가 입력되었습니다.");
+                clearInterval(interval);
+                $("#next_btn").removeClass("disabled_btn").addClass("active_btn");
+                $("#next_btn.active_btn").click(function () {
+                    location.replace("/login");
+                });
             }
         }, error: function () {
-            if(!retry) fileUpload(form_data, true);
-        }
-    });
-}
-
-// 회원가입 버튼
-$("#join_btn").click(function() {
-    const profile_idx = $("#profile_idx").val();
-    const birth_day = $("#birth_day").val();
-    const mbti = $("#mbti option:selected").val();
-    const blood_type = $("[name=blood_type]:checked").val();
-
-    let form_data = new FormData;
-    form_data.append("profileIdx", profile_idx);
-    form_data.append("birth_day", birth_day);
-    form_data.append("mbti", mbti);
-    form_data.append("bloodType", blood_type);
-
-    join(form_data);
-});
-
-function join(form_data, retry = false) {
-    $.ajax({
-        url: '/join/4',
-        method: 'post',
-        data : form_data,
-        contentType: false,
-        processData: false,
-        success: function (data) {
-            const msg = data.msg ?? null;
-            if(msg) {
-                alert(msg);
-                return;
-            }
-
-            if(data.code === "200") {
-                location.replace("/login");
-            }
-        }, error: function () {
-            if(!retry) join(form_data, true);
+            if(!retry) checkCode(true);
         }
     });
 }

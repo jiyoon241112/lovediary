@@ -21,4 +21,6 @@ public interface CoupleAccountRepository extends JpaRepository<CoupleAccount, Lo
     CoupleAccount findByCoupleIdxAndAccountIdxIsNot(Long coupleIdx, Long accountIdx);
 
     List<CoupleAccount> findByCoupleIdx(Long coupleIdx);
+
+    CoupleAccount findByNaverToken(String naverToken);
 }

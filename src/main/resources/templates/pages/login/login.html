@@ -22,5 +22,11 @@
 		</div>
 	</section>
 </body>
+<script th:if="${err != null}" th:inline="javascript">
+	$(document).ready(function() {
+		const err_msg = [[${err}]];
+		alert(err_msg);
+	});
+</script>
 <script type="application/javascript" th:src="@{/js/login.js}"></script>
 </html>

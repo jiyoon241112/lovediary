@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -153,5 +154,32 @@ public class AccountService {
         }
 
         return builder.build();
+    }
+
+    // 네이버 로그인
+    public SessionData getByNaverLogin(Map<String, Object> response) {
+        String naverToken = response.get("id").toString();
+
+        CoupleAccount coupleAccount = coupleAccountRepository.findByNaverToken(naverToken);
+        Account account = null;
+
+        if(coupleAccount == null) {
+            String phoneNumber = response.get("mobile").toString();
+            account = accountRepository.findByPhoneNumber(phoneNumber);
+
+            // 토큰 저장
+            if(account != null) {
+                AccountDto accountDto = convertToDto(account);
+                accountDto.setNaverToken(naverToken);
+                this.saveItem(accountDto);
+
+                return this.getSessionData(accountDto);
+            } else {
+                return null;
+            }
+        } else {
+            account = coupleAccount.getAccount();
+            return this.getSessionData(convertToDto(account));
+        }
     }
 }

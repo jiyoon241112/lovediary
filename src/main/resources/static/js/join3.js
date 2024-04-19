@@ -1,26 +1,63 @@
-// 코드 복사
-$("#copy_code").click(function() {
-    navigator.clipboard.writeText($(this).text())
+// 선택
+$("[name=type]").on("change",function(){
+    const value = $(this).val();
+
+    $("#name, #code").val("");
+    $(".join_tab").hide();
+    $(`#tab${value}`).show();
 });
 
-// 코드 입력 확인
-let interval = setInterval(checkJoin, 3000);
+// 다음
+$("#next_btn").click(function(){
+    if($("[name=type]:checked").val() == "1") {
+        if(!$("#name").val()) {
+            alert("커플명을 입력해주세요.");
+            return;
+        }
 
-function checkJoin(retry = false) {
+        makeCouple();
+    } else {
+        if(!$("#code").val()) {
+            alert("코드를 입력해주세요.");
+            return;
+        }
+
+        checkCode();
+    }
+});
+
+function makeCouple(retry = false) {
     $.ajax({
-        url: '/couple/check',
+        url: '/couple/regist',
         method: 'post',
+        data : {name: $("#name").val()},
         async: false,
         success: function (data) {
+            const msg = data.msg ?? null;
             const code = data.code ?? null;
 
             if(code === "200") {
-                alert("코드가 입력되었습니다.");
-                clearInterval(interval);
-                $("#next_btn").removeClass("disabled_btn").addClass("active_btn");
-                $("#next_btn.active_btn").click(function () {
-                    location.replace("/join/4");
-                });
+                location.replace("/join/4");
+            }
+        }, error: function () {
+            if(!retry) checkCode(true);
+        }
+    });
+}
+
+function checkCode(retry = false) {
+    $.ajax({
+        url: '/couple/code',
+        method: 'post',
+        data : {code: $("#code").val()},
+        async: false,
+        success: function (data) {
+            const msg = data.msg ?? null;
+            const code = data.code ?? null;
+
+            if(code === "200") {
+                alert("회원가입했습니다.");
+                location.replace("/login");
             }
         }, error: function () {
             if(!retry) checkCode(true);

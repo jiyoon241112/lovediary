@@ -60,5 +60,5 @@ $("#kakao_btn").click(function() {
 
 // 네이버 로그인
 $("#naver_btn").click(function() {
-    alert("네이버 로그인");
+    location.replace("/login/naver");
 });
