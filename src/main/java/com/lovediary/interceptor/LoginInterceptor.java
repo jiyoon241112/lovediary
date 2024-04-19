@@ -24,7 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         String requestMethod = request.getMethod();
         boolean isLoginPage = requestUri.contains("/join") || requestUri.contains("/login") || requestUri.contains("/find_password") || requestUri.contains("/error");
 
-        if(requestMethod.toUpperCase().equals("GET")) {
+        if(requestMethod.toUpperCase().equals("GET") && !requestUri.equals("/naver/do")) {
             // 로그인 정보가 없는 경우 로그인 페이지로
             if(request.getSession().getAttribute(constValues.LOGIN_USER) == null && !isLoginPage){
                 response.sendRedirect("/login");

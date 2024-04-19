@@ -1,7 +1,9 @@
 package com.lovediary.api;
 
+import com.lovediary.dto.AccountDto;
 import com.lovediary.dto.CoupleDto;
 import com.lovediary.entity.Couple;
+import com.lovediary.service.AccountService;
 import com.lovediary.service.CoupleService;
 import com.lovediary.util.Session;
 import com.lovediary.values.ResponseData;
@@ -27,8 +29,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CoupleRestController extends Session {
     private final CoupleService coupleService;
-    public CoupleRestController(CoupleService coupleService) {
+    private final AccountService accountService;
+    public CoupleRestController(CoupleService coupleService, AccountService accountService) {
         this.coupleService = coupleService;
+        this.accountService = accountService;
     }
 
     // 커플 생성
@@ -63,10 +67,13 @@ public class CoupleRestController extends Session {
 
         Long result = coupleService.checkCode(code);
 
-        // 커플 고유번호를 세션에 저장
+        // 계정 등록
         HttpSession session = this.getSessionData(request);
-        session.setAttribute(constValues.COUPLE_DATA, result);
+        AccountDto accountDto = (AccountDto) session.getAttribute(constValues.JOIN_DATA);
+        accountDto.setCoupleIdx(result);
 
+        accountService.saveItem(accountDto);
+        
         return new ResponseData(constValues.DONE, "저장했습니다.", null);
     }
 
@@ -79,6 +86,11 @@ public class CoupleRestController extends Session {
         String code = coupleService.getOne(idx).getCode();
 
         if (code == null || code.isEmpty()) {
+            AccountDto accountDto = (AccountDto) session.getAttribute(constValues.JOIN_DATA);
+            accountDto.setCoupleIdx(idx);
+
+            accountService.saveItem(accountDto);
+
             return new ResponseData(constValues.DONE, "가입했습니다.", null);
         } else {
             return new ResponseData(constValues.ERROR, "아직 가입하지 않았습니다.", null);

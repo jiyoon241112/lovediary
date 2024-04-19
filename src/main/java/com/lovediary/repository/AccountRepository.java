@@ -19,4 +19,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Account findByIdAndDeleteYn(String id, Character deleteYn);
 
     boolean existsById(String id);
+
+    Account findByPhoneNumber(String phoneNumber);
 }

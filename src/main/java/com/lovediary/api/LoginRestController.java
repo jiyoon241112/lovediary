@@ -117,8 +117,7 @@ public class LoginRestController extends Session {
             }
 
             session.setAttribute(constValues.JOIN_DATA, accountDto);
-            return new ResponseData(constValues.DONE, "저장했습니다.", null);
-        } else if(page == 4) {
+        } else if(page == 2) {
             AccountDto sessionData = (AccountDto) session.getAttribute(constValues.JOIN_DATA);
             sessionData.setProfileIdx(accountDto.getProfileIdx());
             sessionData.setMbti(accountDto.getMbti());
@@ -133,13 +132,10 @@ public class LoginRestController extends Session {
                 accountDto.setLoveName(accountDto.getName());
             }
 
-            Long idx = (Long) session.getAttribute(constValues.COUPLE_DATA);
-            sessionData.setCoupleIdx(idx);
-
-            accountService.saveItem(sessionData);
+            session.setAttribute(constValues.JOIN_DATA, accountDto);
         }
 
-        return new ResponseData(constValues.DONE, "회원가입을 완료했습니다.", null);
+        return new ResponseData(constValues.DONE, "저장했습니다.", null);
     }
 
     // 문자 보내기

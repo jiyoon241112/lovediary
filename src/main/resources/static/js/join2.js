@@ -1,73 +1,71 @@
-// 선택
-$("[name=type]").on("change",function(){
-    const value = $(this).val();
-
-    $("#name, #code").val("");
-    $(".join_tab").hide();
-    $(`#tab${value}`).show();
-});
-
-// 다음
-$("#next_btn").click(function(){
-    if($("[name=type]:checked").val() == "1") {
-        if(!$("#name").val()) {
-            alert("커플명을 입력해주세요.");
-            return;
-        }
-
-        makeCouple();
-    } else {
-        if(!$("#code").val()) {
-            alert("코드를 입력해주세요.");
-            return;
-        }
-
-        checkCode();
+// 프로필 이미지 업로드
+$("#upload_file").on("change", function() {
+    const files = $(this)[0].files;
+    if(!files.length) {
+        alert("파일을 업로드해주세요.");
+        $(this).val("");
+        return;
     }
+
+    const upload_file = files[0];
+
+    let form_data = new FormData;
+    form_data.append("file", upload_file);
+    form_data.append("type", 1);
+
+    fileUpload(form_data);
+    getBase64(upload_file, function(e) {
+        $("#profile_image").css("background-image", `url('${e.srcElement.result}')`).removeClass("no_image");
+    });
+    $(this).val("");
 });
 
-function makeCouple(retry = false) {
+function fileUpload(form_data, retry = false) {
     $.ajax({
-        url: '/couple/regist',
+        url: '/upload',
         method: 'post',
-        data : {name: $("#name").val()},
-        async: false,
+        data : form_data,
+        contentType: false,
+        processData: false,
         success: function (data) {
-            const msg = data.msg ?? null;
-            const code = data.code ?? null;
-
-            if(msg) {
-                alert(msg);
-            }
-
-            if(code === "200") {
-                location.replace("/join/3");
+            if(data.code === "200") {
+                $("#profile_idx").val(data.result);
             }
         }, error: function () {
-            if(!retry) checkCode(true);
+            if(!retry) fileUpload(form_data, true);
         }
     });
 }
 
-function checkCode(retry = false) {
+// 회원가입 버튼
+$("#join_btn").click(function() {
+    const profile_idx = $("#profile_idx").val();
+    const birth_day = $("#birth_day").val();
+    const mbti = $("#mbti option:selected").val();
+    const blood_type = $("[name=blood_type]:checked").val();
+
+    let form_data = new FormData;
+    form_data.append("profileIdx", profile_idx);
+    form_data.append("birth_day", birth_day);
+    form_data.append("mbti", mbti);
+    form_data.append("bloodType", blood_type);
+
+    join(form_data);
+});
+
+function join(form_data, retry = false) {
     $.ajax({
-        url: '/couple/code',
+        url: '/join/2',
         method: 'post',
-        data : {code: $("#code").val()},
-        async: false,
+        data : form_data,
+        contentType: false,
+        processData: false,
         success: function (data) {
-            const msg = data.msg ?? null;
-            const code = data.code ?? null;
-
-            if(msg) {
-                alert(msg);
-            }
-
-            if(code === "200") {
-                location.replace("/join/4");
+            if(data.code === "200") {
+                location.replace("/join/3");
             }
         }, error: function () {
-            if(!retry) checkCode(true);
+            if(!retry) join(form_data, true);
         }
     });
 }
