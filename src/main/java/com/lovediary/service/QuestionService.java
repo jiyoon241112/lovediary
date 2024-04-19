@@ -2,6 +2,7 @@ package com.lovediary.service;
 
 import com.lovediary.dto.CoupleAnswerDto;
 import com.lovediary.dto.CoupleAnswerReplyDto;
+import com.lovediary.dto.EmotionDto;
 import com.lovediary.entity.*;
 import com.lovediary.repository.*;
 import jakarta.transaction.Transactional;
@@ -31,14 +32,17 @@ public class QuestionService {
     private final CoupleQuestionRepository coupleQuestionRepository;
     private final CoupleAnswerRepository coupleAnswerRepository;
     private final CoupleAnswerReplyRepository coupleAnswerReplyRepository;
+    private final EmotionRepository emotionRepository;
     public QuestionService(CoupleAccountRepository coupleAccountRepository,
                            CoupleQuestionRepository coupleQuestionRepository,
                            CoupleAnswerRepository coupleAnswerRepository,
-                           CoupleAnswerReplyRepository coupleAnswerReplyRepository) {
+                           CoupleAnswerReplyRepository coupleAnswerReplyRepository,
+                           EmotionRepository emotionRepository) {
         this.coupleAccountRepository = coupleAccountRepository;
         this.coupleQuestionRepository = coupleQuestionRepository;
         this.coupleAnswerRepository = coupleAnswerRepository;
         this.coupleAnswerReplyRepository = coupleAnswerReplyRepository;
+        this.emotionRepository = emotionRepository;
     }
 
     // 목록 조회
@@ -61,8 +65,21 @@ public class QuestionService {
         CoupleAnswer answer = wrapper.get();
 
         CoupleAnswerDto answerDto = convertToDto(answer);
-        List<CoupleAccount> coupleAccountList = coupleAccountRepository.findByCoupleIdx(answerDto.getCoupleIdx());
+        Long mansEmotionIdx = answer.getMansEmotionIdx();
+        Long womansEmotionIdx = answer.getWomansEmotionIdx();
 
+        if(mansEmotionIdx != null) {
+            EmotionDto emotionDto = getEmotionOne(mansEmotionIdx);
+            answerDto.setMansImageIdx(emotionDto.getImageIdx());
+        }
+
+        if(womansEmotionIdx != null) {
+            EmotionDto emotionDto = getEmotionOne(womansEmotionIdx);
+            answerDto.setWomansImageIdx(emotionDto.getImageIdx());
+        }
+
+        // 계정 정보 조회
+        List<CoupleAccount> coupleAccountList = coupleAccountRepository.findByCoupleIdx(answerDto.getCoupleIdx());
         for(CoupleAccount coupleAccount : coupleAccountList) {
             Account account = coupleAccount.getAccount();
 
@@ -143,6 +160,28 @@ public class QuestionService {
         return coupleAnswerReplyRepository.save(replyDto.toEntity()).getIdx();
     }
 
+    // 기분 조회(목록)
+    @Transactional
+    public List<EmotionDto> getEmotionList() {
+        List<Emotion> emotionList = emotionRepository.findAll();
+        List<EmotionDto> resultList = new ArrayList<>();
+
+        for(Emotion emotion : emotionList) {
+            resultList.add(convertToDto(emotion));
+        }
+
+        return resultList;
+    }
+
+    // 기분 조회(단건)
+    @Transactional
+    public EmotionDto getEmotionOne(Long idx) {
+        Optional<Emotion> wrapper = emotionRepository.findById(idx);
+        Emotion emotion = wrapper.get();
+
+        return convertToDto(emotion);
+    }
+
     // 오늘의 질문 DTO 변환
     private CoupleAnswerDto convertToDto(CoupleAnswer coupleAnswer) {
         return CoupleAnswerDto.builder()
@@ -181,6 +220,14 @@ public class QuestionService {
                 .deleteYn(coupleAnswerReply.getDeleteYn())
                 .registDate(coupleAnswerReply.getRegistDate())
                 .modifyDate(coupleAnswerReply.getModifyDate())
+                .build();
+    }
+
+    // 기분 DTO 변환
+    private EmotionDto convertToDto(Emotion emotion) {
+        return EmotionDto.builder()
+                .idx(emotion.getIdx())
+                .imageIdx(emotion.getImage().getIdx())
                 .build();
     }
 }

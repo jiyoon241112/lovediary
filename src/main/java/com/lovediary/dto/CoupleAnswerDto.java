@@ -1,6 +1,8 @@
 package com.lovediary.dto;
 
 import com.lovediary.entity.CoupleAnswer;
+import com.lovediary.entity.Emotion;
+import com.lovediary.entity.File;
 import lombok.*;
 
 import java.sql.Date;
@@ -32,6 +34,7 @@ public class CoupleAnswerDto {
     private String mansAccountName;
     private Long mansProfileIdx;
     private Long mansEmotionIdx;
+    private Long mansImageIdx;
     private String mansAnswerContents;
     private Timestamp mansAnswerDate;
 
@@ -40,12 +43,21 @@ public class CoupleAnswerDto {
     private Long womansProfileIdx;
     private Character womansAnswerYn;
     private Long womansEmotionIdx;
+    private Long womansImageIdx;
     private String womansAnswerContents;
     private Timestamp womansAnswerDate;
     private Long coupleIdx;
     private Date questionDate;
 
     public CoupleAnswer toEntity() {
+        Emotion mansEmotion = Emotion.builder()
+                .idx(mansEmotionIdx)
+                .build();
+
+        Emotion womansEmotion = Emotion.builder()
+                .idx(womansEmotionIdx)
+                .build();
+
         return CoupleAnswer.builder()
                 .idx(idx)
                 .questionIdx(questionIdx)
@@ -64,16 +76,18 @@ public class CoupleAnswerDto {
     }
 
     @Builder
-    public CoupleAnswerDto(Long idx, Long questionIdx, String questionContents, Character mansAnswerYn, Long mansEmotionIdx, String mansAnswerContents, Timestamp mansAnswerDate, Character womansAnswerYn, Long womansEmotionIdx, String womansAnswerContents, Timestamp womansAnswerDate, Long coupleIdx, Date questionDate) {
+    public CoupleAnswerDto(Long idx, Long questionIdx, String questionContents, Character mansAnswerYn, Long mansEmotionIdx, Long mansImageIdx, String mansAnswerContents, Timestamp mansAnswerDate, Character womansAnswerYn, Long womansEmotionIdx, Long womansImageIdx, String womansAnswerContents, Timestamp womansAnswerDate, Long coupleIdx, Date questionDate) {
         this.idx = idx;
         this.questionIdx = questionIdx;
         this.questionContents = questionContents;
         this.mansAnswerYn = mansAnswerYn;
         this.mansEmotionIdx = mansEmotionIdx;
+        this.mansImageIdx = mansImageIdx;
         this.mansAnswerContents = mansAnswerContents;
         this.mansAnswerDate = mansAnswerDate;
         this.womansAnswerYn = womansAnswerYn;
         this.womansEmotionIdx = womansEmotionIdx;
+        this.womansImageIdx = womansImageIdx;
         this.womansAnswerContents = womansAnswerContents;
         this.womansAnswerDate = womansAnswerDate;
         this.coupleIdx = coupleIdx;
