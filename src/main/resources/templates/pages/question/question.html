@@ -15,11 +15,7 @@
 		</section>
 		<div class="circle_group">
 			<div id="emotion" class="center_t">
-				<div th:class="${#strings.equals(gender, 'M') ? (answer.mansEmotionIdx == 1 ? 'circle_btn smile_btn on' : 'circle_btn smile_btn') : (answer.womansEmotionIdx == 1 ? 'circle_btn smile_btn on' : 'circle_btn smile_btn')}" data-idx="1"></div>
-				<div th:class="${#strings.equals(gender, 'M') ? (answer.mansEmotionIdx == 2 ? 'circle_btn good_btn on' : 'circle_btn good_btn') : (answer.womansEmotionIdx == 2 ? 'circle_btn good_btn on' : 'circle_btn good_btn')}" data-idx="2"></div>
-				<div th:class="${#strings.equals(gender, 'M') ? (answer.mansEmotionIdx == 3 ? 'circle_btn nice_btn on' : 'circle_btn nice_btn') : (answer.womansEmotionIdx == 3 ? 'circle_btn nice_btn on' : 'circle_btn nice_btn')}" data-idx="3"></div>
-				<div th:class="${#strings.equals(gender, 'M') ? (answer.mansEmotionIdx == 4 ? 'circle_btn sad_btn on' : 'circle_btn sad_btn') : (answer.womansEmotionIdx == 4 ? 'circle_btn sad_btn on' : 'circle_btn sad_btn')}" data-idx="4"></div>
-				<div th:class="${#strings.equals(gender, 'M') ? (answer.mansEmotionIdx == 5 ? 'circle_btn love_btn on' : 'circle_btn love_btn') : (answer.womansEmotionIdx == 5 ? 'circle_btn love_btn on' : 'circle_btn love_btn')}" data-idx="5"></div>
+				<div th:each="emotion : ${emotion_list}" th:class="|circle_btn feel_btn ${#strings.equals(gender, 'M') ? (answer.mansEmotionIdx == emotion.idx ? 'on' : '') : (answer.womansEmotionIdx == emotion.idx ? 'on' : '')}|" th:style="|background-image: url('/view/image/${emotion.imageIdx}');|" th:data-idx="${emotion.idx}"></div>
 			</div>
 		</div>
 	</div>

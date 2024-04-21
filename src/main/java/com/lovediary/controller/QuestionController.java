@@ -62,6 +62,7 @@ public class QuestionController extends Session {
         }
 
         model.addAttribute("gender", accountService.getOne(this.getLoginData(request).getAccountIdx()).getGender());
+        model.addAttribute("emotion_list", questionService.getEmotionList());
 
         return "pages/question/question";
     }

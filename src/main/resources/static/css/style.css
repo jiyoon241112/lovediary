@@ -151,11 +151,7 @@ section.card {width: 90%; margin-left: 5%; padding: 10px 0;}
 
 /* 오늘의 질문 */
 .question_contents {height: 300px;}
-.circle_btn.smile_btn {background-image: url('/resources/feel_smile.svg'); background-size: 60px; background-repeat: no-repeat; background-position: center; border: 0;}
-.circle_btn.good_btn {background-image: url('/resources/feel_good.svg'); background-size: 60px; background-repeat: no-repeat; background-position: center; border: 0;}
-.circle_btn.nice_btn {background-image: url('/resources/feel_nice.svg'); background-size: 60px; background-repeat: no-repeat; background-position: center; border: 0;}
-.circle_btn.sad_btn {background-image: url('/resources/feel_sad.svg'); background-size: 60px; background-repeat: no-repeat; background-position: center; border: 0;}
-.circle_btn.love_btn {background-image: url('/resources/feel_love.svg'); background-size: 60px; background-repeat: no-repeat; background-position: center; border: 0;}
+.circle_btn.feel_btn {background-size: 60px; background-repeat: no-repeat; background-position: center; border: 0;}
 .circle_btn.on {border: solid 2px #ffaaaa !important; border-radius: 100% !important;}
 
 /* 스토어 */
