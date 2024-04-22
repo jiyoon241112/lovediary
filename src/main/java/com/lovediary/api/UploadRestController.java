@@ -30,7 +30,8 @@ public class UploadRestController {
     }
 
     @PostMapping("/upload")
-    public ResponseData upload(@RequestParam("type") Integer type, @RequestParam("file") MultipartFile uploadFile) throws IOException {
+    public ResponseData upload(@RequestParam("type") Integer type,
+                               @RequestParam("file") MultipartFile uploadFile) throws IOException {
         Long result = fileService.saveItem(uploadFile, type);
 
         return new ResponseData(constValues.DONE, "저장되었습니다.", result);

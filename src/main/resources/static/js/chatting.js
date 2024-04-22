@@ -1,4 +1,4 @@
-const socket = io('ws://localhost:8080');
+const socket = io('ws://13.124.101.13:8081');
 const couple_idx = $("#couple_idx").val();
 const account_idx = $("#account_idx").val();
 const idx_list = [];
